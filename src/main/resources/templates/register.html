@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<h1>Register User</h1>
+
+<!-- Form that posts to /register -->
+<form th:action="@{/user/register}" th:object="${user}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" th:field="*{username}" id="username" required />
+
+    <label for="userType">Role:</label>
+    <select th:field="*{userType}" id="userType" required>
+        <option value="CUSTOMER">Customer</option>
+        <option value="SUPPLIER">Supplier</option>
+    </select>
+
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>
