@@ -12,6 +12,9 @@
     <label for="username">Username:</label>
     <input type="text" th:field="*{username}" id="username" required />
 
+    <label for="password">Password:</label>
+    <input type="password" th:field="*{password}" id="password" required/>
+
     <label for="userType">Role:</label>
     <select th:field="*{userType}" id="userType" required>
         <option value="CUSTOMER">Customer</option>
@@ -20,5 +23,6 @@
 
     <button type="submit">Register</button>
 </form>
+
 </body>
 </html>

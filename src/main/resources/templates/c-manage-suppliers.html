@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Suppliers</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/c-manage-suppliers.css">
+</head>
+<body>
+
+<header>
+
+    <a href="/dashboard">Dashboard</a>
+    <a href="/suppliers">Suppliers</a>
+    <a href="/deliveries">Deliveries</a>
+    <a href="/account">Account</a>
+    <a href="/settings">Settings</a>
+
+</header>
+
+<h1>Search Suppliers</h1>
+
+<input type="text" id="searchInput" placeholder="Search suppliers by name...">
+
+<ul id="supplierList">
+    <li th:each="supplier : ${suppliers}"
+        th:text="${supplier.username}"
+        class="supplier-item">
+    </li>
+</ul>
+
+<script src="/js/c-manage-suppliers.js"></script>
+
+
+</body>
+</html>
