@@ -9,6 +9,10 @@
 
 <h1>Login Page</h1>
 
+<div th:if="${loginError}" style="color: red; font-weight: bold;">
+    <p th:text="${loginError}"></p>
+</div>
+
 <form th:action="@{/user/login}" th:object="${user}" method="post">
     <label for="username">Username:</label>
     <input type="text" th:field="*{username}" id="username" required/>
@@ -16,9 +20,7 @@
     <label for="password">Password:</label>
     <input type="password" th:field="*{password}" id="password" required/>
 
-    <div th:if="${loginError}" class="error">
-        <p th:text="${loginError}"></p>  <!-- Display the error message -->
-    </div>
+
 
     <button type="submit">Login</button>
 </form>

@@ -66,8 +66,15 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public String registerUser(@ModelAttribute User user, HttpSession session) {
-        //saves user to h2 in memory repo
+    public String registerUser(@ModelAttribute User user, HttpSession session, Model model) {
+
+        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+        if (existingUser.isPresent()) {
+            System.out.println("User already exists");
+            model.addAttribute("registerError", "User already exists");
+            return "register";
+        }
+
         System.out.println("New User: " + user);
         userRepository.save(user);
 

@@ -7,6 +7,9 @@
 <body>
 <h1>Register User</h1>
 
+<div th:if="${registerError}" style="color: red; font-weight: bold;">
+    <p th:text="${registerError}"></p>
+</div>
 <!-- Form that posts to /register -->
 <form th:action="@{/user/register}" th:object="${user}" method="post">
     <label for="username">Username:</label>
