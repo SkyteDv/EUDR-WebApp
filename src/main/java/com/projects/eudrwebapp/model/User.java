@@ -3,6 +3,8 @@ package com.projects.eudrwebapp.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Entity
 public class User {
@@ -14,6 +16,22 @@ public class User {
     private String username;
     private String password;
     private String userType;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "customer_supplier",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "supplier_id")
+    )
+    private List<User> suppliers;
+
+    public List<User> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(List<User> suppliers) {
+        this.suppliers = suppliers;
+    }
 
     public User() {}
 

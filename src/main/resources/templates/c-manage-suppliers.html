@@ -5,32 +5,48 @@
     <title>Manage Suppliers</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/c-manage-suppliers.css">
+    <link rel="stylesheet" href="/css/header.css">
 </head>
 <body>
 
-<header>
-
-    <a href="/dashboard">Dashboard</a>
-    <a href="/suppliers">Suppliers</a>
-    <a href="/deliveries">Deliveries</a>
-    <a href="/account">Account</a>
-    <a href="/settings">Settings</a>
-
+<header class="header">
+    <nav class="navbar">
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+        <a href="/suppliers" class="nav-link active">Suppliers</a>
+        <a href="/deliveries" class="nav-link">Deliveries</a>
+        <a href="/account" class="nav-link">Account</a>
+        <a href="/settings" class="nav-link">Settings</a>
+    </nav>
 </header>
 
-<h1>Search Suppliers</h1>
+<main class="container">
+    <h1>Manage Suppliers</h1>
 
-<input type="text" id="searchInput" placeholder="Search suppliers by name...">
+    <div class="content-div">
+        <div class="supplier-section">
+            <h2>My Suppliers</h2>
+            <ul id="mySupplierList" class="supplier-list">
+                <li th:each="supplier : ${mySuppliers}"
+                    th:data-id="${supplier.id}"
+                    th:text="${supplier.username}"
+                    class="supplier-item">
+                </li>
+            </ul>
+        </div>
 
-<ul id="supplierList">
-    <li th:each="supplier : ${suppliers}"
-        th:text="${supplier.username}"
-        class="supplier-item">
-    </li>
-</ul>
+        <div class="supplier-section">
+            <h2>All Suppliers</h2>
+            <ul id="allSupplierList" class="supplier-list">
+                <li th:each="supplier : ${allSuppliers}"
+                    th:data-id="${supplier.id}"
+                    th:text="${supplier.username}"
+                    class="supplier-item">
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
 
 <script src="/js/c-manage-suppliers.js"></script>
-
-
 </body>
 </html>

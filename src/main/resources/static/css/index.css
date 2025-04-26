@@ -7,6 +7,70 @@
     align-items: center;
 }
 
+.cssbuttons-io-button {
+    background: rgba(253, 252, 252, 0.87);
+    color: black;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 1.6em -0.6em #ffffff;
+    overflow: hidden;
+    position: relative;
+    height: 4.3em;
+    width: 12em;
+    padding: 0.35em 3.3em 0.35em 1.2em;
+    cursor: pointer;
+}
+
+.cssbuttons-io-button .icon {
+    background: white;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3.7em;
+    width: 4.2em;
+    border-radius: 0.7em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #939393;
+    right: 0.3em;
+    transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+    width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s;
+    color: #959191;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+    transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+    transform: scale(0.95);
+}
+
+
+
+
+
+
+
+
+
+
+
 .overlay {
     background-color: rgba(0, 0, 0, 0.075);
     height: 100%;
@@ -22,12 +86,16 @@
         opacity: 1;
     }
 
-
-    33% {
+    25%  {
         opacity: 0;
     }
 
-    67% {
+
+    50%  {
+        opacity: 0;
+    }
+
+    75%  {
         opacity: 0;
     }
 
@@ -44,20 +112,25 @@
     position: absolute;
     top: 0;
     left: 0;
-    animation: fade 27s ease-in-out infinite alternate;
+    animation: fade 40s ease-in-out infinite alternate;
 }
 
-.fade-image:nth-of-type(3) {
+.fade-image:nth-of-type(4) {
     animation-delay: 0s;
 }
 
+.fade-image:nth-of-type(3) {
+    animation-delay: 10s
+}
+
 .fade-image:nth-of-type(2) {
-    animation-delay: 9s;
+    animation-delay: 20s
 }
 
 .fade-image:nth-of-type(1) {
-    animation-delay: 18s;
+    animation-delay: 30s
 }
+
 
 .content-container {
     background-color: rgba(0, 0, 0, 0);

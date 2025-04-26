@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
+
 @Configuration
 public class H2DataLoader {
 
@@ -30,9 +32,29 @@ public class H2DataLoader {
             userRepository.save(new User("NovaTechSupply", "password123", "SUPPLIER"));
 
             // Insert a customer
-            userRepository.save(new User("1", "1", "CUSTOMER"));
+            User customer = new User("1", "1", "CUSTOMER");
+            userRepository.save(customer);
 
             System.out.println("Dummy data loaded into the database.");
+
+            // Get the list of suppliers
+            User supplier1 = userRepository.findByUsername("GreenTechSupply").orElseThrow();
+            User supplier2 = userRepository.findByUsername("AlphaMaterials").orElseThrow();
+            User supplier3 = userRepository.findByUsername("BlueSkyLogistics").orElseThrow();
+
+            // Assign the suppliers to the customer
+            customer.setSuppliers(Arrays.asList(supplier1, supplier2, supplier3));
+
+            // Save the updated customer with the assigned suppliers
+            userRepository.save(customer);
+
+            // Fetch the customer from the database to confirm the suppliers are assigned
+            User savedCustomer = userRepository.findByUsername("1").orElseThrow();
+            System.out.println("Customer: " + savedCustomer.getUsername());
+            savedCustomer.getSuppliers().forEach(supplier -> System.out.println("Assigned Supplier: " + supplier.getUsername()));
+
+            System.out.println("Dummy data loaded and supplier assignment verified.");
+
         };
     }
 }

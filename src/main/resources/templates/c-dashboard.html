@@ -2,28 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/c-dashboard.css">
 </head>
 <body>
 
-<header>
-
-    <a href="/dashboard">Dashboard</a>
-    <a href="/suppliers">Suppliers</a>
-    <a href="/deliveries">Deliveries</a>
-    <a href="/account">Account</a>
-    <a href="/settings">Settings</a>
-
+<header class="header">
+    <nav class="navbar">
+        <a href="/dashboard" class="nav-link active">Dashboard</a>
+        <a href="/suppliers" class="nav-link">Suppliers</a>
+        <a href="/deliveries" class="nav-link">Deliveries</a>
+        <a href="/account" class="nav-link">Account</a>
+        <a href="/settings" class="nav-link">Settings</a>
+    </nav>
 </header>
 
-<p>Homepage for the Customer</p>
+<div id="content-div">
+    <p>Homepage for the Customer</p>
 
-
-
-<form th:action="@{/user/logout}" method="post">
-    <button type="submit">Logout</button>
-</form>
+    <form th:action="@{/user/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
 
 </body>
 </html>
