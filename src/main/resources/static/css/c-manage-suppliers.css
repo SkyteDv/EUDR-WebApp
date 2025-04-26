@@ -16,7 +16,22 @@ main.container {
     padding: 2rem;
 }
 
+.dds-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+    background-color: white;
+}
+
+.dds-box.filled {
+    background-color: #4CAF50; /* Green */
+    border-color: #4CAF50;
+}
+
 h1 {
+    margin-left: 2rem;
     margin-bottom: 1rem;
     font-size: 2rem;
     color: #1f1f1f;

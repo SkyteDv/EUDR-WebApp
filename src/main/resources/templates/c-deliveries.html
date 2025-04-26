@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deliveries</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/c-deliveries.css">
+</head>
+<body>
+
+<header class="header">
+    <nav class="navbar">
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+        <a href="/suppliers" class="nav-link">Suppliers</a>
+        <a href="/deliveries" class="nav-link active">Deliveries</a>
+        <a href="/account" class="nav-link">Account</a>
+        <a href="/settings" class="nav-link">Settings</a>
+    </nav>
+</header>
+
+<div class="main-content">
+    <div class="deliveries-header">
+        <h1>Deliveries</h1>
+        <div class="search-filter">
+            <label>
+                <input type="text" class="search-input" placeholder="Search by DDS or RNR..." id="searchInput">
+            </label>
+            <button class="clean-button" onclick="openPopup()">Order by</button>
+            <button class="clean-button">Refresh Deliveries</button>
+        </div>
+    </div>
+
+    <div class="deliveries-table">
+        <table id="ordersTable">
+            <thead>
+            <tr>
+                <th class="sortable" data-column="ddsStatus">DDS on Delivery</th>
+                <th data-column="ddsReferenceNumber">DDS Ref</th>
+                <th data-column="erpReferenceNumber">Shipment Ref</th>
+                <th class="sortable" data-column="destination">Destination</th>
+                <th class="sortable" data-column="status">Status</th>
+                <th class="sortable" data-column="supplier">Supplier</th>
+                <th class="sortable" data-column="orderDate">Order Date</th>
+                <th class="sortable" data-column="estimatedDeliveryDate">Estimated Delivery</th>
+                <th class="sortable" data-column="productCategory">Category</th>
+                <th class="sortable" data-column="productName">Product Name</th>
+                <th class="sortable" data-column="dimensions">Dimensions (m²)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${deliveries}">
+                <td data-label="DDS on Delivery">
+                    <span th:if="${order.ddsStatus == 'Yes'}" style="color: green; font-weight: bold;">Yes</span>
+                    <span th:if="${order.ddsStatus == 'No'}" style="color: orange; font-weight: bold;">No</span>
+                    <span th:if="${order.ddsStatus == 'Not Available'}" style="color: red; font-weight: bold;">NOT AVAILABLE</span>
+                </td>
+                <td data-label="DDS Ref" th:text="${order.ddsReferenceNumber}"></td>
+                <td data-label="Shipment Ref" th:text="${order.erpReferenceNumber}"></td>
+                <td data-label="Destination" th:text="${order.destination}"></td>
+                <td data-label="Status" th:text="${order.status}"></td>
+                <td data-label="Supplier">
+                    <a th:href="@{/suppliers}" th:text="${order.supplier.username}"></a>
+                </td>
+                <td data-label="Order Date" th:text="${order.orderDate}"></td>
+                <td data-label="Estimated Delivery" th:text="${order.estimatedDeliveryDate}"></td>
+                <td data-label="Category" th:text="${order.productCategory}"></td>
+                <td data-label="Product Name" th:text="${order.productName}"></td>
+                <td data-label="Dimensions" th:text="${order.dimensions}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="popupOverlay" class="popup-overlay">
+    <div class="popup-card">
+        <h2>Sort Deliveries By</h2>
+        <div class="popup-grid">
+            <div class="popup-option">Estimated Delivery Date (Asc)</div>
+            <div class="popup-option">Estimated Delivery Date (Desc)</div>
+            <div class="popup-option">Status</div>
+            <div class="popup-option">Supplier</div>
+            <div class="popup-option">DDS on Delivery</div>
+            <div class="popup-option">Destination</div>
+            <div class="popup-option">Product Group</div>
+            <div class="popup-option">Product Name</div>
+            <div class="popup-option">Dimensions</div>
+        </div>
+        <button class="close-button" onclick="closePopup()">Close</button>
+    </div>
+</div>
+
+
+<script src="/js/c-deliveries/c-sortTable.js"></script>
+<script src="/js/c-deliveries/c-popup.js"></script>
+
+</body>
+</html>
