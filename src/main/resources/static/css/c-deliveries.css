@@ -56,6 +56,11 @@
     text-decoration: underline;
 }
 
+.highlight {
+    background-color: rgba(0, 255, 255, 0.3);
+    font-weight: bold;
+}
+
 /* Responsive Advanced Table */
 @media (max-width: 900px) {
     .deliveries-table table,
@@ -68,7 +73,7 @@
     }
 
     .deliveries-table thead tr {
-        display: none; /* Hide the header on small screens */
+        display: none; 
     }
 
     .deliveries-table tr {

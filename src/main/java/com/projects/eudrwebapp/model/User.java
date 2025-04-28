@@ -3,6 +3,7 @@ package com.projects.eudrwebapp.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,33 +17,43 @@ public class User {
     private String username;
     private String password;
     private String userType;
+    private String osapiensID;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "customer_supplier",
+            name = "user_associate",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "supplier_id")
     )
-    private List<User> suppliers;
+    private List<User> associates = new ArrayList<>();
 
-    public List<User> getSuppliers() {
-        return suppliers;
+    public List<User> getAssociates() {
+        return associates;
     }
 
-    public void setSuppliers(List<User> suppliers) {
-        this.suppliers = suppliers;
+    public void setAssociates(List<User> associates) {
+        this.associates = associates;
     }
 
     public User() {}
 
-    public User(String username, String password, String userType) {
+    public User(String username, String password, String userType, String osapiensID) {
         this.username = username;
         this.password = password;
         this.userType = userType;
+        this.osapiensID = osapiensID;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getOsapiensID() {
+        return osapiensID;
+    }
+
+    public void setOsapiensID(String osapiensID) {
+        this.osapiensID = osapiensID;
     }
 
     public String getPassword() {
@@ -74,7 +85,10 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", userType='" + userType + '\'' +
+                ", osapiensID='" + osapiensID + '\'' +
+                ", associates=" + associates +
                 '}';
     }
 }

@@ -36,48 +36,18 @@ public class CSupplierController {
         User loggedInUser = loggedInUserOptional.get();
 
         //Get Assosicated Suppliers
-        List<User> mySuppliers = loggedInUser.getSuppliers();
+        List<User> mySuppliers = loggedInUser.getAssociates();
 
         //Filter all suppliers for associated ones
         List<User> filteredSuppliers = suppliers.stream()
                 .filter(supplier -> !mySuppliers.contains(supplier))
                 .toList();
 
+        System.out.println("Filtered sup: " + filteredSuppliers);
+        System.out.println("My Sup: " + mySuppliers);
         model.addAttribute("allSuppliers", filteredSuppliers);
         model.addAttribute("mySuppliers", mySuppliers);
         return "c-manage-suppliers";
-    }
-
-    @PostMapping("/select")
-    @ResponseBody
-    public String selectSupplier(@RequestBody Map<String, String> payload,
-                                 @SessionAttribute(value = "userId", required = false) String userId) {
-        String supplierId = payload.get("supplierId");
-        System.out.println("Clicked supplier ID: " + supplierId);
-
-        if (userId == null) {
-            return "User not logged in";
-        }
-
-        Optional<User> loggedInUserOpt = userRepository.findById(userId);
-        Optional<User> supplierOpt = userRepository.findById(supplierId);
-
-        if (loggedInUserOpt.isEmpty() || supplierOpt.isEmpty()) {
-            return "User or supplier not found";
-        }
-
-        User customer = loggedInUserOpt.get();
-        User supplier = supplierOpt.get();
-
-        // Prevent duplicates
-        if (!customer.getSuppliers().contains(supplier)) {
-            customer.getSuppliers().add(supplier);
-            userRepository.save(customer);
-            System.out.println("Customer updated: " + customer + ". Added Supplier: " + supplier);
-            return "Supplier added successfully.";
-        } else {
-            return "Supplier already associated.";
-        }
     }
 
 
