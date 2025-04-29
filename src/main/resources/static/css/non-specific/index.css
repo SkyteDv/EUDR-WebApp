@@ -1,12 +1,3 @@
-.container {
-    height: 100vh;
-    width: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .cssbuttons-io-button {
     background: rgba(253, 252, 252, 0.87);
     color: black;
@@ -60,61 +51,6 @@
 .cssbuttons-io-button:active .icon {
     transform: scale(0.95);
 }
-
-.overlay {
-    background-color: rgba(0, 0, 0, 0.0075);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 50;
-}
-
-@keyframes fade {
-    0% {
-        opacity: 1;
-    }
-    25% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 0;
-    }
-    75% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-.fade-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    animation: fade 40s ease-in-out infinite alternate;
-}
-
-.fade-image:nth-of-type(4) {
-    animation-delay: 0s;
-}
-
-.fade-image:nth-of-type(3) {
-    animation-delay: 10s;
-}
-
-.fade-image:nth-of-type(2) {
-    animation-delay: 20s;
-}
-
-.fade-image:nth-of-type(1) {
-    animation-delay: 30s;
-}
-
 .content-container {
     background-color: rgba(0, 0, 0, 0);
     box-sizing: border-box;
@@ -146,11 +82,11 @@
 
 .logo-icon {
     position: absolute;
-    top: 0%;
+    top: 0;
     left: 75%;
     background-color: rgba(0, 0, 0, 0);
-    width: 120px;
-    height: 120px;
+    width: 30%;
+    height: 30%;
     object-fit: contain;
     z-index: 100;
 }

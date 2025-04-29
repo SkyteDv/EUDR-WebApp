@@ -30,7 +30,6 @@ public class DashboardController {
         if (!sessionService.isLoggedIn(session)) {
             return urlService.goHome();
         }
-
         String userid = String.valueOf(session.getAttribute("userId"));
         User user = userRepository.getReferenceById(userid);
         System.out.println("Logged in as: " + user);

@@ -2,33 +2,88 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/non-specific/global.css">
+    <link rel="stylesheet" href="/css/non-specific/register.css">
+    <link rel="stylesheet" href="/css/non-specific/background-slideshow.css">
     <title>Register</title>
 </head>
 <body>
-<h1>Register User</h1>
 
-<div th:if="${registerError}" style="color: red; font-weight: bold;">
-    <p th:text="${registerError}"></p>
+<div class="container">
+   <div class="overlay"></div>
+   <img class="fade-image" src="/images/palm%20oil.jpg" alt="Palm Oil">
+   <img class="fade-image" src="/images/rainforest3.jpg" alt="Rainforest Image">
+   <img class="fade-image" src="/images/rainforest1.jpg" alt="Rainforest Image">
+   <img class="fade-image" src="/images/rainforest2.jpg" alt="Rainforest Image">
+
+   <div class="content-container">
+
+       <div class="register-header">
+           <h1>Sign Up</h1>
+       </div>
+
+       <!-- Error Message -->
+       <div th:if="${registerError}" style="color: red; font-weight: bold;">
+           <p th:text="${registerError}"></p>
+       </div>
+
+       <!-- Register Form -->
+       <form th:action="@{/user/register}" th:object="${user}" method="post">
+
+           <!-- Username Input -->
+           <div class="input-box">
+               <label>
+                   <input type="text" class="input-field" th:field="*{username}" placeholder="Username" autocomplete="off" required>
+               </label>
+           </div>
+
+           <!-- Password Input -->
+           <div class="input-box">
+               <label>
+                   <input type="password" class="input-field" th:field="*{password}" placeholder="Password" autocomplete="off" required>
+               </label>
+           </div>
+
+           <!-- Osapiens ID Input -->
+           <div class="input-box">
+               <label>
+                   <input type="text" class="input-field" th:field="*{osapiensID}" placeholder="Osapiens ID" autocomplete="off" required>
+               </label>
+           </div>
+
+           <!-- User Type Dropdown -->
+           <div class="input-box">
+               <label>
+                   <select class="input-field" th:field="*{userType}" id="userType" name="userType" required>
+                       <option value="" disabled selected>Select Role</option>
+                       <option value="CUSTOMER">Customer</option>
+                       <option value="SUPPLIER">Supplier</option>
+                   </select>
+               </label>
+           </div>
+
+           <!-- Submit Button -->
+           <div class="input-submit">
+               <button class="submit-btn" type="submit" id="submit"></button>
+               <label for="submit">Register</label>
+           </div>
+
+           <!-- Cancel / Login Link -->
+           <div class="sign-up-link">
+               <p><a href="/">Cancel</a></p>
+               <p>Already have an account? <a href="/user/login">Login</a></p>
+           </div>
+
+       </form>
+
+
+   </div>
+
+
+
 </div>
-<!-- Form that posts to /register -->
-<form th:action="@{/user/register}" th:object="${user}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" th:field="*{username}" id="username" required />
-
-    <label for="password">Password:</label>
-    <input type="password" th:field="*{password}" id="password" required/>
-
-    <label for="osapiensID">Osapiens ID:</label>
-    <input type="text" th:field="*{osapiensID}" id="osapiensID" required>
-
-    <label for="userType">Role:</label>
-    <select th:field="*{userType}" id="userType" required>
-        <option value="CUSTOMER">Customer</option>
-        <option value="SUPPLIER">Supplier</option>
-    </select>
-
-    <button type="submit">Register</button>
-</form>
 
 </body>
 </html>

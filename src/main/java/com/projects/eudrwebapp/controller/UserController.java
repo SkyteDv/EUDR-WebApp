@@ -6,6 +6,8 @@ import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import com.projects.eudrwebapp.service.HelperService;
 import com.projects.eudrwebapp.service.OrderService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,13 +43,27 @@ public class UserController {
 // Login Logic
 
     @GetMapping("login")
-    public String login(Model model) {
+    public String login(HttpSession session, Model model, @CookieValue(value = "rememberMe", required = false) String rememberedUserId) {
+        if (rememberedUserId != null) {
+            Optional<User> user = userRepository.findById(rememberedUserId);
+            if (user.isPresent()) {
+                session.setAttribute("userId", rememberedUserId);
+                System.out.println("Remembered User Id: "+ rememberedUserId);
+                return "redirect:/dashboard";
+            }
+        }
         model.addAttribute("user", new User());
         return "login";
     }
 
-    @PostMapping("login")
-    public String login(@ModelAttribute("user") User user, HttpSession session, Model model) {
+    @PostMapping("/login")
+    public String login(
+            @ModelAttribute("user") User user,
+            HttpSession session,
+            Model model,
+            @RequestParam(required = false) String rememberMe,
+            HttpServletResponse response) {
+
         Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
         if (existingUser.isPresent()) {
             User dbUser = existingUser.get();
@@ -62,6 +78,14 @@ public class UserController {
                     logger.info("Importing orders for Osapiens ID: {}", dbUser.getOsapiensID());
                     orderService.importOrders(inputStream, dbUser.getOsapiensID());
 
+                    // Set rememberMe cookie for 2 minutes if checkbox was selected
+                    if (rememberMe != null && rememberMe.equalsIgnoreCase("on")) {
+                        Cookie cookie = new Cookie("rememberMe", String.valueOf(dbUser.getId()));
+                        cookie.setMaxAge(2 * 60); // 2 minutes
+                        cookie.setPath("/");
+                        cookie.setHttpOnly(true);
+                        response.addCookie(cookie);
+                    }
                     return "redirect:/dashboard";
                 } catch (Exception e) {
                     logger.error("Error importing orders for user '{}'", dbUser.getUsername(), e);
@@ -69,16 +93,17 @@ public class UserController {
                     return "login";
                 }
             } else {
-                logger.warn("Login attempt failed for user '{}': Incorrect password.", user.getUsername());
+                logger.warn("Login failed for '{}': wrong password", user.getUsername());
                 model.addAttribute("loginError", "Invalid password");
                 return "login";
             }
         } else {
-            logger.warn("Login attempt failed: Username '{}' not found.", user.getUsername());
+            logger.warn("Login failed: user '{}' not found", user.getUsername());
             model.addAttribute("loginError", "Invalid username");
             return "login";
         }
     }
+
 
 
 
@@ -119,9 +144,17 @@ public class UserController {
 // Logout Logic
 
     @PostMapping("logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletResponse response) {
         session.invalidate();
         logger.info("User session invalidated and logged out.");
+
+        // Remove the rememberMe cookie
+        Cookie cookie = new Cookie("rememberMe", null);
+        cookie.setMaxAge(0); // Deletes the cookie
+        cookie.setPath("/"); // Must match the original path
+        response.addCookie(cookie);
+        logger.info("All Logging Cookies Removed");
+
         return "redirect:/";
     }
 }

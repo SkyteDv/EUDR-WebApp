@@ -1,28 +1,26 @@
-<head>
-    <link rel="stylesheet" href="/css/testing.css">
-</head>
+<div th:if="${registerError}" style="color: red; font-weight: bold;">
+    <p th:text="${registerError}"></p>
+</div>
+<!-- Form that posts to /register -->
+<form th:action="@{/user/register}" th:object="${user}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" th:field="*{username}" id="username" required />
 
-<body>
-<nav>
-    <div class="navbar">
-        <div class="container nav-container">
-            <input class="checkbox" type="checkbox" name="" id="" />
-            <div class="hamburger-lines">
-                <span class="line line1"></span>
-                <span class="line line2"></span>
-                <span class="line line3"></span>
-            </div>
-            <div class="logo">
-                <h1>Navbar</h1>
-            </div>
-            <div class="menu-items">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">about</a></li>
-                <li><a href="#">blogs</a></li>
-                <li><a href="#">portfolio</a></li>
-                <li><a href="#">contact</a></li>
-            </div>
-        </div>
-    </div>
-</nav>
-</body>
+    <label for="password">Password:</label>
+    <input type="password" th:field="*{password}" id="password" required/>
+
+    <label for="osapiensID">Osapiens ID:</label>
+    <input type="text" th:field="*{osapiensID}" id="osapiensID" required>
+
+    <label for="userType">Role:</label>
+    <select th:field="*{userType}" id="userType" required>
+        <option value="CUSTOMER">Customer</option>
+        <option value="SUPPLIER">Supplier</option>
+    </select>
+
+    <button type="submit">Register</button>
+</form>
+
+<a href="/">Cancel</a>
+<p>Already have an Account?</p>
+<a href="/user/login">Login</a>

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 public class SessionService {
 
     public boolean isLoggedIn(HttpSession session) {
-        Long userId = (Long) session.getAttribute("userId");
+        String userId = String.valueOf(session.getAttribute("userId"));
         return userId != null;
     }
 
-    public Long getSessionUserId(HttpSession session) {
-        return (Long) session.getAttribute("userId");
+    public String getSessionUserId(HttpSession session) {
+        return (String) session.getAttribute("userId");
     }
 }

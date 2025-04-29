@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
 * {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins',sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -12,6 +12,7 @@
     font-size: 1rem;
     background-color: #7a6fbe;
     color: white;
+    text-decoration: none;
     border: none;
     border-radius: 8px;
     cursor: pointer;
