@@ -1,6 +1,5 @@
 package com.projects.eudrwebapp.controller;
 
-import com.projects.eudrwebapp.model.Order;
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
@@ -11,12 +10,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
