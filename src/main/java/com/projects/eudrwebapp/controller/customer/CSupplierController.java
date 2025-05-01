@@ -1,4 +1,4 @@
-package com.projects.eudrwebapp.controller;
+package com.projects.eudrwebapp.controller.customer;
 
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.UserRepository;
@@ -7,12 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/suppliers")
+@RequestMapping("/customer/suppliers")
 public class CSupplierController {
 
     private UserRepository userRepository;

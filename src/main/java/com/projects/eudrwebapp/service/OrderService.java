@@ -40,13 +40,13 @@ public class OrderService {
 
     @Async
     @Transactional
-    public void importOrders(InputStream inputStream, String osapiensID) throws Exception {
+    public void importOrders(InputStream inputStream, String osapiensID, String fetchingFor) throws Exception {
         long startTime = System.currentTimeMillis(); // Start timer
 
         List<Map<String, Object>> ordersData = objectMapper.readValue(inputStream, new TypeReference<List<Map<String, Object>>>() {});
 
         int createdOrders = 0;
-        int skippedDueToWrongCustomer = 0;
+        int skippedDueToWrongUser = 0;
         int skippedDueToDuplicateDelivery = 0;
         int skippedDueToMissingUsers = 0;
         int skippedDueToExistingAssociation = 0;
@@ -57,10 +57,17 @@ public class OrderService {
             String customerOsapiensID = (String) orderData.get("customerOsapiensID");
             String erpReferenceNumber = (String) orderData.get("erpReferenceNumber");
 
-            if (!customerOsapiensID.equals(osapiensID)) {
-                skippedDueToWrongCustomer++;
+            if (!customerOsapiensID.equals(osapiensID) && fetchingFor.equalsIgnoreCase("CUSTOMER")) {
+                skippedDueToWrongUser++;
                 continue;
             }
+
+            if (!supplierOsapiensID.equals(osapiensID) && fetchingFor.equalsIgnoreCase("SUPPLIER")) {
+                skippedDueToWrongUser++;
+                continue;
+            }
+
+
 
             if (orderRepository.findByErpReferenceNumber(erpReferenceNumber).isPresent()) {
                 skippedDueToDuplicateDelivery++;
@@ -112,7 +119,7 @@ public class OrderService {
         System.out.println("Total Orders in Input: " + ordersData.size());
         System.out.println("Created Orders: " + createdOrders);
         System.out.println("Created Associations: " + createdAssociations);
-        System.out.println("Skipped due to wrong customer: " + skippedDueToWrongCustomer);
+        System.out.println("Skipped due to wrong customer: " + skippedDueToWrongUser);
         System.out.println("Skipped due to duplicate delivery (ERP ref): " + skippedDueToDuplicateDelivery);
         System.out.println("Skipped due to missing supplier/customer user: " + skippedDueToMissingUsers);
         System.out.println("Skipped due to existing association: " + skippedDueToExistingAssociation);

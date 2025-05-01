@@ -35,7 +35,10 @@ public class InternalAPIController {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             try {
-                helperService.updateDeliveries("/static/json/orders.json", user.get().getOsapiensID());
+                User currentUser = user.get();
+                String userType = currentUser.getUserType();
+                String osapiensID = currentUser.getOsapiensID();
+                helperService.updateDeliveries("/static/json/orders.json", osapiensID, userType);
 
                 // Return a response with a message key
                 Map<String, String> response = new HashMap<>();

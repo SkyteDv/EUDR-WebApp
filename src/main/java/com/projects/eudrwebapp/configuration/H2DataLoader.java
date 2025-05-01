@@ -20,11 +20,11 @@ public class H2DataLoader {
     public CommandLineRunner dataLoader(UserRepository userRepository, OrderRepository orderRepository) {
         return args -> {
             // Insert default suppliers with osapiensID in the format OS12342
-            userRepository.save(new User("GreenTechSupply", "1", "SUPPLIER", "SUP001"));
-            userRepository.save(new User("AlphaMaterials", "1", "SUPPLIER", "SUP002"));
-            userRepository.save(new User("BlueSkyLogistics", "1", "SUPPLIER", "SUP003"));
-            userRepository.save(new User("SolarisManufacturing", "1", "SUPPLIER", "SUP004"));
-            userRepository.save(new User("TechnoWarehouse", "1", "SUPPLIER", "SUP005"));
+            userRepository.save(new User("S1", "1", "SUPPLIER", "SUP001"));
+            userRepository.save(new User("S2", "1", "SUPPLIER", "SUP002"));
+            userRepository.save(new User("S3", "1", "SUPPLIER", "SUP003"));
+            userRepository.save(new User("S4", "1", "SUPPLIER", "SUP004"));
+            userRepository.save(new User("S5", "1", "SUPPLIER", "SUP005"));
 
 
             userRepository.save(new User("C1", "1", "CUSTOMER", "CUST001"));

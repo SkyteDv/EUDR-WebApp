@@ -12,7 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByCustomerId(Long customerId);
 
-    List<Order> findBySupplierId(Long supplierId);
+    List<Order> findBySupplierId(Long supplier_id);
 
     Optional<Order> findByDdsReferenceNumber(String ddsReferenceNumber);
 

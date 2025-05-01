@@ -71,9 +71,9 @@ public class UserController {
 
                 try {
                     InputStream inputStream = helperService.getInputStream("static/json/orders.json");
-
+                    String userType = dbUser.getUserType();
                     logger.info("Importing orders for Osapiens ID: {}", dbUser.getOsapiensID());
-                    orderService.importOrders(inputStream, dbUser.getOsapiensID());
+                    orderService.importOrders(inputStream, dbUser.getOsapiensID(), userType);
 
                     // Set rememberMe cookie for 2 minutes if checkbox was selected
                     if (rememberMe != null && rememberMe.equalsIgnoreCase("on")) {
@@ -83,7 +83,14 @@ public class UserController {
                         cookie.setHttpOnly(true);
                         response.addCookie(cookie);
                     }
-                    return "redirect:/dashboard";
+
+                    if (userType.equalsIgnoreCase("customer")) {
+                        return "redirect:/customer/dashboard";
+                    } else if(userType.equalsIgnoreCase("supplier")) {
+                        return "redirect:/supplier/dashboard";
+                    } else {
+                        return "redirect:/";
+                    }
                 } catch (Exception e) {
                     logger.error("Error importing orders for user '{}'", dbUser.getUsername(), e);
                     model.addAttribute("loginError", "Error importing orders");

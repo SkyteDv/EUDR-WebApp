@@ -21,9 +21,9 @@ public class HelperService {
         return inputStream;
     }
 
-    public void updateDeliveries(String fileLocation, String osapiensId) throws Exception {
+    public void updateDeliveries(String fileLocation, String osapiensId, String userType) throws Exception {
         InputStream inputStream = getInputStream(fileLocation);
-        orderService.importOrders(inputStream, osapiensId);
+        orderService.importOrders(inputStream, osapiensId, userType);
     }
 
 }

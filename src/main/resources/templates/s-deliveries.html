@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deliveries</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
-    <link rel="stylesheet" href="/css/supplier/s-dashboard.css">
-    <title>Homepage</title>
+    <link rel="stylesheet" href="/css/supplier/s-deliveries.css">
 </head>
-
 <body>
 
 <header class="header">
@@ -18,20 +17,32 @@
     </div>
 
     <nav class="navbar">
-        <a href="/supplier/dashboard" class="nav-link active">Dashboard</a>
+        <a href="/supplier/dashboard" class="nav-link">Dashboard</a>
         <a href="#" class="nav-link">Customers</a>
-        <a href="/supplier/deliveries" class="nav-link">Deliveries</a>
+        <a href="/supplier/deliveries" class="nav-link active">Deliveries</a>
         <a href="#" class="nav-link">Account</a>
         <a href="#" class="nav-link">Settings</a>
     </nav>
 </header>
 
-<p>Homepage for the Supplier</p>
+<main class="main-content">
+    <h1>Test1</h1>
+    <div class="table-div-container">
+        <div class="left-div">
+            <h1>Test2</h1>
+        </div>
+
+        <div class="right-div">
+            <h1>Test3</h1>
+        </div>
+    </div>
 
 
-<form th:action="@{/user/logout}" method="post">
-    <button type="submit">Logout</button>
-</form>
+
+</main>
+
+
+
 
 </body>
 </html>
