@@ -7,6 +7,10 @@
     box-sizing: border-box;
 }
 
+body {
+    background: radial-gradient(circle, rgb(173, 236, 251), rgb(208, 234, 255), #dcedfa);
+}
+
 .clean-button {
     padding: 0.5rem 1rem;
     font-size: 1rem;

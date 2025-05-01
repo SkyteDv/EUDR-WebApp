@@ -1,39 +1,170 @@
-.main-content {
-    background-color: #ddfbe5;
+.page-content {
     margin-top: 6vh;
     padding: 2rem;
-    height: calc(100vh - 6vh); /* viewable area below header */
+    height: calc(100vh - 6vh);
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
 }
 
+/* Header Section: Title + Search Bar */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-.table-div-container {
+.section-header h1 {
+    font-size: 2rem;
+    color: #333; /* Dark gray text for the title */
+}
+
+.section-controls {
+    display: flex;
+    gap: 1rem;
+    background-color: transparent;
+}
+
+.section-controls .search-input {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* Table Area Container */
+.delivery-panels {
     margin-top: 2rem;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #cdb3b3;
     width: 100%;
     flex: 1;
     flex-wrap: wrap;
+    min-height: 0;
+    overflow: unset;
     gap: 2rem;
+    box-sizing: border-box;
 }
 
-.left-div, .right-div {
-
-    height: 100%;
+/* Individual Panels */
+.left-panel {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1 1 45%;
-    background-color: #98cbd8;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex: 7;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Individual Panels */
+.right-panel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex: 3;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Panel Header */
+.panel-header {
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.panel-header h2 {
+    font-size: 1.5rem;
+    color: #333; /* Dark gray for headings */
+    padding-left: 0.2rem;
+    text-align: start;
+    font-weight: 500; /* Slightly lighter than default bold */
+}
+
+/* Search input styling in panel header */
+.panel-header .search-input {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    width: 85%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.table-wrapper {
+    width: 100%;
+    flex: 1;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+
+/* Style the table */
+.delivery-table {
+    overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.delivery-table tbody {
+    overflow-y: scroll;
+}
+
+/* Table headers with higher contrast */
+.delivery-table th {
+    background-color: #e0e0e0; /* Darker light gray background for header */
+    color: #333; /* Dark text color */
+    padding: 0.8rem;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 1px solid #ddd; /* Border under header */
+}
+
+/* Style for the table rows */
+.delivery-table td {
+    padding: 1rem;
+    text-align: left;
+}
+
+/* Optional: Zebra striping for rows */
+.delivery-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover effect for table rows */
+.delivery-table tr:hover {
+    background-color: rgb(233, 231, 255); /* Light gray background when hovering */
+    cursor: pointer; /* Change cursor to a pointer to indicate interactivity */
+}
+
+/* Optional: Highlight the row even more when clicked */
+.delivery-table tr:active {
+    background-color: #e0e0e0; /* Darker gray background when clicking */
+}
+
+
+/*Media Queries for Responsive Layouts*/
+
+/*Tablet Query*/
 @media (max-width: 768px) {
-    .left-div,
-    .right-div {
-        flex: 1 1 100%; /* stack vertically */
+    .delivery-panels {
+        height: auto; /* Allow vertical stacking */
+        overflow: visible;
     }
 }

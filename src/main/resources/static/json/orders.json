@@ -298,5 +298,188 @@
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST005"
+  },
+
+
+  {
+    "erpReferenceNumber": "ERP10026",
+    "productCategory": "Cocoa",
+    "productName": "Cocoa Butter",
+    "dimensions": "60x30x20 cm",
+    "destination": "Rotterdam",
+    "orderDate": "2025-04-26",
+    "estimatedDeliveryDate": "2025-05-07",
+    "ddsReferenceNumber": "DDS9026",
+    "supplierOsapiensID": "SUP001",
+    "customerOsapiensID": "CUST002"
+  },
+  {
+    "erpReferenceNumber": "ERP10027",
+    "productCategory": "Soy",
+    "productName": "Soy Lecithin",
+    "dimensions": "120x100x10 cm",
+    "destination": "Hamburg",
+    "orderDate": "2025-04-27",
+    "estimatedDeliveryDate": "2025-05-08",
+    "ddsReferenceNumber": "DDS9027",
+    "supplierOsapiensID": "SUP003",
+    "customerOsapiensID": "CUST003"
+  },
+  {
+    "erpReferenceNumber": "ERP10028",
+    "productCategory": "Coffee",
+    "productName": "Decaffeinated Coffee Beans",
+    "dimensions": "70x40x30 cm",
+    "destination": "Antwerp",
+    "orderDate": "2025-04-28",
+    "estimatedDeliveryDate": "2025-05-09",
+    "ddsReferenceNumber": "DDS9028",
+    "supplierOsapiensID": "SUP004",
+    "customerOsapiensID": "CUST004"
+  },
+  {
+    "erpReferenceNumber": "ERP10029",
+    "productCategory": "Wood",
+    "productName": "Balsa Wood",
+    "dimensions": "300x200x10 cm",
+    "destination": "Genoa",
+    "orderDate": "2025-04-29",
+    "estimatedDeliveryDate": "2025-05-10",
+    "ddsReferenceNumber": "DDS9029",
+    "supplierOsapiensID": "SUP002",
+    "customerOsapiensID": "CUST001"
+  },
+  {
+    "erpReferenceNumber": "ERP10030",
+    "productCategory": "Rubber",
+    "productName": "Rubber Tyres",
+    "dimensions": "150x100x50 cm",
+    "destination": "Marseille",
+    "orderDate": "2025-04-30",
+    "estimatedDeliveryDate": "2025-05-11",
+    "ddsReferenceNumber": "DDS9030",
+    "supplierOsapiensID": "SUP005",
+    "customerOsapiensID": "CUST002"
+  },
+  {
+    "erpReferenceNumber": "ERP10031",
+    "productCategory": "Palm Oil",
+    "productName": "Palm Fatty Acid Distillate",
+    "dimensions": "100x90x100 cm",
+    "destination": "Bremen",
+    "orderDate": "2025-05-01",
+    "estimatedDeliveryDate": "2025-05-12",
+    "ddsReferenceNumber": "DDS9031",
+    "supplierOsapiensID": "SUP001",
+    "customerOsapiensID": "CUST003"
+  },
+  {
+    "erpReferenceNumber": "ERP10032",
+    "productCategory": "Cattle",
+    "productName": "Frozen Pork Cuts",
+    "dimensions": "90x50x50 cm",
+    "destination": "Valencia",
+    "orderDate": "2025-05-02",
+    "estimatedDeliveryDate": "2025-05-13",
+    "ddsReferenceNumber": "DDS9032",
+    "supplierOsapiensID": "SUP003",
+    "customerOsapiensID": "CUST004"
+  },
+  {
+    "erpReferenceNumber": "ERP10033",
+    "productCategory": "Cocoa",
+    "productName": "Cocoa Powder",
+    "dimensions": "55x30x30 cm",
+    "destination": "Rotterdam",
+    "orderDate": "2025-05-03",
+    "estimatedDeliveryDate": "2025-05-14",
+    "ddsReferenceNumber": "DDS9033",
+    "supplierOsapiensID": "SUP004",
+    "customerOsapiensID": "CUST005"
+  },
+  {
+    "erpReferenceNumber": "ERP10034",
+    "productCategory": "Coffee",
+    "productName": "Espresso Coffee Beans",
+    "dimensions": "65x35x35 cm",
+    "destination": "Antwerp",
+    "orderDate": "2025-05-04",
+    "estimatedDeliveryDate": "2025-05-15",
+    "ddsReferenceNumber": "DDS9034",
+    "supplierOsapiensID": "SUP002",
+    "customerOsapiensID": "CUST001"
+  },
+  {
+    "erpReferenceNumber": "ERP10035",
+    "productCategory": "Wood",
+    "productName": "MDF Boards",
+    "dimensions": "250x125x5 cm",
+    "destination": "Hamburg",
+    "orderDate": "2025-05-05",
+    "estimatedDeliveryDate": "2025-05-16",
+    "ddsReferenceNumber": "DDS9035",
+    "supplierOsapiensID": "SUP001",
+    "customerOsapiensID": "CUST002"
+  },
+  {
+    "erpReferenceNumber": "ERP10036",
+    "productCategory": "Rubber",
+    "productName": "Butyl Rubber",
+    "dimensions": "130x80x30 cm",
+    "destination": "Genoa",
+    "orderDate": "2025-05-06",
+    "estimatedDeliveryDate": "2025-05-17",
+    "ddsReferenceNumber": "DDS9036",
+    "supplierOsapiensID": "SUP001",
+    "customerOsapiensID": "CUST003"
+  },
+  {
+    "erpReferenceNumber": "ERP10037",
+    "productCategory": "Palm Oil",
+    "productName": "Palm Kernel Expeller",
+    "dimensions": "110x70x70 cm",
+    "destination": "Marseille",
+    "orderDate": "2025-05-07",
+    "estimatedDeliveryDate": "2025-05-18",
+    "ddsReferenceNumber": "DDS9037",
+    "supplierOsapiensID": "SUP001",
+    "customerOsapiensID": "CUST004"
+  },
+  {
+    "erpReferenceNumber": "ERP10038",
+    "productCategory": "Cattle",
+    "productName": "Fresh Lamb Cuts",
+    "dimensions": "85x60x40 cm",
+    "destination": "Valencia",
+    "orderDate": "2025-05-08",
+    "estimatedDeliveryDate": "2025-05-19",
+    "ddsReferenceNumber": "DDS9038",
+    "supplierOsapiensID": "SUP003",
+    "customerOsapiensID": "CUST005"
+  },
+  {
+    "erpReferenceNumber": "ERP10039",
+    "productCategory": "Cocoa",
+    "productName": "Cocoa Paste",
+    "dimensions": "75x50x50 cm",
+    "destination": "Bremen",
+    "orderDate": "2025-05-09",
+    "estimatedDeliveryDate": "2025-05-20",
+    "ddsReferenceNumber": "DDS9039",
+    "supplierOsapiensID": "SUP001",
+    "customerOsapiensID": "CUST002"
+  },
+  {
+    "erpReferenceNumber": "ERP10040",
+    "productCategory": "Soy",
+    "productName": "Soy Oil",
+    "dimensions": "100x100x100 cm",
+    "destination": "Antwerp",
+    "orderDate": "2025-05-10",
+    "estimatedDeliveryDate": "2025-05-21",
+    "ddsReferenceNumber": "DDS9040",
+    "supplierOsapiensID": "SUP001",
+    "customerOsapiensID": "CUST003"
   }
 ]
+

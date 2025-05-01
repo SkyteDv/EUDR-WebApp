@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Order Details Overview</title>
+</head>
+<body>
+
+<div class="order-overview">
+    <h1>Order Overview – Shipment Ref: ERP-887721</h1>
+
+    <!-- Shipment Overview Section -->
+    <div class="shipment-info">
+        <h3>Shipment Details</h3>
+        <p><strong>Shipment Ref:</strong> ERP-887721</p>
+        <p><strong>DDS Ref:</strong> A23-ZXY</p>
+        <p><strong>DDS on Delivery:</strong> <span id="ddsStatus">No</span></p>
+    </div>
+
+    <!-- Order Information Section -->
+    <div class="order-info">
+        <h3>Order Information</h3>
+        <p><strong>Order Date:</strong> 2025-05-01</p>
+        <p><strong>Expected Delivery Date:</strong> 2025-05-05</p>
+    </div>
+
+    <!-- Customer Information Section -->
+    <div class="customer-info">
+        <h3>Customer Information</h3>
+        <p><strong>Customer Name:</strong> Schwarz IT</p>
+        <p><strong>Order Amount:</strong> 500 kg</p>
+        <p><strong>Order Dimensions:</strong> 2m x 1.5m x 0.8m</p>
+    </div>
+
+    <!-- Product Information Section -->
+    <div class="product-info">
+        <h3>Product Information</h3>
+        <p><strong>Product Group:</strong> Electronics</p>
+        <p><strong>Product Name:</strong> Smart Devices</p>
+    </div>
+
+    <!-- DDS Ref QR Code Section -->
+    <div class="qr-section">
+        <h3>DDS Ref QR Code</h3>
+        <p><strong>Generate QR Code for DDS Ref:</strong> A23-ZXY</p>
+        <button onclick="window.location.href='/api/generate-qr/A23-ZXY'">Generate DDS QR Code for Delivery</button>
+    </div>
+
+    <!-- Verify DDS Attachment Button -->
+    <button id="startScanButton">Verify DDS Attachment</button>
+
+    <!-- Video element to show webcam feed for QR Code scanning -->
+    <video id="webcamVideo" width="100%" height="auto" autoplay></video>
+
+    <!-- QR Code Scanner Output -->
+    <div id="qrOutput"></div>
+
+</div>
+
+<!-- JSQR library for QR code scanning -->
+<script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+
+<!-- External JS file for the QR scanner logic -->
+<script src="/javascript/supplier/qrScanner.js"></script> <!-- Ensure correct path -->
+</body>
+</html>

@@ -1,26 +1,106 @@
-<div th:if="${registerError}" style="color: red; font-weight: bold;">
-    <p th:text="${registerError}"></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>QR Code Scanner</title>
+</head>
+<body>
+
+<div class="order-overview">
+    <h1>Order Overview – Shipment Ref: ERP-887721</h1>
+
+    <h3>DDS Ref</h3>
+    <p id="ddsRef" style="background-color: green; color: white; padding: 5px;">A23-ZXY</p>
+
+    <!-- Button to start scanning process -->
+    <button id="startScanButton">Verify DDS Attachment</button>
+
+    <!-- Video element to show webcam feed -->
+    <video id="webcamVideo" width="100%" height="auto" autoplay></video>
+
+    <!-- QR Code Scanner Output -->
+    <div id="qrOutput"></div>
 </div>
-<!-- Form that posts to /register -->
-<form th:action="@{/user/register}" th:object="${user}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" th:field="*{username}" id="username" required />
 
-    <label for="password">Password:</label>
-    <input type="password" th:field="*{password}" id="password" required/>
+<script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
 
-    <label for="osapiensID">Osapiens ID:</label>
-    <input type="text" th:field="*{osapiensID}" id="osapiensID" required>
+<script>
+    // Get references to HTML elements
+    const videoElement = document.getElementById('webcamVideo');
+    const startScanButton = document.getElementById('startScanButton');
+    const qrOutput = document.getElementById('qrOutput');
 
-    <label for="userType">Role:</label>
-    <select th:field="*{userType}" id="userType" required>
-        <option value="CUSTOMER">Customer</option>
-        <option value="SUPPLIER">Supplier</option>
-    </select>
+    let videoStream = null;
 
-    <button type="submit">Register</button>
-</form>
+    // Start camera
+    function startCamera() {
+        // Request camera access
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                // Assign video stream to the video element
+                videoStream = stream;
+                videoElement.srcObject = stream;
+                videoElement.play();
 
-<a href="/">Cancel</a>
-<p>Already have an Account?</p>
-<a href="/user/login">Login</a>
+                // Wait for the video to load and get the video dimensions
+                videoElement.onloadedmetadata = () => {
+                    // Now the video element has metadata (width/height)
+                    scanQRCode();
+                };
+            })
+            .catch(function(err) {
+                console.error("Camera access denied:", err);
+                qrOutput.innerHTML = "Unable to access camera.";
+            });
+    }
+
+    // QR Code scanning logic
+    function scanQRCode() {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const videoWidth = videoElement.videoWidth;
+        const videoHeight = videoElement.videoHeight;
+
+        // Continuously scan the video feed
+        function detectQRCode() {
+            canvas.width = videoWidth;
+            canvas.height = videoHeight;
+            context.drawImage(videoElement, 0, 0, videoWidth, videoHeight);
+
+            // Try to decode QR code from the image captured from the video feed
+            const imageData = context.getImageData(0, 0, videoWidth, videoHeight);
+            const qrCode = jsQR(imageData.data, videoWidth, videoHeight);
+
+            if (qrCode) {
+                // Stop video stream when QR code is detected
+                stopCamera();
+                // Show QR code data
+                qrOutput.innerHTML = `QR Code detected: ${qrCode.data}`;
+                // Log the QR code data in the console
+                console.log("QR Code Data:", qrCode.data);
+                // Optionally disable the button to prevent further scanning
+                startScanButton.disabled = true;
+            } else {
+                // Keep scanning until QR code is detected
+                requestAnimationFrame(detectQRCode);
+            }
+        }
+
+        detectQRCode();
+    }
+
+    // Stop the camera feed
+    function stopCamera() {
+        if (videoStream) {
+            const tracks = videoStream.getTracks();
+            tracks.forEach(track => track.stop()); // Stop all video tracks
+        }
+    }
+
+    // Trigger camera start when button is clicked
+    startScanButton.addEventListener('click', startCamera);
+</script>
+
+</body>
+</html>

@@ -49,7 +49,7 @@ public class OrderService {
         int skippedDueToWrongUser = 0;
         int skippedDueToDuplicateDelivery = 0;
         int skippedDueToMissingUsers = 0;
-        int skippedDueToExistingAssociation = 0;
+        int skippedAssociationCreation = 0;
         int createdAssociations = 0;
 
         for (Map<String, Object> orderData : ordersData) {
@@ -90,8 +90,7 @@ public class OrderService {
                 userRepository.save(customerUser);
                 createdAssociations++;
             } else {
-                skippedDueToExistingAssociation++;
-                continue;
+                skippedAssociationCreation++;
             }
 
             Order order = new Order(
@@ -119,10 +118,10 @@ public class OrderService {
         System.out.println("Total Orders in Input: " + ordersData.size());
         System.out.println("Created Orders: " + createdOrders);
         System.out.println("Created Associations: " + createdAssociations);
-        System.out.println("Skipped due to wrong customer: " + skippedDueToWrongUser);
+        System.out.println("Skipped due to wrong User: " + skippedDueToWrongUser);
         System.out.println("Skipped due to duplicate delivery (ERP ref): " + skippedDueToDuplicateDelivery);
         System.out.println("Skipped due to missing supplier/customer user: " + skippedDueToMissingUsers);
-        System.out.println("Skipped due to existing association: " + skippedDueToExistingAssociation);
+        System.out.println("Skipped association creation: " + skippedAssociationCreation);
         System.out.println("Total Time: " + duration + " ms");
         System.out.println("===============================");
     }

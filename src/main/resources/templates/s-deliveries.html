@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/supplier/s-deliveries.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -25,24 +26,56 @@
     </nav>
 </header>
 
-<main class="main-content">
-    <h1>Test1</h1>
-    <div class="table-div-container">
-        <div class="left-div">
-            <h1>Test2</h1>
-        </div>
-
-        <div class="right-div">
-            <h1>Test3</h1>
+<main class="page-content">
+    <div class="section-header">
+        <h1>Deliveries</h1>
+        <div class="section-controls">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search Deliveries...">
+            <button id="refreshDeliveriesButton" class="clean-button">
+                <i class="fas fa-rotate-right"></i>
+            </button>
         </div>
     </div>
 
+    <div class="delivery-panels">
+        <!-- Left Panel -->
+        <section class="left-panel">
+            <div class="panel-header">
+                <h2>Active Deliveries</h2>
+                <input type="text" id="searchInputLeft" class="search-input" placeholder="Search Active Deliveries...">
+            </div>
 
+            <div class="table-wrapper">
+                <table class="delivery-table">
+                    <thead>
+                    <tr>
+                        <th>Shipment Ref</th>
+                        <th>DDS Ref</th>
+                        <th>Customer</th>
+                        <th>Order Date</th>
+                        <th>Product Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Dynamically Loaded Rows -->
+                    <tr th:each="order : ${deliveries}" class="clickable-row" th:onclick="|window.location='/supplier/deliveries/details' |">
+                        <td th:text="${order.erpReferenceNumber}"></td>
+                        <td th:text="${order.ddsReferenceNumber}"></td>
+                        <td th:text="${order.customer.username}"></td>
+                        <td th:text="${order.orderDate}"></td>
+                        <td th:text="${order.productName}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
+        <!-- Right Panel -->
+        <section class="right-panel ">
+            <h2>Test</h2>
+        </section>
+    </div>
 </main>
-
-
-
 
 </body>
 </html>
