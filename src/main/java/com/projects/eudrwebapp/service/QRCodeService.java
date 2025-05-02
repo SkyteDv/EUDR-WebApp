@@ -21,10 +21,20 @@ public class QRCodeService {
     public byte[] generateQRCodeImage(String data, int width, int height) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.MARGIN, 1);  // Default margin is 4, change it if necessary
-
+        hints.put(EncodeHintType.MARGIN, 1);
+        if (data == null || data.isEmpty()) {
+            throw new IllegalArgumentException("Data for QR code is empty");
+        }
         BitMatrix bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, width, height, hints);
+        BufferedImage bufferedImage = getBufferedImage(width, height, bitMatrix);
 
+        // Convert the BufferedImage to byte array
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "PNG", byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    private static BufferedImage getBufferedImage(int width, int height, BitMatrix bitMatrix) {
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         bufferedImage.createGraphics();
         Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
@@ -40,10 +50,6 @@ public class QRCodeService {
                 }
             }
         }
-
-        // Convert the BufferedImage to byte array
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "PNG", byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
+        return bufferedImage;
     }
 }

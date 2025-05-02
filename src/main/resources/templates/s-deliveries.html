@@ -58,8 +58,9 @@
                     </thead>
                     <tbody>
                     <!-- Dynamically Loaded Rows -->
-                    <tr th:each="order : ${deliveries}" class="clickable-row" th:onclick="|window.location='/supplier/deliveries/details' |">
-                        <td th:text="${order.erpReferenceNumber}"></td>
+                    <tr th:each="order : ${activeDeliveries}" class="clickable-row"
+                        th:onclick="|window.location='/supplier/deliveries/details/${order.id}'|">
+                    <td th:text="${order.erpReferenceNumber}"></td>
                         <td th:text="${order.ddsReferenceNumber}"></td>
                         <td th:text="${order.customer.username}"></td>
                         <td th:text="${order.orderDate}"></td>
@@ -76,6 +77,8 @@
         </section>
     </div>
 </main>
+
+<script src="/javascript/refreshDeliveries.js"></script>
 
 </body>
 </html>

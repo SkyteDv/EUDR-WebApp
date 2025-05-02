@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("supplier/deliveries")
@@ -30,7 +31,15 @@ public class SDeliveriesController {
         }
         Long userId = (Long) session.getAttribute("userId");
         List<Order> deliveries = orderRepository.findBySupplierId(userId);
-        model.addAttribute("deliveries", deliveries);
+
+        List<Order> deliveries_Attached = deliveries.stream().filter(Order::isDdsOnDeliveryNote).toList();
+        List<Order> deliveries_NotAttached = deliveries.stream().filter(order -> !order.isDdsOnDeliveryNote()).toList();
+
+        System.out.println("Attached: " + deliveries_Attached.size());
+        System.out.println("NOT Attached: " +deliveries_NotAttached.size());
+
+        model.addAttribute("activeDeliveries", deliveries_NotAttached);
+        model.addAttribute("attachedDeliveries", deliveries_Attached);
         return "s-deliveries";
     }
 

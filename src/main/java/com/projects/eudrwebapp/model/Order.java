@@ -171,4 +171,22 @@ public class Order {
         this.customer = customer;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", erpReferenceNumber='" + erpReferenceNumber + '\'' +
+                ", productCategory='" + productCategory + '\'' +
+                ", productName='" + productName + '\'' +
+                ", dimensions='" + dimensions + '\'' +
+                ", destination='" + destination + '\'' +
+                ", orderDate=" + orderDate +
+                ", estimatedDeliveryDate=" + estimatedDeliveryDate +
+                ", ddsReferenceNumber='" + ddsReferenceNumber + '\'' +
+                ", ddsOnDeliveryNote=" + ddsOnDeliveryNote +
+                ", status=" + status +
+                ", supplier=" + supplier +
+                ", customer=" + customer +
+                '}';
+    }
 }

@@ -1,7 +1,9 @@
 package com.projects.eudrwebapp.controller;
 
 import com.google.zxing.WriterException;
+import com.projects.eudrwebapp.model.Order;
 import com.projects.eudrwebapp.model.User;
+import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import com.projects.eudrwebapp.service.HelperService;
 import com.projects.eudrwebapp.service.OrderService;
@@ -22,13 +24,15 @@ import java.util.Optional;
 public class InternalAPIController {
 
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
     private final HelperService helperService;
     private final QRCodeService qrCodeService;
 
-    public InternalAPIController(OrderService orderService, UserRepository userRepository, HelperService helperService, QRCodeService qrCodeService) {
+    public InternalAPIController(OrderService orderService, UserRepository userRepository, HelperService helperService, QRCodeService qrCodeService, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.helperService = helperService;
         this.qrCodeService = qrCodeService;
+        this.orderRepository = orderRepository;
     }
 
     @PostMapping("/refresh-deliveries")
@@ -59,11 +63,18 @@ public class InternalAPIController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    @GetMapping("/generate-qr/{ddsRef}")
-    public ResponseEntity<byte[]> generateQRCode(@PathVariable String ddsRef) {
+    @GetMapping("/generate-qr/{id}")
+    public ResponseEntity<byte[]> generateQRCode(@PathVariable Long id) {
         try {
             // Generate the QR code using the QRCodeService
-            byte[] qrCodeImage = qrCodeService.generateQRCodeImage(ddsRef, 200, 200); // You can adjust the width and height
+            Optional<Order> order = orderRepository.findById(id);
+            if (order.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            Order currentOrder = order.get();
+            String ddsRef = currentOrder.getDdsReferenceNumber();
+            byte[] qrCodeImage = qrCodeService.generateQRCodeImage(ddsRef, 200, 200);
 
             // Prepare headers to trigger download in the browser
             HttpHeaders headers = new HttpHeaders();
@@ -79,5 +90,18 @@ public class InternalAPIController {
                     .body(("Error generating QR code: " + e.getMessage()).getBytes());
         }
     }
+
+    @PostMapping("/deliveries/attached/{ddsReferenceNumber}")
+    public ResponseEntity<Void> deliveriesAttached(@PathVariable String ddsReferenceNumber) {
+        Optional<Order> optOrder = orderRepository.findByDdsReferenceNumber(ddsReferenceNumber);
+        if (optOrder.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Order currentOrder = optOrder.get();
+        boolean updated = orderRepository.markDDSAsAttached(currentOrder.getDdsReferenceNumber()) == 1;
+        System.out.println("Updated: " + updated);
+        return updated ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
 
 }

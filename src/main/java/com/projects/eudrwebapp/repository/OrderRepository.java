@@ -2,7 +2,10 @@ package com.projects.eudrwebapp.repository;
 
 import com.projects.eudrwebapp.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,5 +20,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findByDdsReferenceNumber(String ddsReferenceNumber);
 
     Optional<Order> findByErpReferenceNumber(String erpReferenceNumber);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Order o SET o.ddsOnDeliveryNote = true WHERE o.ddsReferenceNumber = :ddsReferenceNumber")
+    int markDDSAsAttached(String ddsReferenceNumber);
 
 }
