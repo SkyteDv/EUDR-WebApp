@@ -19,6 +19,12 @@
     align-items: center;
 }
 
+.logo-container a {
+    display: inline-flex; /* ensures the <a> tag does not cause misalignment */
+    align-items: center; /* ensures the image is aligned properly */
+    height: 100%; /* ensures the <a> takes full height of the header */
+}
+
 .logo {
     height: 70%; /* makes it small and responsive */
     max-height: 35px; /* never gets too big */
@@ -78,4 +84,3 @@
     cursor: pointer;
     color: #333;
 }
-

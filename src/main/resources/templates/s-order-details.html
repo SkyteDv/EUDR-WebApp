@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/non-specific/global.css">
+    <link rel="stylesheet" href="/css/non-specific/header.css">
     <title>Order Details Overview</title>
 </head>
 <body>
+
+<header class="header">
+    <div class="logo-container">
+        <a href="/"><img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+    </div>
+
+    <nav class="navbar">
+        <a href="/supplier/dashboard" class="nav-link">Dashboard</a>
+        <a href="#" class="nav-link">Customers</a>
+        <a href="/supplier/deliveries" class="nav-link active">Deliveries</a>
+        <a href="#" class="nav-link">Account</a>
+        <a href="#" class="nav-link">Settings</a>
+    </nav>
+</header>
 
 <div class="order-overview">
     <h1 th:text="'Order Overview – Shipment Ref: ' + ${order.erpReferenceNumber}">Order Overview – Shipment Ref: ERP-887721</h1>

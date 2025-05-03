@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/supplier/s-deliveries.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
 
 <header class="header">
     <div class="logo-container">
-        <img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo">
+        <a href="/"><img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
     </div>
 
     <nav class="navbar">
@@ -30,7 +32,9 @@
     <div class="section-header">
         <h1>Deliveries</h1>
         <div class="section-controls">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search Deliveries...">
+            <label>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search Deliveries...">
+            </label>
             <button id="refreshDeliveriesButton" class="clean-button">
                 <i class="fas fa-rotate-right"></i>
             </button>
@@ -42,10 +46,13 @@
         <section class="left-panel">
             <div class="panel-header">
                 <h2>Active Deliveries</h2>
-                <input type="text" id="searchInputLeft" class="search-input" placeholder="Search Active Deliveries...">
+                <div class="search-filter-wrapper">
+                    <label for="searchInputLeft"></label><input type="text" id="searchInputLeft" class="search-input" placeholder="Search Active Deliveries...">
+                    <button id="filterActiveDeliv" class="clean-button">F</button>
+                </div>
             </div>
 
-            <div class="table-wrapper">
+            <div class="wrapper">
                 <table class="delivery-table">
                     <thead>
                     <tr>
@@ -73,7 +80,37 @@
 
         <!-- Right Panel -->
         <section class="right-panel ">
-            <h2>Test</h2>
+            <div class="panel-header">
+                <h2>Active Deliveries</h2>
+                <div class="search-filter-wrapper">
+                    <label for="searchInputLeft"></label><input type="text" id="searchInputRight" class="search-input" placeholder="Search Active Deliveries...">
+                    <button id="filterAttachedDeliv" class="clean-button">F</button>
+                </div>
+            </div>
+
+            <div class="wrapper">
+                <div class="attached-cards-container">
+                    <div class="attached-card" th:each="order : ${attachedDeliveries}">
+                        <div class="right-card-internal-header">
+                            <h3 th:text="'Shipment Ref: ' + ${order.erpReferenceNumber}"></h3>
+                            <button class="details-button" th:onclick="|window.location='/supplier/deliveries/details/${order.id}'|" title="Details">
+                                <span class="material-icons">library_books</span>
+                            </button>
+
+
+
+
+
+
+                        </div>
+                        <p><strong>DDS Ref:</strong> <span th:text="${order.ddsReferenceNumber}"></span></p>
+                        <p><strong>Customer:</strong> <span th:text="${order.customer.username}"></span></p>
+                        <p><strong>Order Date:</strong> <span th:text="${order.orderDate}"></span></p>
+                        <p><strong>Product:</strong> <span th:text="${order.productName}"></span></p>
+
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </main>

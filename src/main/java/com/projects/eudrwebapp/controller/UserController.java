@@ -42,16 +42,26 @@ public class UserController {
     @GetMapping("login")
     public String login(HttpSession session, Model model, @CookieValue(value = "rememberMe", required = false) String rememberedUserId) {
         if (rememberedUserId != null) {
-            Optional<User> user = userRepository.findById(rememberedUserId);
-            if (user.isPresent()) {
-                session.setAttribute("userId", rememberedUserId);
-                System.out.println("Remembered User Id: "+ rememberedUserId);
-                return "redirect:/dashboard";
+            Optional<User> possibleUser = userRepository.findById(rememberedUserId);
+            if (possibleUser.isPresent()) {
+                User user = possibleUser.get();
+                String userType = user.getUserType();
+                Long userId = user.getId();
+                session.setAttribute("userId", userId);
+                System.out.println("Remembered User Id: " + userId);
+                if (userType.equals("CUSTOMER")) {
+                    return "redirect:/customer/dashboard";
+                } else if (userType.equalsIgnoreCase("SUPPLIER")) {
+                    return "redirect:/supplier/dashboard";
+                } else {
+                    return "login";
+                }
             }
         }
         model.addAttribute("user", new User());
         return "login";
     }
+
 
     @PostMapping("/login")
     public String login(
