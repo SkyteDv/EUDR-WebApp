@@ -16,6 +16,7 @@
 .logo-container {
     height: 100%;
     display: flex;
+    gap: 0.5rem;
     align-items: center;
 }
 
@@ -33,11 +34,11 @@
 
 .navbar {
     display: flex;
-    justify-content: flex-start; /* war: center */
+    justify-content: center;
     align-items: center;
     gap: 2rem;
     height: 100%;
-    flex-grow: 1; /* war: flex: 1;  <- das kann Probleme machen */
+    flex: 1;
 }
 
 .navbar a {

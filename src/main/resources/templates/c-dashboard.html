@@ -5,7 +5,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
-    <link rel="stylesheet" href="/css/c-dashboard.css">
+    <link rel="stylesheet" href="/css/customer/c-dashboard.css">
     <link rel="stylesheet" href="/css/c-account-menu.css">
 </head>
 <body>
@@ -13,14 +13,13 @@
 <header class="header">
     <div class="logo-container">
         <a href="/"><img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+        <h4>CUSTOMER</h4>
     </div>
 
     <nav class="navbar">
         <a href="/customer/dashboard" class="nav-link active">Dashboard</a>
         <a href="/customer/suppliers" class="nav-link">Suppliers</a>
         <a href="/customer/deliveries" class="nav-link">Deliveries</a>
-        <a href="#" class="nav-link">Account</a>
-        <a href="#" class="nav-link">Settings</a>
     </nav>
 
     <div class="account-wrapper">
@@ -39,10 +38,6 @@
 
 <div id="content-div">
     <p>Homepage for the Customer</p>
-
-    <form th:action="@{/user/logout}" method="post">
-        <button type="submit">Logout</button>
-    </form>
 </div>
 
 
