@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
-    <title>Order Details Overview</title>
+    <title>Order Details (No DDS)</title>
 </head>
 <body>
 
@@ -56,41 +56,9 @@
         <p><strong>Product Name:</strong> <span th:text="${order.productName}">Smart Devices</span></p>
     </div>
 
-    <!-- DDS Ref QR Code Section -->
-    <div class="qr-section">
-        <h3>DDS Ref QR-Code</h3>
-        <p>
-            <strong>Generate QR Code for DDS Ref:</strong>
-            <span th:text="${order.ddsReferenceNumber}">A23-ZXY</span>
-        </p>
-        <button
-                th:onclick="'window.location.href=\'/api/generate-qr/' + ${order.id} + '\''">
-            Generate DDS QR Code for Delivery
-        </button>
-        <button id="completeAttachmentButton" disabled>
-            Complete Attachment Process
-        </button>
-        <p id="attachmentError" style="color: red;"></p>
-    </div>
 
-    <!-- Verify DDS Attachment Button -->
-    <button id="startScanButton">Verify DDS Attachment</button>
-
-    <!-- Video element to show webcam feed for QR Code scanning -->
-    <video id="webcamVideo" width="100%" height="auto" autoplay></video>
-
-    <!-- QR Code Scanner Output -->
-    <div id="qrOutput"></div>
 
 </div>
-
-<input type="hidden" id="currentOrderDdsReference" th:value="${order.ddsReferenceNumber}" />
-
-<!-- JSQR library for QR code scanning -->
-<script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
-
-<!-- External JS file for the QR scanner logic -->
-<script src="/javascript/supplier/qrScanner.js"></script>
 
 </body>
 </html>

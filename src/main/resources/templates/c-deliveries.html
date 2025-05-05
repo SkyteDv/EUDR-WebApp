@@ -35,7 +35,7 @@
         <h1>Deliveries</h1>
         <div class="search-filter">
             <label>
-                <input type="text" class="search-input" placeholder="Search Deliveries..." id="searchInput">
+                <input type="text" data-table-id="ordersTable" class="search-input" placeholder="Search Deliveries..." id="searchInput">
             </label>
             <button id="refreshDeliveriesButton" class="clean-button">
                 <i class="fas fa-rotate-right"></i>
@@ -95,9 +95,12 @@
     </div>
 </div>
 
-<script src="/javascript/customer/c-deliveries/c-searchTable.js"></script>
 <script src="/javascript/customer/c-deliveries/c-sortTableHeaders.js"></script>
-<script src="/javascript/refreshDeliveries.js"></script>
+<script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js"></script>
+
+<!--Search Algo Integration-->
+<script src="/javascript/customer/c-deliveries/c-initializeDeliveryTableSearch.js"></script>
+<script src="/javascript/non-specific/customTableSearch.js"></script>
 
 </body>
 </html>

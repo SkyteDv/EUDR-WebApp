@@ -2,6 +2,7 @@ package com.projects.eudrwebapp.controller;
 
 import com.google.zxing.WriterException;
 import com.projects.eudrwebapp.model.Order;
+import com.projects.eudrwebapp.model.OrderStatus;
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
@@ -102,6 +103,48 @@ public class InternalAPIController {
         System.out.println("Updated: " + updated);
         return updated ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
+
+    @PostMapping("/deliveries/update/status")
+    public ResponseEntity<Map<String, String>> updateOrderStatus(@RequestBody Map<String, String> payload) {
+        System.out.println("Received request to update order status with payload: " + payload);
+
+        try {
+            Long orderId = Long.parseLong(payload.get("orderId"));
+            String newStatus = payload.get("status");
+
+            System.out.println("Parsed orderId: " + orderId);
+            System.out.println("Requested new status: " + newStatus);
+
+            Optional<Order> optOrder = orderRepository.findById(orderId);
+            if (optOrder.isEmpty()) {
+                System.out.println("Order not found with ID: " + orderId);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Order not found"));
+            }
+
+            Order order = optOrder.get();
+
+            try {
+                OrderStatus statusEnum = OrderStatus.valueOf(newStatus.toUpperCase());
+                order.setStatus(statusEnum);
+                System.out.println("Order status set to: " + statusEnum);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid status provided: " + newStatus);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("message", "Invalid order status: " + newStatus));
+            }
+
+            orderRepository.save(order);
+
+            return ResponseEntity.ok(Map.of("message", "Order status updated successfully"));
+        } catch (Exception e) {
+            System.out.println("Exception occurred while updating order status: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Failed to update order status: " + e.getMessage()));
+        }
+    }
+
+
 
 
 }

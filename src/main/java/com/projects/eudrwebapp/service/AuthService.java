@@ -27,20 +27,23 @@ public class AuthService {
             return false;
         }
 
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            System.out.println("User with Id: " + userId + " not found!");
+        try  {
+            Optional<User> user = userRepository.findById(userId);
+            if (user.isEmpty()) {
+                System.out.println("User with Id: " + userId + " not found!");
+                return false;
+            }
+            User validUser = user.get();
+
+            if (!validUser.getUserType().equalsIgnoreCase(validateForType)) {
+                System.out.println("User: " + userId + " does not have the valid user type to access this!");
+                return false;
+            }
+            System.out.println("User Validated");
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
-
-        User validUser = user.get();
-
-        if (!validUser.getUserType().equalsIgnoreCase(validateForType)) {
-            System.out.println("User: " + userId + " does not have the valid user type to access this!");
-            return false;
-        }
-
-        System.out.println("User Validated");
-        return true;
     }
 }

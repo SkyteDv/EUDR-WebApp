@@ -1,6 +1,7 @@
 package com.projects.eudrwebapp.controller.supplier;
 
 import com.projects.eudrwebapp.model.Order;
+import com.projects.eudrwebapp.model.OrderStatus;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.service.AuthService;
 import jakarta.servlet.http.HttpSession;
@@ -29,19 +30,32 @@ public class SDeliveriesController {
         if (!authService.validateUserAuth(session, "SUPPLIER")) {
             return "redirect:/";
         }
+
         Long userId = (Long) session.getAttribute("userId");
         List<Order> deliveries = orderRepository.findBySupplierId(userId);
 
-        List<Order> deliveries_Attached = deliveries.stream().filter(Order::isDdsOnDeliveryNote).toList();
-        List<Order> deliveries_NotAttached = deliveries.stream().filter(order -> !order.isDdsOnDeliveryNote()).toList();
+        // Filter out "shipped" orders
+        List<Order> deliveries_Attached = deliveries.stream()
+                .filter(order -> order.isDdsOnDeliveryNote() && !order.getStatus().equals(OrderStatus.SHIPPED))
+                .toList();
+
+        List<Order> deliveries_NotAttached = deliveries.stream()
+                .filter(order -> !order.isDdsOnDeliveryNote() && !order.getStatus().equals(OrderStatus.SHIPPED))
+                .toList();
+
+        List<Order> deliveries_History = deliveries.stream()
+                .filter(order -> order.isDdsOnDeliveryNote() && order.getStatus().equals(OrderStatus.SHIPPED))
+                .toList();
 
         System.out.println("Attached: " + deliveries_Attached.size());
-        System.out.println("NOT Attached: " +deliveries_NotAttached.size());
+        System.out.println("NOT Attached: " + deliveries_NotAttached.size());
 
         model.addAttribute("activeDeliveries", deliveries_NotAttached);
         model.addAttribute("attachedDeliveries", deliveries_Attached);
+        model.addAttribute("shippedDeliveries", deliveries_History);
         return "s-deliveries";
     }
+
 
 
 }

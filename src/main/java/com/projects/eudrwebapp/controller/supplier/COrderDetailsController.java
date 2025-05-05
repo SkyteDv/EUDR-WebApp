@@ -16,8 +16,8 @@ import java.util.Optional;
 @RequestMapping("supplier/deliveries/details")
 public class COrderDetailsController {
 
-    OrderRepository orderRepository;
-    AuthService authService;
+    private final OrderRepository orderRepository;
+    private final AuthService authService;
 
     public COrderDetailsController(OrderRepository orderRepository, AuthService authService) {
         this.orderRepository = orderRepository;
@@ -26,14 +26,25 @@ public class COrderDetailsController {
 
     @GetMapping("/{id}")
     public String details(HttpSession session, Model model, @PathVariable Long id) {
-        if(!authService.validateUserAuth(session, "SUPPLIER"))  {
+        if (!authService.validateUserAuth(session, "SUPPLIER"))  {
+            System.out.println("No permission");
             return "redirect:/";
         }
+
         Optional<Order> order = orderRepository.findById(id);
-        order.ifPresent(value -> model.addAttribute("order", value));
+        if (order.isPresent()) {
+            Order actualOrder = order.get();
+            model.addAttribute("order", actualOrder);
 
-
-        return "s-order-details";
+            boolean ddsPresent = !actualOrder.getDdsReferenceNumber().equalsIgnoreCase("");
+            if (ddsPresent) {
+                return "s-order-details-with-dds";
+            } else {
+                return "s-order-details-without-dds";
+            }
+        } else {
+            System.out.println("Order not found");
+            return "redirect:/";
+        }
     }
-
 }

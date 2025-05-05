@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/supplier/s-deliveries.css">
+    <link rel="stylesheet" href="/css/supplier/s-deliveries-filter.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 </head>
 <body>
 
@@ -31,7 +31,49 @@
 <main class="page-content">
     <div class="section-header">
         <h1>Deliveries</h1>
-        <div class="section-controls">
+
+        <div class="global-filter">
+            <p class="filterTitle">Filter</p>
+            <label class="filter-label">
+                <select class="filter-choice-input">
+                    <option value="global">Global</option>
+                    <option value="not-attached">Del. (Not Attached)</option>
+                    <option value="attached">Del. (Attached)</option>
+                </select>
+            </label>
+            <p class="filterTitle">by</p>
+
+            <label class="filter-label">
+                <input type="text" class="filter-text-input" placeholder="Customer">
+            </label>
+
+            <div id="FilterForDDS">
+                <label class="filter-label">
+                    <span>DDS </span>
+                    <input type="checkbox" id="ddsAvailable" name="ddsAvailable">
+                </label>
+            </div>
+            <div class="timespan">
+                <p>Between</p>
+                <label class="filter-label">
+                    <input type="date" id="from" class="date-search-input" placeholder="From">
+                </label>
+                <p>-</p>
+                <label class="filter-label">
+                    <input type="date" id="till" class="date-search-input" placeholder="Till">
+                </label>
+            </div>
+            <div class="filter-buttons">
+                <button id="resetFilterButton" class="clean-button">
+                    <span class="material-icons">restart_alt</span>
+                </button>
+                <button id="applyFilterButton" class="clean-button">
+                    <span class="material-icons">playlist_add_check</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="global-actions">
             <label>
                 <input type="text" id="searchInput" class="search-input" placeholder="Search Deliveries...">
             </label>
@@ -39,6 +81,7 @@
                 <i class="fas fa-rotate-right"></i>
             </button>
         </div>
+
     </div>
 
     <div class="delivery-panels">
@@ -47,14 +90,15 @@
             <div class="panel-header">
                 <h2>Deliveries (DDS Not Attached)</h2>
                 <div class="search-filter-wrapper">
-                    <label for="searchInputLeft"></label><input type="text" id="searchInputLeft" class="search-input" placeholder="Search Active Deliveries...">
+                    <label for="searchInputLeft"></label>
+                    <input type="text" id="searchInputLeft" data-table-id="activeDeliveriesTable" class="search-input" placeholder="Search Active Deliveries...">
                     <button id="filterActiveDeliv" class="clean-button">F</button>
                 </div>
             </div>
 
             <div class="wrapper">
-                <table class="delivery-table">
-                    <thead>
+                <table id="activeDeliveriesTable" class="delivery-table">
+                <thead>
                     <tr>
                         <th>Shipment Ref</th>
                         <th>DDS Ref</th>
@@ -64,11 +108,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- Dynamically Loaded Rows -->
                     <tr th:each="order : ${activeDeliveries}" class="clickable-row"
+                        th:classappend="${#strings.isEmpty(order.ddsReferenceNumber)} ? 'red-outline' : ''"
                         th:onclick="|window.location='/supplier/deliveries/details/${order.id}'|">
-                    <td th:text="${order.erpReferenceNumber}"></td>
-                        <td th:text="${order.ddsReferenceNumber}"></td>
+                        <td th:text="${order.erpReferenceNumber}"></td>
+                        <td th:text="${#strings.isEmpty(order.ddsReferenceNumber) ? 'Denied' : order.ddsReferenceNumber}"></td>
+
                         <td th:text="${order.customer.username}"></td>
                         <td th:text="${order.orderDate}"></td>
                         <td th:text="${order.productName}"></td>
@@ -83,7 +128,7 @@
             <div class="panel-header">
                 <h2>Deliveries (DDS Attached)</h2>
                 <div class="search-filter-wrapper">
-                    <label for="searchInputLeft"></label><input type="text" id="searchInputRight" class="search-input" placeholder="Search Active Deliveries...">
+                    <label for="searchInputRight"></label><input type="text" id="searchInputRight" class="search-input" placeholder="Search Attached Deliveries...">
                     <button id="filterAttachedDeliv" class="clean-button">F</button>
                 </div>
             </div>
@@ -91,31 +136,34 @@
             <div class="wrapper">
                 <div class="attached-cards-container">
                     <div class="attached-card" th:each="order : ${attachedDeliveries}">
-                        <div class="right-card-internal-header">
+                        <div class="right-card-internal-data">
                             <h3 th:text="'Shipment Ref: ' + ${order.erpReferenceNumber}"></h3>
+                            <p><strong>DDS Ref:</strong> <span th:text="${order.ddsReferenceNumber}"></span></p>
+                            <p><strong>Customer:</strong> <span th:text="${order.customer.username}"></span></p>
+                            <p><strong>Order Date:</strong> <span th:text="${order.orderDate}"></span></p>
+                            <p><strong>Product:</strong> <span th:text="${order.productName}"></span></p>
+                        </div>
+                        <div class="right-card-internal-header" th:attr="data-order-id=${order.id}">
                             <button class="details-button" th:onclick="|window.location='/supplier/deliveries/details/${order.id}'|" title="Details">
                                 <span class="material-icons">library_books</span>
                             </button>
-
-
-
-
-
-
+                            <button class="done-button" type="button" title="Mark as Done" onclick="markAsShipped(this)">
+                                <span class="material-icons">done</span>
+                            </button>
                         </div>
-                        <p><strong>DDS Ref:</strong> <span th:text="${order.ddsReferenceNumber}"></span></p>
-                        <p><strong>Customer:</strong> <span th:text="${order.customer.username}"></span></p>
-                        <p><strong>Order Date:</strong> <span th:text="${order.orderDate}"></span></p>
-                        <p><strong>Product:</strong> <span th:text="${order.productName}"></span></p>
-
                     </div>
                 </div>
             </div>
         </section>
     </div>
+
 </main>
 
-<script src="/javascript/refreshDeliveries.js"></script>
+<script src="/javascript/non-specific/customTableSearch.js" ></script>
+<script src="/javascript/supplier/s-deliveries/s-initializeTableSearch.js"></script>
+<script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js"></script>
+<script src="/javascript/supplier/s-deliveries/doneDeliveryLogic.js"></script>
+<script src="/javascript/supplier/s-deliveries/s-globalFilter.js"></script>
 
 </body>
 </html>

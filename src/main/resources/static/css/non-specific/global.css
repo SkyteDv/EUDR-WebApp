@@ -23,6 +23,12 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.clean-button .material-icons {
+    font-size: 1.3rem;  /* or whatever size fits */
+    line-height: 1;
+    vertical-align: middle;
+}
+
 .clean-button:hover {
     background-color: #6857a8;
 }
