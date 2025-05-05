@@ -40,7 +40,7 @@
 }
 
 .global-filter .filter-choice-input {
-    width: 8rem;
+    width: 13rem;
 }
 
 .global-filter .filter-text-input {
@@ -73,8 +73,6 @@
     color: #333;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
-
 
 .global-actions {
     display: flex;
