@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Mein Profil</title>
+    <link rel="stylesheet" href="/css/non-specific/global.css">
+    <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/c-account-menu.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .main-content {
+            display: flex;
+            margin-top: 6vh; /* Höhe der Header-Leiste */
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #f9f9f9;
+            border-right: 1px solid #ddd;
+            padding: 1.5rem 1rem;
+            height: calc(100vh - 6vh);
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .sidebar a:hover {
+            color: #7a6fbe;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .content-area h1 {
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="logo-container">
+        <img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo">
+    </div>
+
+    <nav class="navbar">
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+        <a href="/suppliers" class="nav-link">Suppliers</a>
+        <a href="/deliveries" class="nav-link">Deliveries</a>
+    </nav>
+
+    <div class="account-wrapper">
+        <a href="#" id="account-toggle">👤 Hallo <span th:text="${session.username}">Benutzer</span> ▼</a>
+        <div class="dropdown-menu" id="account-menu">
+            <a href="/account">Profil</a>
+            <a href="/settings">Einstellungen</a>
+            <form th:action="@{/user/logout}" method="post">
+                <button type="submit" class="dropdown-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+
+<!-- Inhalt -->
+<div class="main-content">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>Profilmenü</h2>
+        <ul>
+            <li><a href="#" onclick="showSection('overview')">Profilübersicht</a></li>
+            <li><a href="#" onclick="showSection('personal')">Persönliche Daten</a></li>
+            <li><a href="#" onclick="showSection('password')">Passwort ändern</a></li>
+            <li><a href="#" onclick="showSection('notifications')">Benachrichtigungen</a></li>
+            <li><a href="#" onclick="showSection('security')">Sicherheit</a></li>
+            <li><a href="#" onclick="showSection('delete')">Konto löschen</a></li>
+        </ul>
+    </aside>
+
+    <!-- Inhalt rechts -->
+    <section class="content-area">
+        <div id="overview" class="section active">
+            <h1>Profilübersicht</h1>
+            <p>Hier sehen Sie Ihre allgemeinen Profilinformationen.</p>
+        </div>
+        <div id="personal" class="section">
+            <h1>Persönliche Daten</h1>
+            <p>Hier können Sie Ihren Namen, Ihre E-Mail-Adresse und andere Daten ändern.</p>
+        </div>
+        <div id="password" class="section">
+            <h1>Passwort ändern</h1>
+            <p>Hier können Sie ein neues Passwort festlegen.</p>
+        </div>
+        <div id="notifications" class="section">
+            <h1>Benachrichtigungen</h1>
+            <p>Verwalten Sie Ihre E-Mail- oder Systembenachrichtigungen.</p>
+        </div>
+        <div id="security" class="section">
+            <h1>Sicherheit</h1>
+            <p>Aktivieren Sie Zwei-Faktor-Authentifizierung oder sehen Sie Ihre Login-Aktivitäten ein.</p>
+        </div>
+        <div id="delete" class="section">
+            <h1>Konto löschen</h1>
+            <p>Vorsicht! Hier können Sie Ihr Konto dauerhaft entfernen.</p>
+        </div>
+    </section>
+</div>
+
+<script src="/javascript/c-account-menu.js"></script>
+<script>
+    function showSection(id) {
+        document.querySelectorAll(".section").forEach(section => {
+            section.classList.remove("active");
+        });
+        document.getElementById(id).classList.add("active");
+    }
+</script>
+</body>
+</html>

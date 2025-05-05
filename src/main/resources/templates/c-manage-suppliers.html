@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Manage Suppliers</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/customer/c-manage-suppliers.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/c-account-menu.css">
 </head>
+
 <body>
 
 <!-- Header Section -->
@@ -23,19 +26,36 @@
         <a href="#" class="nav-link">Settings</a>
     </nav>
 
-    <div class="menu-toggle" id="menu-toggle">
-        &#9776; <!-- Unicode for ☰ -->
-    </div>
-</header>
+        <div class="account-wrapper">
+            <a href="#" id="account-toggle">
+                👤 Hallo <span th:text="${session.username}">Benutzer</span> ▼
+              </a>
+            <div class="dropdown-menu" id="account-menu">
+                <a href="/account">Profil</a>
+                <a href="/settings">Einstellungen</a>
+                <form th:action="@{/user/logout}" method="post">
+                    <button type="submit" class="dropdown-btn">Logout</button>
+                </form>
+            </div>
+        </div>
 
-<!-- Main Content Section -->
-<main class="supplier-page">
-    <!-- Search Bar -->
-    <div class="search-bar">
-        <input type="text" placeholder="Search Suppliers..." id="search-suppliers" />
-    </div>
-</main>
 
-<script src="script.js"></script> <!-- Placeholder for future JS -->
+
+        <div class="menu-toggle" id="menu-toggle">
+            &#9776; <!-- Unicode for ☰ -->
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="supplier-page">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search Suppliers..." id="search-suppliers" />
+        </div>
+    </main>
+
+    <script src="script.js"></script> <!-- Placeholder for future JS -->
+    <script src="/javascript/c-account-menu.js"></script>
 </body>
+
 </html>

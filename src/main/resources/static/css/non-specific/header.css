@@ -7,7 +7,7 @@
     top: 0;
     left: 0;
     z-index: 1000;
-
+    overflow: visible;
     display: flex; /* add flex */
     align-items: center; /* center items vertically */
     padding: 0 1rem; /* some space on the sides */
@@ -33,11 +33,11 @@
 
 .navbar {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* war: center */
     align-items: center;
-    flex: 1; /* navbar takes remaining space */
+    gap: 2rem;
     height: 100%;
-    gap: 2rem; /* adds space between links */
+    flex-grow: 1; /* war: flex: 1;  <- das kann Probleme machen */
 }
 
 .navbar a {

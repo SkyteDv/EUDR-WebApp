@@ -1,21 +1,28 @@
 package com.projects.eudrwebapp.controller;
 
+import java.io.InputStream;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import com.projects.eudrwebapp.service.HelperService;
 import com.projects.eudrwebapp.service.OrderService;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.InputStream;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -77,6 +84,7 @@ public class UserController {
 
             if (user.getPassword().equals(dbUser.getPassword())) {
                 session.setAttribute("userId", dbUser.getId());
+                session.setAttribute("username", dbUser.getUsername()); //Username in Session, ich hole mir den für die Account ansicht.
                 logger.info("User '{}' logged in successfully.", dbUser.getUsername());
 
                 try {

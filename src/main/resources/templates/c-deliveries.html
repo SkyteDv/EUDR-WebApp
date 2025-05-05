@@ -5,7 +5,8 @@
     <title>Deliveries</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
-    <link rel="stylesheet" href="/css/customer/c-deliveries.css">
+    <link rel="stylesheet" href="/css/c-deliveries.css">
+    <link rel="stylesheet" href="/css/c-account-menu.css">
     <!-- Font Awesome CDN for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -24,6 +25,19 @@
         <a href="#" class="nav-link">Account</a>
         <a href="#" class="nav-link">Settings</a>
     </nav>
+
+    <div class="account-wrapper">
+        <a href="#" id="account-toggle">
+            👤 Hallo <span th:text="${session.username}">Benutzer</span> ▼
+          </a>
+        <div class="dropdown-menu" id="account-menu">
+            <a href="/account">Profil</a>
+            <a href="/settings">Einstellungen</a>
+            <form th:action="@{/user/logout}" method="post">
+                <button type="submit" class="dropdown-btn">Logout</button>
+            </form>
+        </div>
+    </div>
 
     <div class="menu-toggle" id="menu-toggle">
         &#9776; <!-- unicode for ☰ -->
@@ -101,6 +115,19 @@
 <!--Search Algo Integration-->
 <script src="/javascript/customer/c-deliveries/c-initializeDeliveryTableSearch.js"></script>
 <script src="/javascript/non-specific/customTableSearch.js"></script>
+<script src="/javascript/c-deliveries/c-searchTable.js"></script>
+<script src="/javascript/c-deliveries/c-popup.js"></script>
+<script src="/javascript/c-deliveries/c-sortTableHeaders.js"></script>
+<script src="/javascript/c-deliveries/c-refreshDeliveries.js"></script>
+<script src="/javascript/c-account-menu.js"></script>
+
+<script>
+    function editDelivery(ddsReferenceNumber) {
+        // Here you can add functionality to edit the delivery,
+        // such as opening a modal with the delivery's current data to update
+        alert('Editing Delivery with Reference Number: ' + ddsReferenceNumber);
+    }
+</script>
 
 </body>
 </html>
