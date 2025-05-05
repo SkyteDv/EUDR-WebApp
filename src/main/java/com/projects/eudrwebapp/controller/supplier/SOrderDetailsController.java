@@ -14,12 +14,12 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("supplier/deliveries/details")
-public class SOrderDetailsController {
+public class COrderDetailsController {
 
     private final OrderRepository orderRepository;
     private final AuthService authService;
 
-    public SOrderDetailsController(OrderRepository orderRepository, AuthService authService) {
+    public COrderDetailsController(OrderRepository orderRepository, AuthService authService) {
         this.orderRepository = orderRepository;
         this.authService = authService;
     }
