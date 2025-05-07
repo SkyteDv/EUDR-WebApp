@@ -16,8 +16,8 @@ import java.util.List;
 @RequestMapping("/customer/deliveries")
 public class CDeliveriesController {
 
-    private OrderRepository orderRepository;
-    private AuthService authService;
+    private final OrderRepository orderRepository;
+    private final AuthService authService;
 
     public CDeliveriesController(OrderRepository orderRepository, AuthService authService) {
         this.orderRepository = orderRepository;

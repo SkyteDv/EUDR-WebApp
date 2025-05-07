@@ -2,7 +2,6 @@ package com.projects.eudrwebapp.service;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
-import com.lowagie.text.pdf.draw.LineSeparator;
 import com.projects.eudrwebapp.model.Order;
 import org.springframework.stereotype.Service;
 import com.lowagie.text.Image;

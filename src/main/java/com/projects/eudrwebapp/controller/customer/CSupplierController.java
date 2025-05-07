@@ -2,6 +2,8 @@ package com.projects.eudrwebapp.controller.customer;
 
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.UserRepository;
+import com.projects.eudrwebapp.service.AuthService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,23 +15,26 @@ import java.util.Optional;
 @RequestMapping("/customer/suppliers")
 public class CSupplierController {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final AuthService authService;
 
-    public CSupplierController(UserRepository userRepository) {
+    public CSupplierController(UserRepository userRepository, AuthService authService) {
         this.userRepository = userRepository;
+        this.authService = authService;
     }
 
     @GetMapping
-    public String suppliers(Model model, @SessionAttribute(value = "userId", required = false) String userId) {
-        List<User> suppliers = userRepository.findByUserType("SUPPLIER");
-        if (userId == null) {
-            return "redirect:/user/login";
-        }
-        Optional<User> loggedInUserOptional = userRepository.findById(userId);
-        if (loggedInUserOptional.isEmpty()) {
-            return "redirect:/user/login";
+    public String suppliers(HttpSession session, Model model, @SessionAttribute(value = "userId", required = false) String userId) {
+        if (!authService.validateUserAuth(session, "CUSTOMER")) {
+            return "redirect:/";
         }
 
+        List<User> suppliers = userRepository.findByUserType("SUPPLIER");
+        Optional<User> loggedInUserOptional = userRepository.findById(userId);
+
+        if (loggedInUserOptional.isEmpty()) {
+            return "redirect:/";
+        }
         //Get UserReference
         User loggedInUser = loggedInUserOptional.get();
 
