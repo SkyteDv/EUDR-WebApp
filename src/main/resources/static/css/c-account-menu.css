@@ -19,7 +19,7 @@
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 0.5rem);
   right: 0;
   background-color: white;
   border: 1px solid #ccc;
@@ -54,7 +54,7 @@
 /* Hover-Effekt */
 .dropdown-menu a:hover,
 .dropdown-menu .dropdown-btn:hover {
-  background-color: #f4f4f4;
+  background-color: #E9E7FFFF;
 }
 
 #account-toggle {

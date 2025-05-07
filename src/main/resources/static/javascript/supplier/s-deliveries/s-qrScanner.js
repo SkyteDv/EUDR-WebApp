@@ -2,11 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoElement = document.getElementById('webcamVideo');
     const startScanButton = document.getElementById('startScanButton');
     const qrOutput = document.getElementById('qrOutput');
+    const errorOutput = document.getElementById('attachmentError');
+    const cancelButton = document.getElementById('cancelButton');
+
     let videoStream = null;
     let scannedDdsReference = null; // Store scanned DDS reference
 
     // Function to start the camera and initiate QR code scanning
     function startCamera() {
+        console.log("started process");
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(function (stream) {
                 videoStream = stream;
@@ -26,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function scanQRCode() {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
+
+        canvas.willReadFrequently = true;
+
         const videoWidth = videoElement.videoWidth;
         const videoHeight = videoElement.videoHeight;
 
@@ -38,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const qrCode = jsQR(imageData.data, videoWidth, videoHeight);
 
             if (qrCode) {
+                console.log('qrCode', qrCode.data);
                 stopCamera(); // Stop the camera once QR code is detected
                 const qrData = qrCode.data; // Get the scanned DDS reference
                 qrOutput.innerHTML = `QR Code detected: ${qrData}`;
@@ -57,18 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return document.getElementById('currentOrderDdsReference').value;
     }
 
-    // Function to check if the scanned DDS reference matches the current order's DDS reference
     function checkDDSReference(scannedDds) {
         const currentOrderDdsReference = getCurrentOrderDdsReference();
 
         if (scannedDds === currentOrderDdsReference) {
-            // DDS reference matches, enable the Complete button
             const completeBtn = document.getElementById('completeAttachmentButton');
             startScanButton.disabled = true;
             completeBtn.disabled = false;
+            errorOutput.textContent = '';
         } else {
-            // If it doesn't match, show an error
-            const errorOutput = document.getElementById('attachmentError');
             errorOutput.textContent = 'DDS reference mismatch. Please try again.';
         }
     }
@@ -82,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     startScanButton.addEventListener('click', startCamera);
+    cancelButton.addEventListener('click', stopCamera);
 
     document.getElementById('completeAttachmentButton').addEventListener('click', async () => {
         const errorOutput = document.getElementById('attachmentError');

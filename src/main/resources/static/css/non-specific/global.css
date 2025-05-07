@@ -33,6 +33,10 @@ body {
     background-color: #6857a8;
 }
 
+.clean-button:disabled {
+    background-color: #231445;
+    cursor: not-allowed;
+}
 
 
 

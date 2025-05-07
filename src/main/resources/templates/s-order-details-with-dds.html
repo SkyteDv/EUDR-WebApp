@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/supplier/s-delivery-details-with-dds.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Order Details</title>
 </head>
 <body>
@@ -14,7 +16,6 @@
         <a href="/"><img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
         <h4>SUPPLIER</h4>
     </div>
-
     <nav class="navbar">
         <a href="/supplier/dashboard" class="nav-link">Dashboard</a>
         <a href="#" class="nav-link">Customers</a>
@@ -23,64 +24,67 @@
 </header>
 
 <div class="order-overview">
-    <h1 th:text="'Order Overview – Shipment Ref: ' + ${order.erpReferenceNumber}">Order Overview – Shipment Ref: ERP-887721</h1>
+    <div id="page-actions">
+        <h1>Order Overview</h1>
+        <div id="page-action-buttons">
+            <button class="clean-button" onclick="history.back()">
+                <i class="material-icons">arrow_back</i>
+            </button>
 
-    <!-- Shipment Overview Section -->
-    <div class="shipment-info">
-        <h3>Shipment Details</h3>
-        <p><strong>Shipment Ref:</strong> <span th:text="${order.erpReferenceNumber}">ERP-887721</span></p>
-        <p><strong>DDS Ref:</strong> <span th:text="${order.ddsReferenceNumber}">A23-ZXY</span></p>
-        <p><strong>DDS on Delivery:</strong> <span id="ddsStatus" th:text="${order.ddsOnDeliveryNote ? 'Yes' : 'No'}">No</span></p>
+            <button class="clean-button" th:onclick="|window.location.href='/api/generate-order-pdf/${order.id}'|">Gen. Delivery Note</button>
+            <button class="clean-button" onclick="document.getElementById('step2').style.display = 'block'">Start Verification</button>
+        </div>
+    </div>
+    <div id="order-info-container">
+        <!-- Shipment Overview Section -->
+        <div class="data-card-holder">
+            <div id="shipment-data">
+                <h2>Order Details</h2>
+                <p><strong>Shipment Ref:</strong> <span th:text="${order.erpReferenceNumber}">ERP-887721</span></p>
+                <p><strong>DDS Ref:</strong> <span th:text="${order.ddsReferenceNumber}">A23-ZXY</span></p>
+                <p><strong>DDS on Delivery:</strong> <span id="ddsStatus" th:text="${order.ddsOnDeliveryNote ? 'Yes' : 'No'}">No</span></p>
+                <p><strong>Order Date:</strong> <span th:text="${order.orderDate}">2025-05-01</span></p>
+                <p><strong>Expected Delivery Date:</strong> <span th:text="${order.estimatedDeliveryDate}">2025-05-05</span></p>
+                <p><strong>Order Amount:</strong> 500 kg</p>
+                <p><strong>Order Dimensions:</strong> <span th:text="${order.dimensions}">Not Available</span></p>
+            </div>
+        </div>
+
+        <div class="data-card-holder">
+            <!-- Customer Information Section -->
+            <div class="data-card" id="customer-info">
+                <h2>Customer Information</h2>
+                <p><strong>Customer Name:</strong> <span th:text="${order.customer.username}">Not Available</span></p>
+                <p><strong>Customer Location:</strong> Germany</p>
+            </div>
+
+            <!-- Product Information Section -->
+            <div class="data-card" id="product-info">
+                <h2>Product Information</h2>
+                <p><strong>Product Group:</strong> <span th:text="${order.productCategory}">Electronics</span></p>
+                <p><strong>Product Name:</strong> <span th:text="${order.productName}">Smart Devices</span></p>
+            </div>
+        </div>
     </div>
 
-    <!-- Order Information Section -->
-    <div class="order-info">
-        <h3>Order Information</h3>
-        <p><strong>Order Date:</strong> <span th:text="${order.orderDate}">2025-05-01</span></p>
-        <p><strong>Expected Delivery Date:</strong> <span th:text="${order.estimatedDeliveryDate}">2025-05-05</span></p>
+    <!-- Popup for DDS verification (Step 2) -->
+    <div id="step2" class="popup">
+        <div class="popup-content">
+            <h2>DDS Verification</h2>
+            <button class="clean-button"  id="cancelButton" onclick="document.getElementById('step2').style.display = 'none'">Cancel</button>
+            <div id="videoArea">
+                <h3>Video output:</h3>
+                <video id="webcamVideo" autoplay></video>
+            </div>
+            <p>
+                <button class="clean-button" id="startScanButton">Start Scan</button>
+                <button class="clean-button" th:onclick="|window.location.href='/api/generate-order-pdf/${order.id}'|">Gen. Delivery Note</button>
+                <button class="clean-button" id="completeAttachmentButton" disabled>Complete Attachment</button>
+            </p>
+            <p id="attachmentError" style="color: red;"></p>
+            <div id="qrOutput"></div>
+        </div>
     </div>
-
-    <!-- Customer Information Section -->
-    <div class="customer-info">
-        <h3>Customer Information</h3>
-        <p><strong>Customer Name:</strong> <span th:text="${order.customer.username}">Not Available</span></p>
-        <p><strong>Order Amount:</strong> 500 kg</p>
-        <p><strong>Order Dimensions:</strong> <span th:text="${order.dimensions}">Not Available</span></p>
-    </div>
-
-    <!-- Product Information Section -->
-    <div class="product-info">
-        <h3>Product Information</h3>
-        <p><strong>Product Group:</strong> <span th:text="${order.productCategory}">Electronics</span></p>
-        <p><strong>Product Name:</strong> <span th:text="${order.productName}">Smart Devices</span></p>
-    </div>
-
-    <!-- DDS Ref QR Code Section -->
-    <div class="qr-section">
-        <h3>DDS Ref QR-Code</h3>
-        <p>
-            <strong>Generate QR Code for DDS Ref:</strong>
-            <span th:text="${order.ddsReferenceNumber}">A23-ZXY</span>
-        </p>
-        <button
-                th:onclick="'window.location.href=\'/api/generate-qr/' + ${order.id} + '\''">
-            Generate DDS QR Code for Delivery
-        </button>
-        <button id="completeAttachmentButton" disabled>
-            Complete Attachment Process
-        </button>
-        <p id="attachmentError" style="color: red;"></p>
-    </div>
-
-    <!-- Verify DDS Attachment Button -->
-    <button id="startScanButton">Verify DDS Attachment</button>
-
-    <!-- Video element to show webcam feed for QR Code scanning -->
-    <video id="webcamVideo" width="100%" height="auto" autoplay></video>
-
-    <!-- QR Code Scanner Output -->
-    <div id="qrOutput"></div>
-
 </div>
 
 <input type="hidden" id="currentOrderDdsReference" th:value="${order.ddsReferenceNumber}" />

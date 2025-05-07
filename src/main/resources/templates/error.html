@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/non-specific/background-slideshow.css">
     <title>404 - Page Not Found</title>
     <style>
         /* General reset and font setup */
@@ -23,6 +24,7 @@
 
         /* Main container for the error page */
         .error-container {
+            z-index: 100;
             text-align: center;
             background-color: #fff;
             padding: 40px 60px;
@@ -64,10 +66,21 @@
     </style>
 </head>
 <body>
-<div class="error-container">
-    <h1>404</h1>
-    <p>Oops! The page you're looking for doesn't exist.</p>
-    <a href="/" class="home-btn">Go to Homepage</a>
+
+<div class="container">
+    <div class="overlay"></div>
+        <img class="fade-image" src="/images/palm%20oil.jpg" alt="Palm Oil">
+        <img class="fade-image" src="/images/rainforest3.jpg" alt="Rainforest Image">
+        <img class="fade-image" src="/images/rainforest1.jpg" alt="Rainforest Image">
+        <img class="fade-image" src="/images/rainforest2.jpg" alt="Rainforest Image">
+    <div class="content-container">
+        <div class="error-container">
+            <h1>404</h1>
+            <p>Oops! The page you're looking for doesn't exist.</p>
+            <a href="/" class="home-btn">Go to Homepage</a>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

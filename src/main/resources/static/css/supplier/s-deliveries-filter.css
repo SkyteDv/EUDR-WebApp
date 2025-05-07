@@ -11,6 +11,7 @@
 }
 
 .section-header h1 {
+    margin-left: 0.5rem;
     font-size: 2rem;
     color: #333; /* Dark gray text for the title */
 }

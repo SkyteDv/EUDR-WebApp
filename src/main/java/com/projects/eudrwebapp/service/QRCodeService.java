@@ -18,21 +18,14 @@ import java.util.Map;
 @Service
 public class QRCodeService {
 
-    public byte[] generateQRCodeImage(String data, int width, int height) throws WriterException, IOException {
+    public BufferedImage generateQRCodeBufferedImage(String data, int width, int height) throws WriterException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         Map<EncodeHintType, Object> hints = new HashMap<>();
         hints.put(EncodeHintType.MARGIN, 1);
-        if (data == null || data.isEmpty()) {
-            throw new IllegalArgumentException("Data for QR code is empty");
-        }
         BitMatrix bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, width, height, hints);
-        BufferedImage bufferedImage = getBufferedImage(width, height, bitMatrix);
-
-        // Convert the BufferedImage to byte array
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "PNG", byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
+        return getBufferedImage(width, height, bitMatrix);
     }
+
 
     private static BufferedImage getBufferedImage(int width, int height, BitMatrix bitMatrix) {
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

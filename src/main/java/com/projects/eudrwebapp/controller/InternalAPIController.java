@@ -8,6 +8,7 @@ import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import com.projects.eudrwebapp.service.HelperService;
 import com.projects.eudrwebapp.service.OrderService;
+import com.projects.eudrwebapp.service.PDFService;
 import com.projects.eudrwebapp.service.QRCodeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,12 +30,19 @@ public class InternalAPIController {
     private final OrderRepository orderRepository;
     private final HelperService helperService;
     private final QRCodeService qrCodeService;
+    private final PDFService pdfService;
 
-    public InternalAPIController(OrderService orderService, UserRepository userRepository, HelperService helperService, QRCodeService qrCodeService, OrderRepository orderRepository) {
+    public InternalAPIController(OrderService orderService,
+                                 UserRepository userRepository,
+                                 HelperService helperService,
+                                 QRCodeService qrCodeService,
+                                 OrderRepository orderRepository,
+                                 PDFService pdfService) {
         this.userRepository = userRepository;
         this.helperService = helperService;
         this.qrCodeService = qrCodeService;
         this.orderRepository = orderRepository;
+        this.pdfService = pdfService;
     }
 
     @PostMapping("/refresh-deliveries")
@@ -64,33 +73,29 @@ public class InternalAPIController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    @GetMapping("/generate-qr/{id}")
-    public ResponseEntity<byte[]> generateQRCode(@PathVariable Long id) {
+    @GetMapping("/generate-order-pdf/{id}")
+    public ResponseEntity<byte[]> generateOrderPDF(@PathVariable Long id) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (orderOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Order order = orderOptional.get();
         try {
-            // Generate the QR code using the QRCodeService
-            Optional<Order> order = orderRepository.findById(id);
-            if (order.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
+            BufferedImage qrImage = qrCodeService.generateQRCodeBufferedImage(order.getDdsReferenceNumber(), 200, 200);
+            byte[] pdf = pdfService.generateOrderPDFWithQRCode(order, qrImage);
 
-            Order currentOrder = order.get();
-            String ddsRef = currentOrder.getDdsReferenceNumber();
-            byte[] qrCodeImage = qrCodeService.generateQRCodeImage(ddsRef, 200, 200);
-
-            // Prepare headers to trigger download in the browser
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", "image/png");
-            headers.add("Content-Disposition", "attachment; filename=\"qr-code.png\"");
+            headers.add("Content-Type", "application/pdf");
+            headers.add("Content-Disposition", "attachment; filename=\"order-summary.pdf\"");
 
-            // Return the image as a byte array with the headers
-            return new ResponseEntity<>(qrCodeImage, headers, HttpStatus.OK);
-
-        } catch (WriterException | IOException e) {
-            // Handle errors (e.g., QR code generation failure)
+            return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(("Error generating QR code: " + e.getMessage()).getBytes());
+                    .body(("Error generating PDF: " + e.getMessage()).getBytes());
         }
     }
+
 
     @PostMapping("/deliveries/attached/{ddsReferenceNumber}")
     public ResponseEntity<Void> deliveriesAttached(@PathVariable String ddsReferenceNumber) {
