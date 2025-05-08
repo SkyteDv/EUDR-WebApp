@@ -7,7 +7,7 @@
     justify-content: center;
     flex-direction: column;
     width: clamp(280px, 90vw, 440px);
-    height: clamp(460px, 80vh,580px);
+    height: clamp(500px, 80vh,600px);
     padding: clamp(1rem, 5vw, 30px);
     box-sizing: border-box;
 }
@@ -25,7 +25,8 @@
 .input-box .input-field {
     width: 100%;
     height: 55px;
-    font-size: 1rem;
+    font-size: 1.05rem;
+    font-weight: 500;
     padding: 0 20px;
     margin-bottom: 15px;
     border-radius: 30px;
@@ -35,8 +36,9 @@
     transition: .3s;
 }
 ::placeholder {
-    font-weight: 500;
-    color: #222;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #9e9e9e;
 }
 .input-field:focus {
     width: 103%;

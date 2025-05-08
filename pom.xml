@@ -88,6 +88,7 @@
 
     <build>
         <plugins>
+            <!-- Compiler Plugin for Lombok and Spring Boot Configuration Processor -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -98,12 +99,14 @@
                             <artifactId>spring-boot-configuration-processor</artifactId>
                         </path>
                         <path>
-                            <groupId>org.projectlombok</groupId>
+                            <groupId>org.projectlombok</groupId> <!-- Fixed typo here -->
                             <artifactId>lombok</artifactId>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
+            <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -116,7 +119,27 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- Resources Plugin for excluding the tmp folder -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/static/tmp/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
 
 </project>

@@ -55,7 +55,7 @@
             <div class="data-card" id="customer-info">
                 <h2>Customer Information</h2>
                 <p><strong>Customer Name:</strong> <span th:text="${order.customer.username}">Not Available</span></p>
-                <p><strong>Customer Location:</strong> Germany</p>
+                <p><strong>Customer Location:</strong> <span th:text="${order.customer.location}">Not Available</span></p>
             </div>
 
             <!-- Product Information Section -->
@@ -66,23 +66,30 @@
             </div>
         </div>
     </div>
+    <div id="map-container">
+
+    </div>
 
     <!-- Popup for DDS verification (Step 2) -->
     <div id="step2" class="popup">
         <div class="popup-content">
-            <h2>DDS Verification</h2>
-            <button class="clean-button"  id="cancelButton" onclick="document.getElementById('step2').style.display = 'none'">Cancel</button>
+            <div id="popup-header">
+                <h2>DDS Verification</h2>
+                <button class="clean-button" id="cancelButton" onclick="document.getElementById('step2').style.display = 'none'">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
             <div id="videoArea">
                 <h3>Video output:</h3>
+                <div id="qrOutput"></div>
                 <video id="webcamVideo" autoplay></video>
             </div>
-            <p>
+            <div id="popup-actions">
                 <button class="clean-button" id="startScanButton">Start Scan</button>
                 <button class="clean-button" th:onclick="|window.location.href='/api/generate-order-pdf/${order.id}'|">Gen. Delivery Note</button>
-                <button class="clean-button" id="completeAttachmentButton" disabled>Complete Attachment</button>
-            </p>
+                <button class="clean-button" id="completeAttachmentButton" disabled>Complete</button>
+            </div>
             <p id="attachmentError" style="color: red;"></p>
-            <div id="qrOutput"></div>
         </div>
     </div>
 </div>

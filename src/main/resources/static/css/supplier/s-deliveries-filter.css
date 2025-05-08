@@ -21,6 +21,7 @@
     border-radius: 1.4rem;
     padding: 0.5rem 2rem 0.5rem 2rem;
     display: flex;
+    height: 4rem;
     flex-direction: row;
     gap: 1rem;
     align-items: center;
@@ -62,9 +63,9 @@
 }
 
 .date-search-input {
-    appearance: none;            /* Removes browser default styles */
-    -webkit-appearance: none;    /* Safari/Chrome */
-    -moz-appearance: none;       /* Firefox */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
     padding: 0.1rem 0.1rem;
     font-size: 0.9rem;
@@ -89,5 +90,61 @@
     border: 1px solid #ccc;
     border-radius: 8px;
 }
+
+@media (max-width: 1800px) {
+    .section-header {
+        flex: 0.4;
+        flex-direction: column;
+    }
+
+    .global-filter {
+        flex: 1;
+        height: 3rem;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+        margin: 2rem 0rem;
+        /*  display: none; */
+    }
+}
+
+@media (max-width: 1350px) {
+    .section-header {
+        flex: 0.8;
+        flex-direction: column;
+    }
+
+    .global-filter {
+        flex: 1;
+        height: 3rem;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+        margin: 2rem 0rem;
+        /*  display: none; */
+    }
+}
+
+@media (max-width: 800px) {
+    .section-header {
+        flex: 1.2;
+        flex-direction: column;
+    }
+
+    .global-filter {
+        flex: 1;
+        height: 3rem;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+        margin: 2rem 0rem;
+        /*  display: none; */
+    }
+}
+
+
 
 

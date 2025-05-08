@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelButton = document.getElementById('cancelButton');
 
     let videoStream = null;
-    let scannedDdsReference = null; // Store scanned DDS reference
+    let scannedDdsReference = null;
+    let canvas = null;
 
     // Function to start the camera and initiate QR code scanning
     function startCamera() {
@@ -26,17 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Function to scan the QR code and verify DDS reference
     function scanQRCode() {
-        const canvas = document.createElement('canvas');
+        canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
-
         canvas.willReadFrequently = true;
 
-        const videoWidth = videoElement.videoWidth;
-        const videoHeight = videoElement.videoHeight;
-
         function detectQRCode() {
+            const videoWidth = videoElement.videoWidth;
+            const videoHeight = videoElement.videoHeight;
+
+            // Ensure the video dimensions are available
+            if (videoWidth === 0 || videoHeight === 0) {
+                requestAnimationFrame(detectQRCode); // Try again
+                return;
+            }
+
             canvas.width = videoWidth;
             canvas.height = videoHeight;
             context.drawImage(videoElement, 0, 0, videoWidth, videoHeight);
@@ -46,20 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (qrCode) {
                 console.log('qrCode', qrCode.data);
-                stopCamera(); // Stop the camera once QR code is detected
-                const qrData = qrCode.data; // Get the scanned DDS reference
+                canvas.remove();
+                stopCamera();
+                const qrData = qrCode.data;
                 qrOutput.innerHTML = `QR Code detected: ${qrData}`;
-                scannedDdsReference = qrData; // Store the scanned DDS reference
-
-                // Check if the scanned DDS reference matches the current order's DDS reference
+                scannedDdsReference = qrData;
                 checkDDSReference(scannedDdsReference);
             } else {
-                requestAnimationFrame(detectQRCode);
+                requestAnimationFrame(detectQRCode); // Keep scanning
             }
         }
 
         detectQRCode();
     }
+
 
     function getCurrentOrderDdsReference() {
         return document.getElementById('currentOrderDdsReference').value;
@@ -78,17 +83,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to stop the camera
     function stopCamera() {
         if (videoStream) {
             const tracks = videoStream.getTracks();
             tracks.forEach(track => track.stop());
+            videoStream = null;
         }
+
+        videoElement.pause();
+        videoElement.srcObject = null;
     }
 
-    startScanButton.addEventListener('click', startCamera);
-    cancelButton.addEventListener('click', stopCamera);
 
+    startScanButton.addEventListener('click', startCamera);
+    cancelButton.addEventListener('click', () => {
+        stopCamera();
+    });
     document.getElementById('completeAttachmentButton').addEventListener('click', async () => {
         const errorOutput = document.getElementById('attachmentError');
 

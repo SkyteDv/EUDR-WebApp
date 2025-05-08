@@ -91,7 +91,9 @@
                 <div class="search-filter-wrapper">
                     <label for="searchInputLeft"></label>
                     <input type="text" id="searchInputLeft" data-table-id="activeDeliveriesTable" class="search-input" placeholder="Search Active Deliveries...">
-                    <button id="filterActiveDeliv" class="clean-button">F</button>
+                    <button class="filterConfig clean-button">
+                        <i class="material-icons">settings</i>
+                    </button>
                 </div>
             </div>
 
@@ -128,7 +130,9 @@
                 <h2>Deliveries (DDS Attached)</h2>
                 <div class="search-filter-wrapper">
                     <label for="searchInputRight"></label><input type="text" id="searchInputRight" class="search-input" placeholder="Search Attached Deliveries...">
-                    <button id="filterAttachedDeliv" class="clean-button">F</button>
+                    <button class="filterConfig clean-button">
+                        <i class="material-icons">settings</i>
+                    </button>
                 </div>
             </div>
 
@@ -155,8 +159,11 @@
             </div>
         </section>
     </div>
-
 </main>
+
+<div id="search-config-popup">
+
+</div>
 
 <script src="/javascript/non-specific/customTableSearch.js" ></script>
 <script src="/javascript/supplier/s-deliveries/s-initializeTableSearch.js"></script>
