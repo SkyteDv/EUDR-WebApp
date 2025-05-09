@@ -120,24 +120,31 @@
                 </configuration>
             </plugin>
 
-            <!-- Resources Plugin for excluding the tmp folder -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.1.0</version>
                 <executions>
                     <execution>
+                        <id>default-resources</id>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>resources</goal>
                         </goals>
                         <configuration>
-                            <excludes>
-                                <exclude>**/static/tmp/**</exclude>
-                            </excludes>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <excludes>
+                                        <exclude>static/tmp/**</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 

@@ -1,4 +1,7 @@
-/* Header Section: Title + Search Bar */
+.global-filter {
+    font-size: 0.85vw !important;
+}
+
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -26,6 +29,14 @@
     gap: 1rem;
     align-items: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#filter-choice-input-dds-label {
+    width: 6rem;
+}
+
+#filter-choice-input-risk {
+    width: 8rem;
 }
 
 .global-filter .filterTitle {
@@ -68,7 +79,6 @@
     -moz-appearance: none;
 
     padding: 0.1rem 0.1rem;
-    font-size: 0.9rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: white;
@@ -105,6 +115,7 @@
         align-content: center;
         flex-wrap: wrap;
         margin: 2rem 0rem;
+        font-size: 1vw;
         /*  display: none; */
     }
 }
@@ -123,6 +134,7 @@
         align-content: center;
         flex-wrap: wrap;
         margin: 2rem 0rem;
+        font-size: 2vw;
         /*  display: none; */
     }
 }
@@ -141,6 +153,7 @@
         align-content: center;
         flex-wrap: wrap;
         margin: 2rem 0rem;
+        font-size: 4vw;
         /*  display: none; */
     }
 }

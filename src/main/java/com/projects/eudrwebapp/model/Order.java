@@ -65,6 +65,35 @@ public class Order {
         }
     }
 
+    // Method to calculate the risk level
+    public String calculateRiskLevel() {
+        String ddsStatus = getDdsStatus();
+
+        if ("Yes".equalsIgnoreCase(ddsStatus)) {
+            return switch (status) {
+                case PENDING, SHIPPED, IN_HARBOUR, PASSED_CUSTOMS -> "Low";
+                default -> "Unknown";
+            };
+        } else if ("No".equalsIgnoreCase(ddsStatus)) {
+            return switch (status) {
+                case PENDING -> "Low";
+                case SHIPPED, IN_HARBOUR -> "Medium";
+                case PASSED_CUSTOMS -> "Very High";
+                default -> "Unknown";
+            };
+        } else if ("Not Available".equalsIgnoreCase(ddsStatus)) {
+            return switch (status) {
+                case PENDING -> "Medium";
+                case SHIPPED, IN_HARBOUR -> "High";
+                case PASSED_CUSTOMS -> "Very High";
+                default -> "Unknown";
+            };
+        } else {
+            return "Unknown";
+        }
+    }
+
+
     // --- Getters and Setters ---
 
     public Long getId() {

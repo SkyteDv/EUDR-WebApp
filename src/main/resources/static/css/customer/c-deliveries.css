@@ -1,3 +1,7 @@
+main {
+    font-size: 0.85vw;
+}
+
 /* Page Layout */
 .main-content {
     margin-top: 6vh;
@@ -45,11 +49,11 @@
 }
 
 .deliveries-table th {
-    background-color: #eaeaed; /* Softer white with a hint of lavender */
+    background-color: #eaeaed;
     color: #333;
-    padding: 1.2rem 1rem; /* Slightly taller */
-    font-size: 1.08rem;    /* Slightly larger text */
-    font-weight: 600;      /* Slightly bolder text */
+    padding: 1.2rem 1rem;
+    font-size: 0.9vw;
+    font-weight: 600;
 }
 
 .deliveries-table td a {
@@ -71,8 +75,26 @@
     font-weight: bold;
 }
 
+.red-outline {
+    border: 2px solid red !important;
+}
+
+@media (max-width: 1800px) {
+    .global-filter {
+        display: none!important;
+    }
+}
+
 /* Responsive Advanced Table */
 @media (max-width: 900px) {
+    * {
+        font-size: 1rem !important;
+    }
+
+    .global-filter {
+        display: none!important;
+    }
+
     .deliveries-table table,
     .deliveries-table thead,
     .deliveries-table tbody,

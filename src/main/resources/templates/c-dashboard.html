@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/customer/c-dashboard.css">
-    <link rel="stylesheet" href="/css/customer/c-account-menu.css">
+    <link rel="stylesheet" href="/css/customer/account-menu.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 
@@ -25,7 +26,7 @@
     <div class="account-wrapper">
         <a href="#" id="account-toggle">
             👤 Hallo <span th:text="${session.username}">Benutzer</span> ▼
-          </a>
+        </a>
         <div class="dropdown-menu" id="account-menu">
             <a href="/account">Profil</a>
             <a href="/settings">Einstellungen</a>
@@ -36,11 +37,63 @@
     </div>
 </header>
 
-<div id="content-div">
-    <p>Homepage for the Customer</p>
-</div>
+<main>
+    <div id="dashboard">
+        <div class="chart-container" id="piechart"></div>
+        <div class="chart-container" id="barchart"></div>
+    </div>
+    <div id="controls">
+        <h3>Controls</h3>
+        <!-- Add controls here -->
+    </div>
+    <div id="summary">
+        <div>Summary Data</div>
+        <div>More Info</div>
+    </div>
+</main>
 
+<script>
+    google.charts.load('current', {'packages':['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawCharts);
 
-<script src="/javascript/c-account-menu.js"></script>
+    function drawCharts() {
+        // Pie chart data and options
+        var pieData = google.visualization.arrayToDataTable([
+            ['Category', 'Value'],
+            ['Category 1', 45],
+            ['Category 2', 25],
+            ['Category 3', 30]
+        ]);
+        var pieOptions = {
+            title: 'Pie Chart Example',
+            pieSliceText: 'label',
+        };
+        var pieChart = new google.visualization.PieChart(document.getElementById('piechart'));
+        pieChart.draw(pieData, pieOptions);
+
+        // Bar chart data and options
+        var barData = google.visualization.arrayToDataTable([
+            ['Category', 'Value'],
+            ['Category 1', 10],
+            ['Category 2', 20],
+            ['Category 3', 30]
+        ]);
+        var barOptions = {
+            title: 'Bar Chart Example',
+            chartArea: {width: '50%'},
+            hAxis: {
+                title: 'Value',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Category'
+            }
+        };
+        var barChart = new google.visualization.BarChart(document.getElementById('barchart'));
+        barChart.draw(barData, barOptions);
+    }
+</script>
+
+<script src="/javascript/account-menu.js"></script>
 </body>
 </html>
