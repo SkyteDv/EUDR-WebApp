@@ -9,7 +9,8 @@
     "estimatedDeliveryDate": "2025-04-10",
     "ddsReferenceNumber": "DDS9001",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST001"
+    "customerOsapiensID": "CUST001",
+    "responsible_party": "Emma Richardson"
   },
   {
     "erpReferenceNumber": "ERP10002",
@@ -21,7 +22,8 @@
     "estimatedDeliveryDate": "2025-04-12",
     "ddsReferenceNumber": "DDS9002",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Liam Caldwell"
   },
   {
     "erpReferenceNumber": "ERP10003",
@@ -33,7 +35,8 @@
     "estimatedDeliveryDate": "2025-04-13",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "Olivia Sinclair"
   },
   {
     "erpReferenceNumber": "ERP10004",
@@ -45,7 +48,8 @@
     "estimatedDeliveryDate": "2025-04-15",
     "ddsReferenceNumber": "DDS9004",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST004"
+    "customerOsapiensID": "CUST004",
+    "responsible_party": "Noah Whitmore"
   },
   {
     "erpReferenceNumber": "ERP10005",
@@ -57,7 +61,8 @@
     "estimatedDeliveryDate": "2025-04-16",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST005"
+    "customerOsapiensID": "CUST005",
+    "responsible_party": "Ava Kensington"
   },
   {
     "erpReferenceNumber": "ERP10006",
@@ -69,7 +74,8 @@
     "estimatedDeliveryDate": "2025-04-17",
     "ddsReferenceNumber": "DDS9006",
     "supplierOsapiensID": "SUP002",
-    "customerOsapiensID": "CUST001"
+    "customerOsapiensID": "CUST001",
+    "responsible_party": "William Harrington"
   },
   {
     "erpReferenceNumber": "ERP10007",
@@ -81,7 +87,8 @@
     "estimatedDeliveryDate": "2025-04-18",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP002",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Sophia Montgomery"
   },
   {
     "erpReferenceNumber": "ERP10008",
@@ -93,7 +100,8 @@
     "estimatedDeliveryDate": "2025-04-19",
     "ddsReferenceNumber": "DDS9008",
     "supplierOsapiensID": "SUP002",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "James Pembroke"
   },
   {
     "erpReferenceNumber": "ERP10009",
@@ -105,7 +113,8 @@
     "estimatedDeliveryDate": "2025-04-20",
     "ddsReferenceNumber": "DDS9009",
     "supplierOsapiensID": "SUP002",
-    "customerOsapiensID": "CUST004"
+    "customerOsapiensID": "CUST004",
+    "responsible_party": "Isabella Worthington"
   },
   {
     "erpReferenceNumber": "ERP10010",
@@ -117,7 +126,8 @@
     "estimatedDeliveryDate": "2025-04-21",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP002",
-    "customerOsapiensID": "CUST005"
+    "customerOsapiensID": "CUST005",
+    "responsible_party": "Benjamin Ashford"
   },
   {
     "erpReferenceNumber": "ERP10011",
@@ -129,7 +139,8 @@
     "estimatedDeliveryDate": "2025-04-22",
     "ddsReferenceNumber": "DDS9011",
     "supplierOsapiensID": "SUP003",
-    "customerOsapiensID": "CUST001"
+    "customerOsapiensID": "CUST001",
+    "responsible_party": "Mia Kingsley"
   },
   {
     "erpReferenceNumber": "ERP10012",
@@ -141,7 +152,8 @@
     "estimatedDeliveryDate": "2025-04-23",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP003",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Lucas Beaumont"
   },
   {
     "erpReferenceNumber": "ERP10013",
@@ -153,7 +165,8 @@
     "estimatedDeliveryDate": "2025-04-24",
     "ddsReferenceNumber": "DDS9013",
     "supplierOsapiensID": "SUP003",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "Charlotte Ellington"
   },
   {
     "erpReferenceNumber": "ERP10014",
@@ -165,7 +178,8 @@
     "estimatedDeliveryDate": "2025-04-25",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP003",
-    "customerOsapiensID": "CUST004"
+    "customerOsapiensID": "CUST004",
+    "responsible_party": "Alexander Carmichael"
   },
   {
     "erpReferenceNumber": "ERP10015",
@@ -177,7 +191,8 @@
     "estimatedDeliveryDate": "2025-04-26",
     "ddsReferenceNumber": "DDS9015",
     "supplierOsapiensID": "SUP003",
-    "customerOsapiensID": "CUST005"
+    "customerOsapiensID": "CUST005",
+    "responsible_party": "Amelia St. Clair"
   },
   {
     "erpReferenceNumber": "ERP10016",
@@ -189,7 +204,8 @@
     "estimatedDeliveryDate": "2025-04-27",
     "ddsReferenceNumber": "DDS9016",
     "supplierOsapiensID": "SUP004",
-    "customerOsapiensID": "CUST001"
+    "customerOsapiensID": "CUST001",
+    "responsible_party": "Ethan Blackwood"
   },
   {
     "erpReferenceNumber": "ERP10017",
@@ -201,7 +217,8 @@
     "estimatedDeliveryDate": "2025-04-28",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP004",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Harper Wellingham"
   },
   {
     "erpReferenceNumber": "ERP10018",
@@ -213,7 +230,8 @@
     "estimatedDeliveryDate": "2025-04-29",
     "ddsReferenceNumber": "DDS9018",
     "supplierOsapiensID": "SUP004",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "Daniel Fairchild"
   },
   {
     "erpReferenceNumber": "ERP10019",
@@ -225,7 +243,8 @@
     "estimatedDeliveryDate": "2025-04-30",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP004",
-    "customerOsapiensID": "CUST004"
+    "customerOsapiensID": "CUST004",
+    "responsible_party": "Evelyn Radcliffe"
   },
   {
     "erpReferenceNumber": "ERP10020",
@@ -237,7 +256,8 @@
     "estimatedDeliveryDate": "2025-05-01",
     "ddsReferenceNumber": "DDS9020",
     "supplierOsapiensID": "SUP004",
-    "customerOsapiensID": "CUST005"
+    "customerOsapiensID": "CUST005",
+    "responsible_party": "Michael Thornfield"
   },
   {
     "erpReferenceNumber": "ERP10021",
@@ -249,7 +269,8 @@
     "estimatedDeliveryDate": "2025-05-02",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP005",
-    "customerOsapiensID": "CUST001"
+    "customerOsapiensID": "CUST001",
+    "responsible_party": "Abigail Whitaker"
   },
   {
     "erpReferenceNumber": "ERP10022",
@@ -261,7 +282,8 @@
     "estimatedDeliveryDate": "2025-05-03",
     "ddsReferenceNumber": "DDS9022",
     "supplierOsapiensID": "SUP005",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Samuel Harrington"
   },
   {
     "erpReferenceNumber": "ERP10023",
@@ -273,7 +295,8 @@
     "estimatedDeliveryDate": "2025-05-04",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP005",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "Emily Redgrave"
   },
   {
     "erpReferenceNumber": "ERP10024",
@@ -285,7 +308,8 @@
     "estimatedDeliveryDate": "2025-05-05",
     "ddsReferenceNumber": "DDS9024",
     "supplierOsapiensID": "SUP005",
-    "customerOsapiensID": "CUST004"
+    "customerOsapiensID": "CUST004",
+    "responsible_party": "Josephine Marlowe"
   },
   {
     "erpReferenceNumber": "ERP10025",
@@ -297,10 +321,9 @@
     "estimatedDeliveryDate": "2025-05-06",
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP005",
-    "customerOsapiensID": "CUST005"
+    "customerOsapiensID": "CUST005",
+    "responsible_party": "Christopher Ashbury"
   },
-
-
   {
     "erpReferenceNumber": "ERP10026",
     "productCategory": "Cocoa",
@@ -311,7 +334,8 @@
     "estimatedDeliveryDate": "2025-05-07",
     "ddsReferenceNumber": "DDS9026",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Grace Huntington"
   },
   {
     "erpReferenceNumber": "ERP10027",
@@ -323,7 +347,8 @@
     "estimatedDeliveryDate": "2025-05-08",
     "ddsReferenceNumber": "DDS9027",
     "supplierOsapiensID": "SUP003",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "Andrew Kensington"
   },
   {
     "erpReferenceNumber": "ERP10028",
@@ -335,7 +360,8 @@
     "estimatedDeliveryDate": "2025-05-09",
     "ddsReferenceNumber": "DDS9028",
     "supplierOsapiensID": "SUP004",
-    "customerOsapiensID": "CUST004"
+    "customerOsapiensID": "CUST004",
+    "responsible_party": "Victoria Caldwell"
   },
   {
     "erpReferenceNumber": "ERP10029",
@@ -347,7 +373,8 @@
     "estimatedDeliveryDate": "2025-05-10",
     "ddsReferenceNumber": "DDS9029",
     "supplierOsapiensID": "SUP002",
-    "customerOsapiensID": "CUST001"
+    "customerOsapiensID": "CUST001",
+    "responsible_party": "Nathaniel Winthrop"
   },
   {
     "erpReferenceNumber": "ERP10030",
@@ -359,7 +386,8 @@
     "estimatedDeliveryDate": "2025-05-11",
     "ddsReferenceNumber": "DDS9030",
     "supplierOsapiensID": "SUP005",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Penelope Beauchamp"
   },
   {
     "erpReferenceNumber": "ERP10031",
@@ -371,7 +399,8 @@
     "estimatedDeliveryDate": "2025-05-12",
     "ddsReferenceNumber": "DDS9031",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "Sebastian Montgomery"
   },
   {
     "erpReferenceNumber": "ERP10032",
@@ -383,7 +412,8 @@
     "estimatedDeliveryDate": "2025-05-13",
     "ddsReferenceNumber": "DDS9032",
     "supplierOsapiensID": "SUP003",
-    "customerOsapiensID": "CUST004"
+    "customerOsapiensID": "CUST004",
+    "responsible_party": "Lillian Ashford"
   },
   {
     "erpReferenceNumber": "ERP10033",
@@ -395,7 +425,8 @@
     "estimatedDeliveryDate": "2025-05-14",
     "ddsReferenceNumber": "DDS9033",
     "supplierOsapiensID": "SUP004",
-    "customerOsapiensID": "CUST005"
+    "customerOsapiensID": "CUST005",
+    "responsible_party": "Theodore Kingsley"
   },
   {
     "erpReferenceNumber": "ERP10034",
@@ -407,7 +438,8 @@
     "estimatedDeliveryDate": "2025-05-15",
     "ddsReferenceNumber": "DDS9034",
     "supplierOsapiensID": "SUP002",
-    "customerOsapiensID": "CUST001"
+    "customerOsapiensID": "CUST001",
+    "responsible_party": "Eleanor Pembroke"
   },
   {
     "erpReferenceNumber": "ERP10035",
@@ -419,7 +451,8 @@
     "estimatedDeliveryDate": "2025-05-16",
     "ddsReferenceNumber": "DDS9035",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Gabriel Whitmore"
   },
   {
     "erpReferenceNumber": "ERP10036",
@@ -431,7 +464,8 @@
     "estimatedDeliveryDate": "2025-05-17",
     "ddsReferenceNumber": "DDS9036",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "Clara Ellington"
   },
   {
     "erpReferenceNumber": "ERP10037",
@@ -443,7 +477,8 @@
     "estimatedDeliveryDate": "2025-05-18",
     "ddsReferenceNumber": "DDS9037",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST004"
+    "customerOsapiensID": "CUST004",
+    "responsible_party": "Dominic Radcliffe"
   },
   {
     "erpReferenceNumber": "ERP10038",
@@ -455,7 +490,8 @@
     "estimatedDeliveryDate": "2025-05-19",
     "ddsReferenceNumber": "DDS9038",
     "supplierOsapiensID": "SUP003",
-    "customerOsapiensID": "CUST005"
+    "customerOsapiensID": "CUST005",
+    "responsible_party": "Beatrice St. John"
   },
   {
     "erpReferenceNumber": "ERP10039",
@@ -467,7 +503,8 @@
     "estimatedDeliveryDate": "2025-05-20",
     "ddsReferenceNumber": "DDS9039",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST002"
+    "customerOsapiensID": "CUST002",
+    "responsible_party": "Henry Worthington"
   },
   {
     "erpReferenceNumber": "ERP10040",
@@ -479,7 +516,7 @@
     "estimatedDeliveryDate": "2025-05-21",
     "ddsReferenceNumber": "DDS9040",
     "supplierOsapiensID": "SUP001",
-    "customerOsapiensID": "CUST003"
+    "customerOsapiensID": "CUST003",
+    "responsible_party": "Matilda Carmichael"
   }
 ]
-

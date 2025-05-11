@@ -1,16 +1,16 @@
 .header {
     width: 100%;
+    position: fixed;
     height: 6vh;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 100000;
     overflow: visible;
-    display: flex; /* add flex */
-    align-items: center; /* center items vertically */
-    padding: 0 1rem; /* some space on the sides */
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
 }
 
 .logo-container {
@@ -21,9 +21,9 @@
 }
 
 .logo-container a {
-    display: inline-flex; /* ensures the <a> tag does not cause misalignment */
-    align-items: center; /* ensures the image is aligned properly */
-    height: 100%; /* ensures the <a> takes full height of the header */
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
 }
 
 .logo {
@@ -164,5 +164,12 @@
     margin-right: 0.5rem;
     font-size: 1.2rem;
     vertical-align: middle;
+}
+
+@media(max-width: 800px) {
+    .header {
+        height: 60px;
+        font-size: 0.8rem;
+    }
 }
 

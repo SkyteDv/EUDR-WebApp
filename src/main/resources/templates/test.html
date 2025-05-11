@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
-    <title>Order Details</title>
+    <link rel="stylesheet" href="/css/testing.css">
+    <title>Testing</title>
 </head>
 <body>
 
 <header class="header">
     <div class="logo-container">
-        <a href="/"><img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+        <a href="/"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
         <h4>SUPPLIER</h4>
     </div>
 
@@ -22,73 +23,7 @@
     </nav>
 </header>
 
-<div class="order-overview">
-    <h1 th:text="'Order Overview – Shipment Ref: ' + ${order.erpReferenceNumber}">Order Overview – Shipment Ref: ERP-887721</h1>
 
-    <!-- Shipment Overview Section -->
-    <div class="shipment-info">
-        <h3>Shipment Details</h3>
-        <p><strong>Shipment Ref:</strong> <span th:text="${order.erpReferenceNumber}">ERP-887721</span></p>
-        <p><strong>DDS Ref:</strong> <span th:text="${order.ddsReferenceNumber}">A23-ZXY</span></p>
-        <p><strong>DDS on Delivery:</strong> <span id="ddsStatus" th:text="${order.ddsOnDeliveryNote ? 'Yes' : 'No'}">No</span></p>
-    </div>
-
-    <!-- Order Information Section -->
-    <div class="order-info">
-        <h3>Order Information</h3>
-        <p><strong>Order Date:</strong> <span th:text="${order.orderDate}">2025-05-01</span></p>
-        <p><strong>Expected Delivery Date:</strong> <span th:text="${order.estimatedDeliveryDate}">2025-05-05</span></p>
-    </div>
-
-    <!-- Customer Information Section -->
-    <div class="customer-info">
-        <h3>Customer Information</h3>
-        <p><strong>Customer Name:</strong> <span th:text="${order.customer.username}">Not Available</span></p>
-        <p><strong>Order Amount:</strong> 500 kg</p>
-        <p><strong>Order Dimensions:</strong> <span th:text="${order.dimensions}">Not Available</span></p>
-    </div>
-
-    <!-- Product Information Section -->
-    <div class="product-info">
-        <h3>Product Information</h3>
-        <p><strong>Product Group:</strong> <span th:text="${order.productCategory}">Electronics</span></p>
-        <p><strong>Product Name:</strong> <span th:text="${order.productName}">Smart Devices</span></p>
-    </div>
-
-    <!-- DDS Ref QR Code Section -->
-    <div class="qr-section">
-        <h3>DDS Ref QR-Code</h3>
-        <p>
-            <strong>Generate QR Code for DDS Ref:</strong>
-            <span th:text="${order.ddsReferenceNumber}">A23-ZXY</span>
-        </p>
-        <button th:onclick="|window.location.href='/api/generate-order-pdf/${order.id}'|">
-            Generate Delivery Note with DDS
-        </button>
-        <button id="completeAttachmentButton" disabled>
-            Complete Attachment Process
-        </button>
-        <p id="attachmentError" style="color: red;"></p>
-    </div>
-
-    <!-- Verify DDS Attachment Button -->
-    <button id="startScanButton">Verify DDS Attachment</button>
-
-    <!-- Video element to show webcam feed for QR Code scanning -->
-    <video id="webcamVideo" width="100%" height="auto" autoplay></video>
-
-    <!-- QR Code Scanner Output -->
-    <div id="qrOutput"></div>
-
-</div>
-
-<input type="hidden" id="currentOrderDdsReference" th:value="${order.ddsReferenceNumber}" />
-
-<!-- JSQR library for QR code scanning -->
-<script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
-
-<!-- External JS file for the QR scanner logic -->
-<script src="/javascript/supplier/s-deliveries/s-qrScanner.js"></script>
 
 </body>
 </html>

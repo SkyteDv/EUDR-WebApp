@@ -1,10 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+
+/*Light Mode*/
+    --text-clr: black;
+    --base-clr: white;
+    --field-hover-clr: #E9E7FFFF;
+    --button-bg-color: #7A6FBEFF;
+    --button-hover-bg-clr: #6857A8FF;
+
+
+    /*
+    --line-clr: #42434a;
+
+    --accent-clr: #5e63ff;
+    --secondary-text-clr: #b0b3c1;
+    */
+}
 
 * {
-    font-family: 'Poppins',sans-serif;
+    font-family: Poppins, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html{
+    line-height: 1.5rem;
 }
 
 body {
@@ -14,7 +37,7 @@ body {
 .clean-button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
-    background-color: #7a6fbe;
+    background-color: var(--button-bg-color);
     color: white;
     text-decoration: none;
     border: none;
@@ -30,7 +53,7 @@ body {
 }
 
 .clean-button:hover {
-    background-color: #6857a8;
+    background-color: var(--button-hover-bg-clr);
 }
 
 .clean-button:disabled {
