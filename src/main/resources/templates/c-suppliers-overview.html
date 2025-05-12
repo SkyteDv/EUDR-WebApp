@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Supplier Overview</title>
+    <link rel="stylesheet" href="/css/non-specific/global.css">
+    <link rel="stylesheet" href="/css/customer/c-manage-suppliers.css">
+    <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/account-menu.css">
+    <link rel="stylesheet" href="/css/customer/c-suppliers-overview.css">
+
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="/"><img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+            <h4>CUSTOMER</h4>
+        </div>
+
+        <nav class="navbar">
+            <a href="/customer/dashboard" class="nav-link">Dashboard</a>
+            <a href="/customer/suppliers/overview" class="nav-link">Suppliers</a>
+
+            <a href="/customer/deliveries" class="nav-link">Deliveries</a>
+        </nav>
+
+        <div class="account-wrapper">
+            <a href="#" id="account-toggle">
+                👤 Hello <span th:text="${session.username}">Benutzer</span> ▼
+            </a>
+            <div class="dropdown-menu" id="account-menu">
+                <a href="/account">Profil</a>
+                <a href="/settings">Einstellungen</a>
+                <form th:action="@{/user/logout}" method="post">
+                    <button type="submit" class="dropdown-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="menu-toggle" id="menu-toggle">
+            &#9776;
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="supplier-page">
+        <div class="section-header">
+            <h1>Supplier Übersicht</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Suche Supplier..." id="searchInput">
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="delivery-table">
+                <thead>
+                    <tr>
+                        <th data-column="0" class="sortable">Supplier <span class="sort-icon"></span></th>
+                        <th data-column="1" class="sortable">Gesamt <span class="sort-icon"></span></th>
+                        <th data-column="2" class="sortable">Grün <span class="sort-icon"></span></th>
+                        <th data-column="3" class="sortable">Rot <span class="sort-icon"></span></th>
+                        <th data-column="4" class="sortable">Gelb <span class="sort-icon"></span></th>
+                        <th data-column="5" class="sortable">Grünrate <span class="sort-icon"></span></th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    <tr th:each="stat : ${supplierStats}">
+                        <td th:text="${stat.supplierName}"></td>
+                        <td th:text="${stat.totalDeliveries}"></td>
+                        <td th:text="${stat.greenDeliveries}"></td>
+                        <td th:text="${stat.redDeliveries}"></td>
+                        <td th:text="${stat.yellowDeliveries}"></td>
+                        <td th:text="${#numbers.formatDecimal(stat.greenRate, 1, 1)} + '%'"></td>
+                        <td>
+                            <a th:href="@{'/customer/suppliers/details/' + ${stat.supplierId}}" class="nav-link">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="/javascript/c-account-menu.js"></script>
+    <script>
+        // Einfache Suche
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("searchInput");
+            input.addEventListener("keyup", function () {
+                const filter = input.value.toLowerCase();
+                const rows = document.querySelectorAll(".delivery-table tbody tr");
+                rows.forEach(row => {
+                    const name = row.children[0].textContent.toLowerCase();
+                    row.style.display = name.includes(filter) ? "" : "none";
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const table = document.querySelector(".delivery-table");
+            let currentSortedCol = null;
+            let currentDirection = "asc";
+
+            document.querySelectorAll(".delivery-table th[data-column]").forEach(header => {
+                header.classList.add("sortable");
+
+                header.addEventListener("click", () => {
+                    const columnIndex = parseInt(header.dataset.column);
+                    const tbody = table.querySelector("tbody");
+                    const rows = Array.from(tbody.querySelectorAll("tr"));
+                    const isSameColumn = columnIndex === currentSortedCol;
+                    currentDirection = isSameColumn && currentDirection === "asc" ? "desc" : "asc";
+
+                    // Sortieren
+                    rows.sort((a, b) => {
+                        const aText = a.children[columnIndex].textContent.trim();
+                        const bText = b.children[columnIndex].textContent.trim();
+
+                        const aNum = parseFloat(aText.replace("%", "")) || 0;
+                        const bNum = parseFloat(bText.replace("%", "")) || 0;
+
+                        return currentDirection === "asc" ? aNum - bNum : bNum - aNum;
+                    });
+
+                    // Tabelle aktualisieren
+                    rows.forEach(row => tbody.appendChild(row));
+
+                    // Icons aktualisieren
+                    document.querySelectorAll(".delivery-table th").forEach(th => {
+                        th.classList.remove("sorted-asc", "sorted-desc");
+                        const icon = th.querySelector(".sort-icon");
+                        if (icon) icon.textContent = "";
+                    });
+
+                    const icon = header.querySelector(".sort-icon");
+                    if (icon) icon.textContent = currentDirection === "asc" ? "↑" : "↓";
+                    header.classList.add(currentDirection === "asc" ? "sorted-asc" : "sorted-desc");
+
+                    currentSortedCol = columnIndex;
+                });
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

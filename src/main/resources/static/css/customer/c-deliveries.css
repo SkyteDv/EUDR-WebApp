@@ -121,5 +121,21 @@
     }
 }
 
+th.sortable {
+    cursor: pointer;
+    position: relative;
+}
+
+th .sort-icon {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+th.sorted-asc .sort-icon,
+th.sorted-desc .sort-icon {
+    color: #7a6fbe;
+}
+
 
 

@@ -1,6 +1,8 @@
 package com.projects.eudrwebapp.repository;
 
 import com.projects.eudrwebapp.model.Order;
+import com.projects.eudrwebapp.model.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +18,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByCustomerId(Long customerId);
 
     List<Order> findBySupplierId(Long supplier_id);
+
+    List<Order> findByCustomerAndSupplier(User customer, User supplier);
 
     Optional<Order> findByDdsReferenceNumber(String ddsReferenceNumber);
 

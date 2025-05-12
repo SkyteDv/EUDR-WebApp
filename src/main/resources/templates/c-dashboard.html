@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/customer/c-dashboard.css">
-    <link rel="stylesheet" href="/css/c-account-menu.css">
+    <link rel="stylesheet" href="/css/account-menu.css">
 </head>
 <body>
 
@@ -18,13 +18,14 @@
 
     <nav class="navbar">
         <a href="/customer/dashboard" class="nav-link active">Dashboard</a>
-        <a href="/customer/suppliers" class="nav-link">Suppliers</a>
+        <a href="/customer/suppliers/overview" class="nav-link">Suppliers</a>
+
         <a href="/customer/deliveries" class="nav-link">Deliveries</a>
     </nav>
 
     <div class="account-wrapper">
         <a href="#" id="account-toggle">
-            👤 Hallo <span th:text="${session.username}">Benutzer</span> ▼
+            👤 Hello <span th:text="${session.username}">Benutzer</span> ▼
           </a>
         <div class="dropdown-menu" id="account-menu">
             <a href="/account">Profil</a>

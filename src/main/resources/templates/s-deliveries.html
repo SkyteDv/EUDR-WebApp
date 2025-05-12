@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/supplier/s-deliveries.css">
     <link rel="stylesheet" href="/css/supplier/s-deliveries-filter.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/account-menu.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -25,6 +26,22 @@
         <a href="#" class="nav-link">Customers</a>
         <a href="/supplier/deliveries" class="nav-link active">Deliveries</a>
     </nav>
+    <div class="account-wrapper">
+        <a href="#" id="account-toggle">
+            👤 Hello <span th:text="${session.username}">User</span> ▼
+        </a>
+        <div class="dropdown-menu" id="account-menu">
+            <a href="/supplier/account">Profile</a>
+            <a href="/supplier/settings">Settings</a>
+            <form th:action="@{/user/logout}" method="post">
+                <button type="submit" class="dropdown-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+        &#9776;
+    </div>
 </header>
 
 <main class="page-content">
@@ -163,6 +180,7 @@
 <script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js"></script>
 <script src="/javascript/supplier/s-deliveries/doneDeliveryLogic.js"></script>
 <script src="/javascript/supplier/s-deliveries/s-globalFilter.js"></script>
+<script src="/javascript/c-account-menu.js"></script>
 
 </body>
 </html>

@@ -5,68 +5,9 @@
     <title>Mein Profil</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
-    <link rel="stylesheet" href="/css/c-account-menu.css">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-        }
-
-        .main-content {
-            display: flex;
-            margin-top: 6vh; /* Höhe der Header-Leiste */
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #f9f9f9;
-            border-right: 1px solid #ddd;
-            padding: 1.5rem 1rem;
-            height: calc(100vh - 6vh);
-        }
-
-        .sidebar h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar li {
-            margin-bottom: 1rem;
-        }
-
-        .sidebar a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .sidebar a:hover {
-            color: #7a6fbe;
-        }
-
-        .content-area {
-            flex: 1;
-            padding: 2rem;
-        }
-
-        .content-area h1 {
-            margin-bottom: 1rem;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/account-menu.css">
+    <link rel="stylesheet" href="/css/account.css">
+    
 </head>
 <body>
 
@@ -79,12 +20,13 @@
 
     <nav class="navbar">
         <a href="/customer/dashboard" class="nav-link">Dashboard</a>
-        <a href="/customer/suppliers" class="nav-link">Suppliers</a>
+        <a href="/customer/suppliers/overview" class="nav-link">Suppliers</a>
+
         <a href="/customer/deliveries" class="nav-link">Deliveries</a>
     </nav>
 
     <div class="account-wrapper">
-        <a href="#" id="account-toggle">👤 Hallo <span th:text="${session.username}">Benutzer</span> ▼</a>
+        <a href="#" id="account-toggle">👤 Hello <span th:text="${session.username}">Benutzer</span> ▼</a>
         <div class="dropdown-menu" id="account-menu">
             <a href="/account">Profil</a>
             <a href="/settings">Einstellungen</a>
@@ -99,16 +41,17 @@
 <div class="main-content">
     <!-- Sidebar -->
     <aside class="sidebar">
-        <h2>Profilmenü</h2>
+        <h2>Account Menu</h2>
         <ul>
-            <li><a href="#" onclick="showSection('overview')">Profilübersicht</a></li>
-            <li><a href="#" onclick="showSection('personal')">Persönliche Daten</a></li>
-            <li><a href="#" onclick="showSection('password')">Passwort ändern</a></li>
-            <li><a href="#" onclick="showSection('notifications')">Benachrichtigungen</a></li>
-            <li><a href="#" onclick="showSection('security')">Sicherheit</a></li>
-            <li><a href="#" onclick="showSection('delete')">Konto löschen</a></li>
+            <li><a href="#" onclick="showSection('overview')">Profile Overview</a></li>
+            <li><a href="#" onclick="showSection('personal')">Personal Information</a></li>
+            <li><a href="#" onclick="showSection('password')">Change Password</a></li>
+            <li><a href="#" onclick="showSection('notifications')">Notifications</a></li>
+            <li><a href="#" onclick="showSection('security')">Security</a></li>
+            <li><a href="#" onclick="showSection('delete')">Delete Account</a></li>
         </ul>
     </aside>
+    
 
     <!-- Inhalt rechts -->
     <section class="content-area">
@@ -117,12 +60,39 @@
             <p>Hier sehen Sie Ihre allgemeinen Profilinformationen.</p>
         </div>
         <div id="personal" class="section">
-            <h1>Persönliche Daten</h1>
-            <p>Hier können Sie Ihren Namen, Ihre E-Mail-Adresse und andere Daten ändern.</p>
+            <h1>Personal Information</h1>
+        
+            <form th:action="@{/account/personal/save}" method="post" class="personal-form">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" th:value="${user.username}" required>
+        
+                <label for="osapiensID">Osapiens ID</label>
+                <input type="text" id="osapiensID" name="osapiensID" th:value="${user.osapiensID}" required>
+        
+                <button type="submit" class="save-button">Save Changes</button>
+            </form>
+        
+            <p th:if="${successMessage}" class="success-msg" th:text="${successMessage}"></p>
+            <p th:if="${errorMessage}" class="error-msg" th:text="${errorMessage}"></p>
         </div>
         <div id="password" class="section">
-            <h1>Passwort ändern</h1>
-            <p>Hier können Sie ein neues Passwort festlegen.</p>
+            <h1>Change Password</h1>
+        
+            <form th:action="@{/account/password/change}" method="post" class="password-form">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" name="currentPassword" required>
+        
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+        
+                <label for="confirmPassword">Confirm New Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+        
+                <button type="submit" class="save-button">Update Password</button>
+            </form>
+        
+            <p th:if="${successMessage}" class="success-msg" th:text="${successMessage}"></p>
+            <p th:if="${errorMessage}" class="error-msg" th:text="${errorMessage}"></p>
         </div>
         <div id="notifications" class="section">
             <h1>Benachrichtigungen</h1>
@@ -133,9 +103,20 @@
             <p>Aktivieren Sie Zwei-Faktor-Authentifizierung oder sehen Sie Ihre Login-Aktivitäten ein.</p>
         </div>
         <div id="delete" class="section">
-            <h1>Konto löschen</h1>
-            <p>Vorsicht! Hier können Sie Ihr Konto dauerhaft entfernen.</p>
+            <h1>Delete Account</h1>
+            <p>Warning: This action is irreversible. Please enter your current password to confirm account deletion.</p>
+        
+            <form th:action="@{/account/delete}" method="post" class="delete-form">
+                <label for="deletePassword">Current Password</label>
+                <input type="password" id="deletePassword" name="password" required>
+        
+                <button type="submit" class="delete-button">Delete My Account</button>
+            </form>
+        
+            <p th:if="${successMessage}" class="success-msg" th:text="${successMessage}"></p>
+            <p th:if="${errorMessage}" class="error-msg" th:text="${errorMessage}"></p>
         </div>
+        
     </section>
 </div>
 

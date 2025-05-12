@@ -1,0 +1,158 @@
+/* ========================== */
+/* Accountverwaltung Layout   */
+/* ========================== */
+
+.main-content {
+    display: flex;
+    margin-top: 6vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
+    padding: 1.5rem 1rem;
+    height: calc(100vh - 6vh);
+}
+
+.sidebar h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    margin-bottom: 1rem;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.sidebar a:hover {
+    color: #7a6fbe;
+}
+
+.content-area {
+    flex: 1;
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* ========================== */
+/* Inhalt / Formularelemente  */
+/* ========================== */
+
+.content-area form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 1rem;
+}
+
+.content-area label {
+    font-weight: 600;
+    color: #333;
+}
+
+.content-area input {
+    padding: 0.65rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.2s ease;
+}
+
+.content-area input:focus {
+    border-color: #7a6fbe;
+    outline: none;
+}
+
+/* ========================== */
+/* Buttons                    */
+/* ========================== */
+
+.content-area .save-button,
+.content-area .delete-button {
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.content-area .save-button {
+    background-color: #7a6fbe;
+    color: white;
+}
+
+.content-area .save-button:hover {
+    background-color: #5f55a4;
+}
+
+.content-area .delete-button {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.content-area .delete-button:hover {
+    background-color: #c0392b;
+}
+
+/* ========================== */
+/* Statusmeldungen            */
+/* ========================== */
+
+.content-area .success-msg {
+    color: #2ecc71;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.content-area .error-msg {
+    color: #e74c3c;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+/* ========================== */
+/* Responsive                 */
+/* ========================== */
+
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        height: auto;
+    }
+
+    .content-area {
+        padding: 1rem;
+    }
+
+    .content-area form {
+        width: 100%;
+    }
+}

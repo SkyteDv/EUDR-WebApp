@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projects.eudrwebapp.model.Order;
 import com.projects.eudrwebapp.model.OrderStatus;
+import com.projects.eudrwebapp.model.SupplierStatsDTO;
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
@@ -19,9 +20,11 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -125,6 +128,51 @@ public class OrderService {
         System.out.println("Total Time: " + duration + " ms");
         System.out.println("===============================");
     }
+
+    public List<SupplierStatsDTO> getSupplierStatsForCustomer(User customer) {
+    List<Order> orders = orderRepository.findAll(); // Optional: effizienter mit eigenem Query für Customer
+
+    // Filter: nur Orders dieses Customers
+    List<Order> customerOrders = orders.stream()
+            .filter(o -> o.getCustomer().getId().equals(customer.getId()))
+            .toList();
+
+    // Gruppiere nach Supplier
+    Map<User, List<Order>> ordersBySupplier = customerOrders.stream()
+            .collect(Collectors.groupingBy(Order::getSupplier));
+
+    // Erzeuge DTOs
+    List<SupplierStatsDTO> result = new ArrayList<>();
+
+    for (Map.Entry<User, List<Order>> entry : ordersBySupplier.entrySet()) {
+        User supplier = entry.getKey();
+        List<Order> supplierOrders = entry.getValue();
+
+        long total = supplierOrders.size();
+        long green = supplierOrders.stream()
+                .filter(o -> o.getDdsStatus().equals("Yes"))
+                .count();
+        long red = supplierOrders.stream()
+                .filter(o -> o.getDdsStatus().equals("Not Available"))
+                .count();
+        long yellow = supplierOrders.stream()
+                .filter(o -> o.getDdsStatus().equals("No"))
+                .count();
+
+        SupplierStatsDTO dto = new SupplierStatsDTO(
+                supplier.getUsername(),
+                supplier.getId(),
+                total,
+                green,
+                red,
+                yellow
+        );
+
+        result.add(dto);
+    }
+
+    return result;
+}
 
 }
 

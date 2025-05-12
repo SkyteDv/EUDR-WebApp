@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Supplier Detail</title>
+    <link rel="stylesheet" href="/css/non-specific/global.css">
+    <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/account-menu.css">
+    <link rel="stylesheet" href="/css/customer/c-supplier-details.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo-container">
+        <a href="/"><img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+        <h4>CUSTOMER</h4>
+    </div>
+
+    <nav class="navbar">
+        <a href="/customer/dashboard" class="nav-link">Dashboard</a>
+        <a href="/customer/suppliers/overview" class="nav-link">Suppliers</a>
+        <a href="/customer/deliveries" class="nav-link">Deliveries</a>
+    </nav>
+
+    <div class="account-wrapper">
+        <a href="#" id="account-toggle">
+            👤 Hello <span th:text="${session.username}">Benutzer</span> ▼
+        </a>
+        <div class="dropdown-menu" id="account-menu">
+            <a href="/account">Profil</a>
+            <a href="/settings">Einstellungen</a>
+            <form th:action="@{/user/logout}" method="post">
+                <button type="submit" class="dropdown-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+        &#9776;
+    </div>
+</header>
+
+<main class="detail-page">
+    <h1 th:text="'Supplier: ' + ${supplier.username}"></h1>
+
+    <div class="card-grid">
+
+        <!-- Supplier Info -->
+        <section class="card">
+            <h2>Supplier-Informationen</h2>
+            <p><strong>Name:</strong> <span th:text="${supplier.username}"></span></p>
+            <p><strong>Osapiens-ID:</strong> <span th:text="${supplier.osapiensID}"></span></p>
+            <p><strong>User-ID:</strong> <span th:text="${supplier.id}"></span></p>
+        </section>
+
+        <!-- Deliveries -->
+        <section class="card">
+            <h2>Gemeinsame Lieferungen</h2>
+            <table class="delivery-table">
+                <thead>
+                    <tr>
+                        <th>ERP Ref</th>
+                        <th>Produkt</th>
+                        <th>Order Date</th>
+                        <th>DDS Ref</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${deliveries}">
+                        <td th:text="${order.erpReferenceNumber}"></td>
+                        <td th:text="${order.productName}"></td>
+                        <td th:text="${order.orderDate}"></td>
+                        <td th:text="${order.ddsReferenceNumber != null && order.ddsReferenceNumber != '' ? order.ddsReferenceNumber : '–'}"></td>
+                        <td th:text="${order.status}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Platz für Erweiterung -->
+        <section class="card">
+            <h2>Risikobewertung (zukünftig)</h2>
+            <p>Hier könnten später statistische Auswertungen oder Visualisierungen stehen.</p>
+        </section>
+
+    </div>
+</main>
+
+<script src="/javascript/c-account-menu.js"></script>
+
+</body>
+</html>

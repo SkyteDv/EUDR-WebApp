@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/customer/c-deliveries.css">
-    <link rel="stylesheet" href="/css/c-account-menu.css">
+    <link rel="stylesheet" href="/css/account-menu.css">
     <!-- Font Awesome CDN for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -21,13 +21,14 @@
 
     <nav class="navbar">
         <a href="/customer/dashboard" class="nav-link">Dashboard</a>
-        <a href="/customer/suppliers" class="nav-link">Suppliers</a>
+        <a href="/customer/suppliers/overview" class="nav-link">Suppliers</a>
+
         <a href="/customer/deliveries" class="nav-link active">Deliveries</a>
     </nav>
 
     <div class="account-wrapper">
         <a href="#" id="account-toggle">
-            👤 Hallo <span th:text="${session.username}">Benutzer</span> ▼
+            👤 Hello <span th:text="${session.username}">Benutzer</span> ▼
           </a>
         <div class="dropdown-menu" id="account-menu">
             <a href="/account">Profil</a>
@@ -59,20 +60,21 @@
     <div class="deliveries-table">
         <table id="ordersTable">
             <thead>
-            <tr>
-                <th>  Edit</th> <!-- Added Edit Column -->
-                <th class="sortable" data-column="ddsStatus">DDS on Delivery</th>
-                <th data-column="ddsReferenceNumber">DDS Ref</th>
-                <th data-column="erpReferenceNumber">Shipment Ref</th>
-                <th class="sortable" data-column="destination">Destination</th>
-                <th class="sortable" data-column="status">Status</th>
-                <th class="sortable" data-column="supplier">Supplier</th>
-                <th class="sortable" data-column="orderDate">Order Date</th>
-                <th class="sortable" data-column="estimatedDeliveryDate">Est. Delivery</th>
-                <th class="sortable" data-column="productCategory">Category</th>
-                <th class="sortable" data-column="productName">Product Name</th>
-                <th class="sortable" data-column="dimensions">Dimensions (m²)</th>
-            </tr>
+                <tr>
+                    <th>Edit</th>
+                    <th class="sortable" data-column="1">DDS on Delivery <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="2">DDS Ref <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="3">Shipment Ref <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="4">Destination <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="5">Status <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="6">Supplier <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="7">Order Date <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="8">Est. Delivery <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="9">Category <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="10">Product Name <span class="sort-icon"></span></th>
+                    <th class="sortable" data-column="11">Dimensions (m²) <span class="sort-icon"></span></th>
+                </tr>
+                
             </thead>
             <tbody>
             <tr th:each="order : ${deliveries}">
@@ -126,6 +128,55 @@
         // such as opening a modal with the delivery's current data to update
         alert('Editing Delivery with Reference Number: ' + ddsReferenceNumber);
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const table = document.getElementById("ordersTable");
+    let currentSortedCol = null;
+    let currentDirection = "asc";
+
+    table.querySelectorAll("th.sortable").forEach(header => {
+        const icon = header.querySelector(".sort-icon");
+        header.addEventListener("click", () => {
+            const columnIndex = parseInt(header.getAttribute("data-column"));
+            const tbody = table.querySelector("tbody");
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            const isSameColumn = columnIndex === currentSortedCol;
+            currentDirection = isSameColumn && currentDirection === "asc" ? "desc" : "asc";
+
+            rows.sort((a, b) => {
+                const aText = a.children[columnIndex].textContent.trim();
+                const bText = b.children[columnIndex].textContent.trim();
+
+                // Falls Zahl, dann nach Zahl sortieren, sonst Alphabetisch
+                const aNum = parseFloat(aText.replace(",", ".").replace("%", ""));
+                const bNum = parseFloat(bText.replace(",", ".").replace("%", ""));
+
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    return currentDirection === "asc" ? aNum - bNum : bNum - aNum;
+                } else {
+                    return currentDirection === "asc"
+                        ? aText.localeCompare(bText)
+                        : bText.localeCompare(aText);
+                }
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+
+            table.querySelectorAll("th.sortable").forEach(th => {
+                th.classList.remove("sorted-asc", "sorted-desc");
+                const icon = th.querySelector(".sort-icon");
+                if (icon) icon.textContent = "";
+            });
+
+            if (icon) {
+                icon.textContent = currentDirection === "asc" ? "↑" : "↓";
+            }
+            header.classList.add(currentDirection === "asc" ? "sorted-asc" : "sorted-desc");
+            currentSortedCol = columnIndex;
+        });
+    });
+});
+
 </script>
 
 </body>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/account-menu.css">
     <title>Order Details (No DDS)</title>
 </head>
 <body>
@@ -20,6 +21,23 @@
         <a href="#" class="nav-link">Customers</a>
         <a href="/supplier/deliveries" class="nav-link active">Deliveries</a>
     </nav>
+
+    <div class="account-wrapper">
+        <a href="#" id="account-toggle">
+            👤 Hello <span th:text="${session.username}">User</span> ▼
+        </a>
+        <div class="dropdown-menu" id="account-menu">
+            <a href="/supplier/account">Profile</a>
+            <a href="/supplier/settings">Settings</a>
+            <form th:action="@{/user/logout}" method="post">
+                <button type="submit" class="dropdown-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+        &#9776;
+    </div>
 </header>
 
 <div class="order-overview">
@@ -58,6 +76,6 @@
 
 
 </div>
-
+<script src="/javascript/c-account-menu.js"></script>
 </body>
 </html>
