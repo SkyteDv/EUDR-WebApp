@@ -8,8 +8,7 @@ import com.lowagie.text.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
+import java.io.*;
 
 @Service
 public class PDFService {
@@ -21,7 +20,7 @@ public class PDFService {
             PdfWriter.getInstance(document, out);
             document.open();
 
-            String logoPath = "src/main/resources/static/images/logo_for_slides.png";
+            String logoPath = "src/main/resources/static/images/icons/logo_for_slides.png";
             Image logo = Image.getInstance(logoPath);
             logo.scaleToFit(100, 100);  // Adjust size if needed
             logo.setAlignment(Element.ALIGN_RIGHT);
@@ -71,9 +70,27 @@ public class PDFService {
             // Close document
             document.close();
 
+            savePdfToFile(out.toByteArray(), "order_" + order.getId() + "_delivery_Note.pdf");
+
             return out.toByteArray();
         } catch (Exception e) {
             throw new RuntimeException("Failed to generate PDF: " + e.getMessage(), e);
         }
     }
+
+    private void savePdfToFile(byte[] pdf, String fileName) throws IOException {
+        String directoryPath = "src/main/resources/static/tmp/";
+        File file = new File(directoryPath + fileName);
+
+
+        if (file.exists()) {
+            System.out.println("File already exists, overwriting: " + fileName);
+        }
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            fileOutputStream.write(pdf);
+        }
+    }
+
+
 }

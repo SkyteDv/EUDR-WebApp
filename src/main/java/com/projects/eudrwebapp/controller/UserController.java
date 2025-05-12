@@ -3,6 +3,7 @@ package com.projects.eudrwebapp.controller;
 import java.io.InputStream;
 import java.util.Optional;
 
+import com.projects.eudrwebapp.model.Country;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -135,6 +136,7 @@ public class UserController {
 
     @GetMapping("register")
     public String register(Model model) {
+        model.addAttribute("countries", Country.values());
         model.addAttribute("user", new User());
         return "register";
     }

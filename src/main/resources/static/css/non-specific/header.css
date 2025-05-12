@@ -1,16 +1,16 @@
 .header {
     width: 100%;
+    position: fixed;
     height: 6vh;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 100000;
     overflow: visible;
-    display: flex; /* add flex */
-    align-items: center; /* center items vertically */
-    padding: 0 1rem; /* some space on the sides */
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
 }
 
 .logo-container {
@@ -21,9 +21,9 @@
 }
 
 .logo-container a {
-    display: inline-flex; /* ensures the <a> tag does not cause misalignment */
-    align-items: center; /* ensures the image is aligned properly */
-    height: 100%; /* ensures the <a> takes full height of the header */
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
 }
 
 .logo {
@@ -85,3 +85,91 @@
     cursor: pointer;
     color: #333;
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Account Dropdown Container */
+.account-wrapper {
+    margin-left: auto;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    z-index: 1001;
+}
+
+/* Dropdown Menü selbst */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-width: 200px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+    z-index: 9999;
+}
+
+/* Sichtbar machen über Klasse */
+.dropdown-menu.visible {
+    display: block;
+}
+
+/* Einträge im Dropdown-Menü */
+.dropdown-menu a,
+.dropdown-menu .dropdown-btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    text-decoration: none;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+/* Hover-Effekt */
+.dropdown-menu a:hover,
+.dropdown-menu .dropdown-btn:hover {
+    background-color: #E9E7FFFF;
+}
+
+#account-toggle {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+#account-toggle:visited {
+    color: #333;
+}
+
+#account-toggle:hover {
+    color: #7a6fbe; /* oder eine Hover-Farbe deiner Wahl */
+}
+
+
+#account-toggle i {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+
+@media(max-width: 800px) {
+    .header {
+        height: 60px;
+        font-size: 0.8rem;
+    }
+}
+

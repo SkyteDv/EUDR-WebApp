@@ -20,15 +20,40 @@ function attachTableSearch(tableId, options = {}) {
         return (str.match(regex) || []).length;
     }
 
-    // Function to highlight search matches in a cell
+    // Function to apply highlighting without affecting inner HTML
     function highlightMatches(cell, searchTerm) {
         const text = cell.textContent;
         const regex = new RegExp(`(${searchTerm})`, 'gi');
-        const newText = text.replace(regex, '<span class="highlight">$1</span>');
-        cell.innerHTML = newText;
+
+        // Create an array to store segments of the cell's text
+        let segments = [];
+        let lastIndex = 0;
+
+        // Loop through the text and find matches, creating text nodes and highlight spans
+        text.replace(regex, (match, p1, offset) => {
+            if (offset > lastIndex) {
+                segments.push(text.slice(lastIndex, offset));  // Add non-matched part as plain text
+            }
+            segments.push(`<span class="highlight">${p1}</span>`);  // Add matched part as highlighted
+            lastIndex = offset + match.length;
+        });
+
+        if (lastIndex < text.length) {
+            segments.push(text.slice(lastIndex));  // Add any remaining text after last match
+        }
+
+        // Set the innerHTML of the cell with the segments, preserving the original structure
+        cell.innerHTML = segments.join('');
     }
 
-    // Function to filter and reorder rows
+    // Function to clear all highlights in a cell
+    function clearHighlights(cell) {
+        Array.from(cell.getElementsByClassName('highlight')).forEach(span => {
+            span.replaceWith(...Array.from(span.childNodes)); // Remove span, keeping original text
+        });
+    }
+
+    // Function to filter and reorder rows based on search term
     function filterAndReorderRows(searchTerm) {
         if (searchTerm === '') {
             rows.forEach(row => {
@@ -36,21 +61,12 @@ function attachTableSearch(tableId, options = {}) {
                     row.style.display = '';
                     // Reset all cell highlights
                     Array.from(row.cells).forEach(cell => {
-                        cell.innerHTML = cell.textContent;
+                        clearHighlights(cell);
                     });
                 }
             });
             return;
         }
-
-        // First, reset all highlights
-        rows.forEach(row => {
-            if (!row.classList.contains(settings.excludeRowsClass)) {
-                Array.from(row.cells).forEach(cell => {
-                    cell.innerHTML = cell.textContent; // Clear old highlights
-                });
-            }
-        });
 
         // Sort rows based on the match score (across all cells)
         rows.sort((a, b) => {
@@ -85,11 +101,15 @@ function attachTableSearch(tableId, options = {}) {
             // Check if any cell in the row matches the search term
             Array.from(row.cells).forEach((cell, index) => {
                 if (settings.columnsToSearch.length === 0 || settings.columnsToSearch.includes(index)) {
-                    if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                    const cellContent = cell.textContent.toLowerCase();
+                    if (cellContent.includes(searchTerm)) {
                         rowContainsMatch = true;
                         if (settings.highlight) {
+                            clearHighlights(cell); // Clear previous highlights
                             highlightMatches(cell, searchTerm); // Highlight matching cells
                         }
+                    } else {
+                        clearHighlights(cell); // Clear highlights for non-matching cells
                     }
                 }
             });

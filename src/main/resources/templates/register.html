@@ -53,6 +53,15 @@
                </label>
            </div>
 
+           <div class="input-box">
+               <label>
+                   <select class="input-field" th:field="*{location}" required>
+                       <option value="" disabled selected>Select Country</option>
+                       <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
+                   </select>
+               </label>
+           </div>
+
            <!-- User Type Dropdown -->
            <div class="input-box">
                <label>

@@ -18,6 +18,7 @@ public class Order {
     private LocalDate orderDate;
     private LocalDate estimatedDeliveryDate;
     private String ddsReferenceNumber;
+    private String responsible_party;
 
     private boolean ddsOnDeliveryNote;
 
@@ -40,7 +41,7 @@ public class Order {
     public Order(String erpReferenceNumber,String productCategory, String productName, String dimensions, String destination,
                  LocalDate orderDate, LocalDate estimatedDeliveryDate, String ddsReferenceNumber,
                  boolean ddsOnDeliveryNote, OrderStatus status,
-                 User supplier, User customer) {
+                 User supplier, User customer, String responsible_party) {
         this.erpReferenceNumber = erpReferenceNumber;
         this.productCategory = productCategory;
         this.productName = productName;
@@ -53,6 +54,7 @@ public class Order {
         this.status = status;
         this.supplier = supplier;
         this.customer = customer;
+        this.responsible_party = responsible_party;
     }
 
     public String getDdsStatus() {
@@ -64,6 +66,35 @@ public class Order {
             return "No";  // Yellow
         }
     }
+
+    // Method to calculate the risk level
+    public String calculateRiskLevel() {
+        String ddsStatus = getDdsStatus();
+
+        if ("Yes".equalsIgnoreCase(ddsStatus)) {
+            return switch (status) {
+                case PENDING, SHIPPED, IN_HARBOUR, PASSED_CUSTOMS -> "Low";
+                default -> "Unknown";
+            };
+        } else if ("No".equalsIgnoreCase(ddsStatus)) {
+            return switch (status) {
+                case PENDING -> "Low";
+                case SHIPPED, IN_HARBOUR -> "Medium";
+                case PASSED_CUSTOMS -> "Very High";
+                default -> "Unknown";
+            };
+        } else if ("Not Available".equalsIgnoreCase(ddsStatus)) {
+            return switch (status) {
+                case PENDING -> "Medium";
+                case SHIPPED, IN_HARBOUR -> "High";
+                case PASSED_CUSTOMS -> "Very High";
+                default -> "Unknown";
+            };
+        } else {
+            return "Unknown";
+        }
+    }
+
 
     // --- Getters and Setters ---
 
@@ -171,6 +202,14 @@ public class Order {
         this.customer = customer;
     }
 
+    public String getResponsible_party() {
+        return responsible_party;
+    }
+
+    public void setResponsible_party(String responsible_party) {
+        this.responsible_party = responsible_party;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -187,6 +226,7 @@ public class Order {
                 ", status=" + status +
                 ", supplier=" + supplier +
                 ", customer=" + customer +
+                "; responsible_party='" + responsible_party + '\'' +
                 '}';
     }
 }

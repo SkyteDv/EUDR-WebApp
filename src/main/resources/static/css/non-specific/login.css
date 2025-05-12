@@ -7,7 +7,7 @@
     justify-content: center;
     flex-direction: column;
     width: clamp(280px, 90vw, 440px);
-    height: clamp(360px, 80vh, 480px);
+    height: clamp(400px, 80vh, 520px);
     padding: clamp(1rem, 5vw, 30px);
     box-sizing: border-box;
 }
@@ -32,11 +32,13 @@
     border: none;
     box-shadow: 0px 5px 10px 1px rgba(0,0,0, 0.05);
     outline: none;
+    background-color: #ffffff;
     transition: .3s;
 }
 ::placeholder {
-    font-weight: 500;
-    color: #222;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #8a8989;
 }
 .input-field:focus {
     width: 103%;

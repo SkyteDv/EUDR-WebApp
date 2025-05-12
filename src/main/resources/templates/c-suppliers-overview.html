@@ -51,7 +51,7 @@
         <div class="section-header">
             <h1>Supplier Übersicht</h1>
             <div class="search-bar">
-                <input type="text" placeholder="Suche Supplier..." id="searchInput">
+                <label for="searchInput"></label><input type="text" placeholder="Suche Supplier..." id="searchInput">
             </div>
         </div>
 
@@ -90,7 +90,7 @@
     </main>
 
     <script src="/javascript/c-account-menu.js"></script>
-    <script>
+    <script defer>
         // Einfache Suche
         document.addEventListener("DOMContentLoaded", function () {
             const input = document.getElementById("searchInput");

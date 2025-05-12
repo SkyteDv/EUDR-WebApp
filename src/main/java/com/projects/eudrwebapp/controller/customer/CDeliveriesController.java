@@ -24,7 +24,7 @@ public class CDeliveriesController {
         this.authService = authService;
     }
 
-    @GetMapping
+    @GetMapping("/active")
     public String deliveries(HttpSession session, Model model, @SessionAttribute(value = "userId", required = false) Long userId) {
         if (!authService.validateUserAuth(session, "CUSTOMER")) {
             return "redirect:/";
@@ -35,6 +35,19 @@ public class CDeliveriesController {
         model.addAttribute("deliveries", deliveries);
 
         return "c-deliveries";
+    }
+
+    @GetMapping("/history")
+    public String deliveriesHistory(HttpSession session, Model model, @SessionAttribute(value = "userId", required = false) Long userId) {
+        if (!authService.validateUserAuth(session, "CUSTOMER")) {
+            return "redirect:/";
+        }
+
+        List<Order> deliveries = orderRepository.findByCustomerId(userId);
+
+        //List<Order> history = orderRepository.
+        return "c-delivery-history";
+
     }
 
 }

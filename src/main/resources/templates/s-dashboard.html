@@ -15,7 +15,7 @@
 
 <header class="header">
     <div class="logo-container">
-        <a href="/"><img src="/images/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+        <a href="/"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
         <h4>SUPPLIER</h4>
     </div>
 
@@ -44,11 +44,42 @@
 
 <p>Homepage for the Supplier</p>
 
+<main>
 
-<form th:action="@{/user/logout}" method="post">
-    <button type="submit">Logout</button>
-</form>
+<div id="linechart" style="width: 100%; height: 500px; margin-top: 2rem;"></div>
 
-<script src="/javascript/c-account-menu.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        const data = google.visualization.arrayToDataTable([
+            ['Date', 'Orders with DDS', 'Orders without DDS'],
+            ['2025-05-01',  50,      10],
+            ['2025-05-02',  60,      5],
+            ['2025-05-03',  55,      8],
+            ['2025-05-04',  70,      4],
+            ['2025-05-05',  80,      3]
+        ]);
+
+        const options = {
+            title: 'DDS Presence Over Time',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
+
+        const chart = new google.visualization.LineChart(document.getElementById('linechart'));
+        chart.draw(data, options);
+    }
+</script>
+
+</main>
+
+
+
+
+<script src="/javascript/non-specific/account-menu.js"></script>
+
 </body>
 </html>

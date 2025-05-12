@@ -108,7 +108,8 @@ public class OrderService {
                     false,
                     OrderStatus.PENDING,
                     supplierUser,
-                    customerUser
+                    customerUser,
+                    (String) orderData.get("responsible_party")
             );
             orderRepository.save(order);
             createdOrders++;

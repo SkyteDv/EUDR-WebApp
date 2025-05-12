@@ -19,6 +19,9 @@ public class User {
     private String userType;
     private String osapiensID;
 
+    @Enumerated(EnumType.STRING)
+    private Country location;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_associate",
@@ -37,11 +40,12 @@ public class User {
 
     public User() {}
 
-    public User(String username, String password, String userType, String osapiensID) {
+    public User(String username, String password, String userType, String osapiensID, Country location) {
         this.username = username;
         this.password = password;
         this.userType = userType;
         this.osapiensID = osapiensID;
+        this.location = location;
     }
 
     public Long getId() {
@@ -78,6 +82,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Country getLocation() {
+        return location;
+    }
+
+    public void setLocation(Country location) {
+        this.location = location;
     }
 
     @Override
