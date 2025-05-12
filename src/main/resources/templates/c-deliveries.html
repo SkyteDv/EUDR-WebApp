@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Deliveries</title>
+    <title>Deliveries: Active</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/customer/c-deliveries.css">
@@ -12,6 +12,13 @@
     <!-- Font Awesome CDN for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="/javascript/customer/c-deliveries/c-sortTableHeaders.js" defer></script>
+    <script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js" defer></script>
+    <script src="/javascript/customer/c-deliveries/c-initializeDeliveryTableSearch.js" defer></script>
+    <script src="/javascript/non-specific/customTableSearch.js" defer></script>
+    <script src="/javascript/non-specific/account-menu.js" defer></script>
+    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
 </head>
 <body>
 
@@ -77,7 +84,7 @@
             <ul class="sub-menu">
                 <div>
                     <li class="active"><a href="#">Active</a></li>
-                    <li><a href="#">History</a></li>
+                    <li><a href="/customer/deliveries/history">History</a></li>
                 </div>
             </ul>
         </li>
@@ -111,111 +118,102 @@
 </aside>
 
 <main>
-    <div class="main-content">
-        <div class="deliveries-header">
-            <h1>Deliveries</h1>
+    <div class="deliveries-header">
+        <h1>Deliveries</h1>
 
-            <div class="global-filter">
-                <p class="filterTitle">Filter by</p>
+        <div class="global-filter">
+            <p class="filterTitle">Filter by</p>
 
-                <label class="filter-label">
-                    <select class="filter-choice-input" id="filter-choice-input-risk">
-                        <option value="low">Low Risk</option>
-                        <option value="medium">Medium Risk</option>
-                        <option value="high">High Risk</option>
-                    </select>
-                </label>
-                <p class="filterTitle">DDs Attached:</p>
-                <label class="filter-label">
-                    <select class="filter-choice-input" id="filter-choice-input-dds-label">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                        <option value="denied">DENIED</option>
-                    </select>
-                </label>
+            <label class="filter-label">
+                <select class="filter-choice-input" id="filter-choice-input-risk">
+                    <option value="low">Low Risk</option>
+                    <option value="medium">Medium Risk</option>
+                    <option value="high">High Risk</option>
+                </select>
+            </label>
+            <p class="filterTitle">DDs Attached:</p>
+            <label class="filter-label">
+                <select class="filter-choice-input" id="filter-choice-input-dds-label">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    <option value="denied">DENIED</option>
+                </select>
+            </label>
 
-                <label class="filter-label">
-                    <input type="text" class="filter-text-input" placeholder="Customer">
-                </label>
+            <label class="filter-label">
+                <input type="text" class="filter-text-input" placeholder="Customer">
+            </label>
 
-                <div class="filter-buttons">
-                    <button id="resetFilterButton" class="clean-button">
-                        <span class="material-icons">restart_alt</span>
-                    </button>
-                    <button id="applyFilterButton" class="clean-button">
-                        <span class="material-icons">playlist_add_check</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="search-filter">
-                <label>
-                    <input type="text" data-table-id="ordersTable" class="search-input" placeholder="Search Deliveries..." id="searchInput">
-                </label>
-                <button id="refreshDeliveriesButton" class="clean-button">
-                    <i class="fas fa-rotate-right"></i>
+            <div class="filter-buttons">
+                <button id="resetFilterButton" class="clean-button">
+                    <span class="material-icons">restart_alt</span>
+                </button>
+                <button id="applyFilterButton" class="clean-button">
+                    <span class="material-icons">playlist_add_check</span>
                 </button>
             </div>
         </div>
 
-        <div class="deliveries-table">
-            <table id="ordersTable">
-                <thead>
-                <tr>
-                    <th class="sortable" data-column="riskLevel">Risk</th>
-                    <th class="sortable" data-column="ddsStatus">DDS on Delivery</th>
-                    <th data-column="ddsReferenceNumber">DDS Ref</th>
-                    <th data-column="erpReferenceNumber">Shipment Ref</th>
-                    <th class="sortable" data-column="destination">Destination</th>
-                    <th class="sortable" data-column="status">Status</th>
-                    <th class="sortable" data-column="supplier">Supplier</th>
-                    <th class="sortable" data-column="orderDate">Order Date</th>
-                    <th class="sortable" data-column="estimatedDeliveryDate">Est. Delivery</th>
-                    <th class="sortable" data-column="productCategory">Category</th>
-                    <th class="sortable" data-column="productName">Product Name</th>
-                    <th class="sortable" data-column="dimensions">Dimensions (m²)</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="order : ${deliveries}"
-                    th:classappend="${order.ddsStatus == 'Not Available'} ? 'red-outline' : ''">
-                    <td data-label="Risk Level" th:text="${order.calculateRiskLevel()}"></td>
-                    <td data-label="DDS on Delivery">
-                        <span th:if="${order.ddsStatus == 'Yes'}" style="color: green; font-weight: bold;">Yes</span>
-                        <span th:if="${order.ddsStatus == 'No'}" style="color: orange; font-weight: bold;">No</span>
-                        <span th:if="${order.ddsStatus == 'Not Available'}" style="color: red; font-weight: bold;">DENIED</span>
-                    </td>
-                    <td data-label="DDS Ref">
-                        <span th:if="${order.ddsReferenceNumber == ''}" style="color: red; font-weight: bold;">DENIED</span>
-                        <span th:unless="${order.ddsReferenceNumber == ''}" th:text="${order.ddsReferenceNumber}"></span>
-                    </td>
-                    <td data-label="Shipment Ref" th:text="${order.erpReferenceNumber}"></td>
-                    <td data-label="Destination" th:text="${order.destination}"></td>
-                    <td data-label="Status" th:text="${order.status}"></td>
-                    <td data-label="Supplier">
-                        <a th:href="@{/suppliers}" th:text="${order.supplier.username}"></a>
-                    </td>
-                    <td data-label="Order Date" th:text="${order.orderDate}"></td>
-                    <td data-label="Estimated Delivery" th:text="${order.estimatedDeliveryDate}"></td>
-                    <td data-label="Category" th:text="${order.productCategory}"></td>
-                    <td data-label="Product Name" th:text="${order.productName}"></td>
-                    <td data-label="Dimensions" th:text="${order.dimensions}"></td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="search-filter">
+            <label>
+                <input type="text" data-table-id="ordersTable" class="search-input" placeholder="Search Deliveries..." id="searchInput">
+            </label>
+            <button id="refreshDeliveriesButton" class="clean-button">
+                <i class="fas fa-rotate-right"></i>
+            </button>
         </div>
+    </div>
+
+    <div class="deliveries-table">
+        <table id="ordersTable">
+            <thead>
+            <tr>
+                <th class="sortable" data-column="riskLevel">Risk</th>
+                <th class="sortable" data-column="ddsStatus">DDS on Delivery</th>
+                <th data-column="ddsReferenceNumber">DDS Ref</th>
+                <th data-column="erpReferenceNumber">Shipment Ref</th>
+                <th class="sortable" data-column="destination">Destination</th>
+                <th class="sortable" data-column="status">Status</th>
+                <th class="sortable" data-column="supplier">Supplier</th>
+                <th class="sortable" data-column="orderDate">Order Date</th>
+                <th class="sortable" data-column="estimatedDeliveryDate">Est. Delivery</th>
+                <th class="sortable" data-column="productCategory">Category</th>
+                <th class="sortable" data-column="productName">Product Name</th>
+                <th class="sortable" data-column="dimensions">Dimensions (m²)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${deliveries}"
+                th:classappend="${order.ddsStatus == 'Not Available'} ? 'red-outline' : ''">
+                <td data-label="Risk Level" th:text="${order.calculateRiskLevel()}"></td>
+                <td data-label="DDS on Delivery">
+                    <span th:if="${order.ddsStatus == 'Yes'}" style="color: green; font-weight: bold;">Yes</span>
+                    <span th:if="${order.ddsStatus == 'No'}" style="color: orange; font-weight: bold;">No</span>
+                    <span th:if="${order.ddsStatus == 'Not Available'}" style="color: red; font-weight: bold;">DENIED</span>
+                </td>
+                <td data-label="DDS Ref">
+                    <span th:if="${order.ddsReferenceNumber == ''}" style="color: red; font-weight: bold;">DENIED</span>
+                    <span th:unless="${order.ddsReferenceNumber == ''}" th:text="${order.ddsReferenceNumber}"></span>
+                </td>
+                <td data-label="Shipment Ref" th:text="${order.erpReferenceNumber}"></td>
+                <td data-label="Destination" th:text="${order.destination}"></td>
+                <td data-label="Status" th:text="${order.status}"></td>
+                <td data-label="Supplier">
+                    <a th:href="@{/suppliers}" th:text="${order.supplier.username}"></a>
+                </td>
+                <td data-label="Order Date" th:text="${order.orderDate}"></td>
+                <td data-label="Estimated Delivery" th:text="${order.estimatedDeliveryDate}"></td>
+                <td data-label="Category" th:text="${order.productCategory}"></td>
+                <td data-label="Product Name" th:text="${order.productName}"></td>
+                <td data-label="Dimensions" th:text="${order.dimensions}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 
 
-<script src="/javascript/customer/c-deliveries/c-sortTableHeaders.js"></script>
-<script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js"></script>
 
-<!--Search Algo Integration-->
-<script src="/javascript/customer/c-deliveries/c-initializeDeliveryTableSearch.js"></script>
-<script src="/javascript/non-specific/customTableSearch.js"></script>
-<script src="/javascript/non-specific/account-menu.js"></script>
-<script src="/javascript/non-specific/sidebar-toggle.js"></script>
 
 <script>
     function editDelivery(ddsReferenceNumber) {

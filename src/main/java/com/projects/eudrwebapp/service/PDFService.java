@@ -20,7 +20,7 @@ public class PDFService {
             PdfWriter.getInstance(document, out);
             document.open();
 
-            String logoPath = "src/main/resources/static/images/logo_for_slides.png";
+            String logoPath = "src/main/resources/static/images/icons/logo_for_slides.png";
             Image logo = Image.getInstance(logoPath);
             logo.scaleToFit(100, 100);  // Adjust size if needed
             logo.setAlignment(Element.ALIGN_RIGHT);

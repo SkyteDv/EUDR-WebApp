@@ -1,8 +1,5 @@
-.main-content {
-    font-size: 0.85vw;
-    height: 100%;
-    width: 100%;
-    background-color: transparent;
+.main {
+    font-size: 0.8vw;
 }
 
 .deliveries-header {
@@ -84,7 +81,7 @@
     }
 
     main {
-        font-size: 0.9vmax;
+        font-size: 0.8vmax;
     }
 
     .deliveries-table th {
@@ -95,7 +92,7 @@
 
 @media (max-width: 1200px) {
     main {
-        font-size: 1.2vmax;
+        font-size: 1vmax;
     }
 
     .deliveries-table th {
