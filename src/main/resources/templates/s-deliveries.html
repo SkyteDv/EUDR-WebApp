@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/non-specific/deliveries-filter.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="/css/account-menu.css">
+    <link rel="stylesheet" href="/css/supplier/s-deliveries-side-pop.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -45,8 +46,61 @@
 </header>
 
 <div id="side-popup-details">
-    <p>Test</p>
+    <section id="side-popup-start">
+        <div id="popup-title-close">
+            <button onclick=toggleSidebar() id="closeBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
+            </button>
+            <span class="popup-title">Detail View</span>
+        </div>
+        <div class="data-card-holder">
+            <!-- Order Details -->
+            <div class="data-card" id="shipment-data">
+                <h4>Order Information</h4>
+                <p><strong>Shipment Ref:</strong> <span id="span-erpreferencenumber"></span></p>
+                <p><strong>DDS Ref:</strong> <span id="span-ddsreferencenumber"></span></p>
+                <p><strong>DDS on Delivery:</strong> <span id="span-ddsondeliverynote"></span></p>
+                <p><strong>Order Date:</strong> <span id="span-orderdate"></span></p>
+                <p><strong>Expected Delivery Date:</strong> <span id="span-estimateddeliverydate"></span></p>
+                <p><strong>Order Amount:</strong> Placeholder</p>
+                <p><strong>Order Dimensions:</strong> <span id="span-orderdimensions"></span></p>
+            </div>
 
+            <!-- Customer Information -->
+            <div class="data-card" id="customer-info">
+                <h4>Customer Information</h4>
+                <p><strong>Customer Name:</strong> <span id="span-customername"></span></p>
+                <p><strong>Customer Location:</strong> <span id="span-customerlocation"></span></p>
+            </div>
+
+            <!-- Product Information -->
+            <div class="data-card" id="product-info">
+                <h4>Product Information</h4>
+                <p><strong>Product Group:</strong> <span id="span-productcategory"></span></p>
+                <p><strong>Product Name:</strong> <span id="span-productname"></span></p>
+            </div>
+        </div>
+    </section>
+    <section id="side-popup-end">
+        <button id="verifyBtn" class="clean-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m691-150 139-138-42-42-97 95-39-39-42 43 81 81ZM240-600h480v-80H240v80ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40ZM120-80v-680q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v267q-19-9-39-15t-41-9v-243H200v562h243q5 31 15.5 59T486-86l-6 6-60-60-60 60-60-60-60 60-60-60-60 60Zm120-200h203q3-21 9-41t15-39H240v80Zm0-160h284q38-37 88.5-58.5T720-520H240v80Zm-40 242v-562 562Z"/></svg>
+            <span>Verify</span>
+        </button>
+        <button id="editBtn" class="clean-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
+            <span>Edit</span>
+        </button>
+        <button id="noteBtn" class="clean-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-400v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM180-660h120v-120H180v120Zm-60 60v-240h240v240H120Zm60 420h120v-120H180v120Zm-60 60v-240h240v240H120Zm540-540h120v-120H660v120Zm-60 60v-240h240v240H600ZM360-400v-80h-80v-80h160v160h-80Zm40-200v-160h80v80h80v80H400Zm-190-90v-60h60v60h-60Zm0 480v-60h60v60h-60Zm480-480v-60h60v60h-60Zm-50 570v-120H520v-80h120v-120h80v120h120v80H720v120h-80Z"/></svg>
+            <span>Delivery Note</span>
+        </button>
+    </section>
+    <section id="danger-mark-sent">
+        <button id="dangerBtn" class="clean-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z"/></svg>
+            <span>Shipped without DDS</span>
+        </button>
+    </section>
 </div>
 
 <main class="page-content">
@@ -133,10 +187,18 @@
                     <tbody>
                     <tr th:each="order : ${activeDeliveries}" class="clickable-row"
                         th:classappend="${#strings.isEmpty(order.ddsReferenceNumber)} ? 'red-outline' : ''"
-                        th:onclick="|window.location='/supplier/deliveries/details/${order.id}'|">
+                        th:attr="data-id=${order.id}, data-erpReferenceNumber=${order.erpReferenceNumber},
+                                    data-ddsReferenceNumber=${order.ddsReferenceNumber},
+                                    data-ddsOnDeliveryNote=${order.ddsOnDeliveryNote},
+                                    data-orderDate=${order.orderDate},
+                                    data-estimatedDeliveryDate=${order.estimatedDeliveryDate},
+                                    data-orderDimensions=${order.dimensions},
+                                    data-customerName=${order.customer.username},
+                                    data-customerLocation=${order.customer.location},
+                                    data-productCategory=${order.productCategory},
+                                    data-productName=${order.productName}">
                         <td th:text="${order.erpReferenceNumber}"></td>
                         <td th:text="${#strings.isEmpty(order.ddsReferenceNumber) ? 'Denied' : order.ddsReferenceNumber}"></td>
-
                         <td th:text="${order.customer.username}"></td>
                         <td th:text="${order.orderDate}"></td>
                         <td th:text="${order.productName}"></td>
@@ -183,10 +245,16 @@
     </div>
 </main>
 
-
+<div id="statusPopup" class="status-popup">
+    <div class="status-popup-content">
+        <p>Order Status Updated</p>
+        <button id="statusPopupCloseBtn" class="clean-button">Close</button>
+    </div>
+</div>
 
 <div id="search-config-popup"></div>
 
+<script src="/javascript/supplier/s-deliveries/open-side-pop.js"></script>
 <script src="/javascript/non-specific/customTableSearch.js" ></script>
 <script src="/javascript/supplier/s-deliveries/s-initializeTableSearch.js"></script>
 <script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js"></script>

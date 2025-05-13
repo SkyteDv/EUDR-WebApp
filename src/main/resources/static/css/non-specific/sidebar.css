@@ -73,9 +73,11 @@
     flex-shrink: 0;
     fill: var(--text-clr);
 }
-#sidebar a span, #sidebar .dropdown-btn span{
+#sidebar a span, #sidebar .dropdown-btn span {
     flex-grow: 1;
+    margin-left: 5px;
 }
+
 #sidebar a:hover, #sidebar .dropdown-btn:hover{
     background-color: var(--field-hover-clr);
 }

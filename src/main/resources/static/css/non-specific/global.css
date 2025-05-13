@@ -4,8 +4,10 @@
 :root {
 
 /*Light Mode*/
-    --text-clr: black;
     --base-clr: white;
+    --base-acc-clr: #f6f6f6;
+    --text-clr: black;
+    --text-acc-clr: #424242;
     --field-hover-clr: #E9E7FFFF;
     --button-bg-color: #7A6FBEFF;
     --button-hover-bg-clr: #6857A8FF;
