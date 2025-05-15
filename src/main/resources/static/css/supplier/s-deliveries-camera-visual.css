@@ -1,0 +1,51 @@
+/* Add this to your CSS file */
+.camera-fade {
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.camera-fade.visible {
+    opacity: 1;
+}
+
+#cameraDiv {
+    pointer-events: all;
+    z-index: 999999999;
+    display: flex;
+    position: absolute;
+    top: 55%;
+    height: 750px;
+    width: 1100px;
+    margin-left: 700px; /* distance from right edge */
+    transform: translateY(-50%); /* centers vertically */
+    color: var(--text-clr);
+}
+
+#webcamVideo {
+    z-index: 999999999;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: transparent;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#camera-popup-content {
+    z-index: 999999999;
+    background-color: var(--base-acc-clr);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+
+    position: relative;
+}
+
+#camera-popup-actions {
+    margin: 0.5rem 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: transparent;
+    justify-content: space-between;
+}
