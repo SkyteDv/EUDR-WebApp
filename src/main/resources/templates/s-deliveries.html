@@ -7,6 +7,7 @@
     <title>Deliveries</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/non-specific/sidebar.css">
     <link rel="stylesheet" href="/css/supplier/s-deliveries.css">
     <link rel="stylesheet" href="/css/non-specific/deliveries-filter.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -46,11 +47,50 @@
     </div>
 </header>
 
+<aside id="sidebar">
+    <ul>
+        <li id="sidebar-actions-container">
+            <span class="logo">Actions</span>
+            <button onclick=toggleSidebar() id="toggle-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
+            </button>
+        </li>
+        <li>
+            <button onclick=toggleSubMenu(this) class="dropdown-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
+                <span>Dashboard</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/></svg>
+            </button>
+            <ul class="sub-menu">
+                <div>
+                    <li><a href="/supplier/dashboard">Data 1</a></li>
+                    <li><a href="#">Data 2</a></li>
+                    <li><a href="#">Data 3</a></li>
+                </div>
+            </ul>
+        </li>
+        <li>
+            <button onclick=toggleSubMenu(this) class="dropdown-btn active">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Zm320-228Z"/></svg>
+                <span>Deliveries</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/></svg>
+            </button>
+            <ul class="sub-menu">
+                <div>
+                    <li class="active"><a href="/supplier/deliveries">Active</a></li>
+                    <li><a href="#">History</a></li>
+                </div>
+            </ul>
+        </li>
+    </ul>
+</aside>
+
+
 <div id="wrapper-side-popup">
     <div id="side-popup-details">
         <section id="side-popup-start">
             <div id="popup-title-close">
-                <button onclick=toggleSidebar() id="closeBtn">
+                <button id="closeBtn">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
                 </button>
                 <span id="popup-title" class="popup-title">Detail View</span>
@@ -107,6 +147,7 @@
     </div>
     <!--Camera Div Spot-->
 </div>
+
 
 <main class="page-content">
     <div class="section-header">
@@ -168,7 +209,7 @@
         <!-- Left Panel -->
         <section class="left-panel">
             <div class="panel-header">
-                <h2>Deliveries (DDS Not Attached)</h2>
+                <h2>Deliveries To Process</h2>
                 <div class="search-filter-wrapper">
                     <label for="searchInputLeft"></label>
                     <input type="text" id="searchInputLeft" data-table-id="activeDeliveriesTable" class="search-input" placeholder="Search Active Deliveries...">
@@ -216,7 +257,7 @@
         <!-- Right Panel -->
         <section class="right-panel ">
             <div class="panel-header">
-                <h2>Deliveries (DDS Attached)</h2>
+                <h2>Deliveries DDS Attached</h2>
                 <div class="search-filter-wrapper">
                     <label for="searchInputRight"></label><input type="text" id="searchInputRight" class="search-input" placeholder="Search Attached Deliveries...">
                     <button class="filterConfig clean-button">
@@ -266,7 +307,7 @@
 <script src="/javascript/supplier/s-deliveries/doneDeliveryLogic.js"></script>
 <script src="/javascript/supplier/s-deliveries/s-globalFilter.js"></script>
 <script src="/javascript/non-specific/account-menu.js"></script>
-
+<script src="/javascript/non-specific/sidebar-toggle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 
 </body>

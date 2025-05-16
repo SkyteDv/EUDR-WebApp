@@ -42,7 +42,7 @@
     gap: 1rem;
 }
 
-#side-popup-details.open {
+#side-popup-details.popen {
     visibility: visible;
     flex-direction: column;
     opacity: 1;
@@ -54,7 +54,7 @@
 #side-popup-details.wide {
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: calc(100vw - 60px);
 }
 
 
@@ -63,7 +63,7 @@
     transition: opacity 300ms ease;
 }
 
-#side-popup-details.open section {
+#side-popup-details.popen section {
     opacity: 1;
 }
 

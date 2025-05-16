@@ -22,7 +22,7 @@ let isTransitioning = false;
 // === SIDEBAR LOGIC ===
 function openSidebar() {
     sidePop.style.visibility = 'visible';
-    sidePop.classList.add('open');
+    sidePop.classList.add('popen');
 }
 
 function closeSidebar() {
@@ -38,7 +38,7 @@ function closeSidebar() {
         return;
     }
 
-    sidePop.classList.remove("open");
+    sidePop.classList.remove("popen");
 
 
     sidePop.addEventListener('transitionend', function handler() {
@@ -131,7 +131,7 @@ function setupPopupButtons() {
     });
 
     freshVerifyBtn.addEventListener('click', () => {
-        if (!sidePop.classList.contains("open")) return;
+        if (!sidePop.classList.contains("popen")) return;
 
         freshVerifyBtn.setAttribute("disabled", "");
         freshVerifyBtn.style.display = "none";
@@ -147,7 +147,7 @@ function setupPopupButtons() {
             sidePop.removeEventListener('transitionend', handler);
 
             // ⛔️ Sidebar was closed during transition — abort cameraDiv creation
-            if (!sidePop.classList.contains("open")) return;
+            if (!sidePop.classList.contains("popen")) return;
 
             // Remove old camera div if it exists
             removeExistingCameraDiv();
@@ -160,7 +160,7 @@ function setupPopupButtons() {
 
     // === DONE BUTTON ===
     freshDoneBtn.addEventListener('click', () => {
-        sidePop.classList.remove("wide", "open");
+        sidePop.classList.remove("wide", "popen");
 
         sidePop.addEventListener('transitionend', function handler() {
             sidePop.style.visibility = 'hidden';
@@ -208,5 +208,8 @@ function removeExistingCameraDiv() {
 
 // === TABLE ROW LISTENERS ===
 document.querySelectorAll(".clickable-row").forEach(row => {
+    if(row.classList.contains("red-outline")) {
+        return;
+    }
     row.addEventListener("click", () => openSidebarFromRow(row));
 });
