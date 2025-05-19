@@ -1,20 +1,24 @@
 package com.projects.eudrwebapp.controller.customer;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
 import com.projects.eudrwebapp.model.Order;
 import com.projects.eudrwebapp.model.SupplierStatsDTO;
 import com.projects.eudrwebapp.model.User;
+import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import com.projects.eudrwebapp.service.AuthService;
 import com.projects.eudrwebapp.service.OrderService;
-import com.projects.eudrwebapp.repository.OrderRepository;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer/suppliers")
@@ -25,8 +29,8 @@ public class CSupplierController {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
 
-
-    public CSupplierController(UserRepository userRepository, AuthService authService, OrderService orderService, OrderRepository orderRepository) {
+    public CSupplierController(UserRepository userRepository, AuthService authService, OrderService orderService,
+            OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.authService = authService;
         this.orderService = orderService;
@@ -108,9 +112,14 @@ public class CSupplierController {
         }
 
         List<Order> deliveries = orderRepository.findByCustomerAndSupplier(customer, supplier);
+        SupplierStatsDTO stats = orderService.getSupplierStatsForCustomerAndSupplier(customer, supplier);
 
         model.addAttribute("supplier", supplier);
         model.addAttribute("deliveries", deliveries);
+        model.addAttribute("greenCount", stats.getGreenDeliveries());
+        model.addAttribute("yellowCount", stats.getYellowDeliveries());
+        model.addAttribute("redCount", stats.getRedDeliveries());
+
         return "c-supplier-details"; // neue HTML-Seite
     }
 

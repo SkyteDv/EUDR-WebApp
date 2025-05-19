@@ -1,150 +1,179 @@
-/* Supplier Overview Page Layout */
-.supplier-page {
+/* === Layout: Gesamtseite === */
+main {
+    height: 100vh;
+    width: 100%;
+    padding-top: calc(6vh + 2rem);
+    padding-right: 2rem;
+    padding-left: calc(60px + 2rem);
+    padding-bottom: 2rem;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    background-color: #f4f4f4;
-    min-height: calc(100vh - 6vh); /* Adjust for header */
+    gap: 2rem;
+    background-color: transparent;
 }
 
-/* Section Header */
+/* === Header-Bereich mit Titel und Suche === */
 .section-header {
-    width: 100%;
-    max-width: 1200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .section-header h1 {
     font-size: 2rem;
+    font-weight: 500;
     color: #333;
+    margin: 0;
 }
 
-.search-bar {
-    width: 100%;
-    max-width: 400px;
+/* === Suchfeld + Buttons === */
+.global-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
-#searchInput {
-    width: 100%;
-    padding: 0.7rem 1.2rem;
+.search-input {
+    padding: 0.6rem 1rem;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
-    outline: none;
-    box-sizing: border-box;
     color: #333;
+    width: 250px;
 }
 
-#searchInput:focus {
-    border-color: #7a6fbe;
+td.status-cell {
+    color: #000;
 }
 
-/* Table Styling */
-.table-wrapper {
-    width: 100%;
-    max-width: 1200px;
-    background-color: white;
+.clean-button {
+    background-color: var(--button-bg-color);
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.clean-button:hover {
+    background-color: var(--button-hover-bg-clr);
+}
+
+.filterConfig .material-icons {
+    font-size: 24px;
+}
+
+/* === Tabelle + Wrapper === */
+.wrapper {
+    flex: 1;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
 }
 
 .delivery-table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 0.95rem;
 }
 
 .delivery-table thead {
-    background-color: #eaeaed;
-}
-
-.delivery-table th, .delivery-table td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    font-size: 1rem;
+    background-color: #e0e0e0;
 }
 
 .delivery-table th {
+    padding: 1rem;
+    text-align: left;
     font-weight: 600;
     color: #333;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    position: relative;
 }
 
-.delivery-table td a {
-    color: #7a6fbe;
-    text-decoration: underline;
-    font-weight: 500;
+.delivery-table td {
+    padding: 1rem;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #eee;
 }
 
 .delivery-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.delivery-table td a:hover {
-    text-decoration: underline;
+.delivery-table thead th.sortable:hover {
+    background-color: #ddd;
+    cursor: pointer;
 }
 
-/* Hover-Effekt auf sortierbare Spalten */
-.delivery-table th.sortable {
+/* === GreenRate Coloring === */
+.status-cell {
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+}
+
+.status-green {
+    background-color: #28a745;
+}
+
+.status-yellow {
+    background-color: #ffc107;
+    color: black;
+}
+
+.status-red {
+    background-color: #dc3545;
+}
+
+/* === Details Button === */
+.details-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.details-button:hover {
+    background-color: var(--button-hover-bg-clr);
+}
+
+.sortable {
     cursor: pointer;
     position: relative;
-    transition: background-color 0.2s ease;
 }
 
-.delivery-table th.sortable:hover {
-    background-color: #d6d6e0;
-}
-
-/* Sortiericon rechtsbündig */
 .sort-icon {
     margin-left: 0.5rem;
-    font-size: 0.8rem;
-    color: #666;
+    color: #888;
+    font-size: 0.9rem;
 }
 
-/* Aktiv sortierte Spalte */
-.delivery-table th.sorted-asc,
-.delivery-table th.sorted-desc {
-    background-color: #cfcfe6;
-    font-weight: 700;
+.sorted-asc .sort-icon::before {
+    content: "\f0de";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
 }
 
-
-/* Responsive Table */
-@media (max-width: 900px) {
-    .delivery-table, .delivery-table thead, .delivery-table tbody, .delivery-table th, .delivery-table td, .delivery-table tr {
-        display: block;
-    }
-
-    .delivery-table thead tr {
-        display: none;
-    }
-
-    .delivery-table tr {
-        margin-bottom: 1rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 1rem;
-        background: #fff;
-    }
-
-    .delivery-table td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.7rem 1rem;
-        text-align: left;
-    }
-
-    .delivery-table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #555;
-        flex-basis: 40%;
-    }
+.sorted-desc .sort-icon::before {
+    content: "\f0dd";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
 }
+

@@ -1,4 +1,4 @@
-#sidebar{
+#sidebar {
     z-index: 99999;
     min-height: 100vh;
     color: var(--text-clr);
@@ -16,27 +16,29 @@
     overflow: hidden;
 }
 
-#sidebar.open{
+#sidebar.open {
     padding: 5px 1em;
     width: 250px;
 }
 
-#sidebar ul{
+#sidebar ul {
     list-style: none;
 }
 
-#sidebar > ul > li:first-child{
+#sidebar>ul>li:first-child {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 16px;
-    .logo{
+
+    .logo {
         font-weight: 600;
     }
 }
-#sidebar ul li.active a{
+
+#sidebar ul li.active a {
     color: var(--button-bg-color);
 
-    svg{
+    svg {
         fill: var(--button-bg-color);
     }
 }
@@ -46,13 +48,15 @@
         color: var(--button-bg-color);
     }
 
-    svg{
+    svg {
         fill: var(--button-bg-color);
     }
 }
 
 
-#sidebar a, #sidebar .dropdown-btn, #sidebar .logo{
+#sidebar a,
+#sidebar .dropdown-btn,
+#sidebar .logo {
     border-radius: .5em;
     padding: .85em;
     text-decoration: none;
@@ -61,7 +65,8 @@
     align-items: center;
     gap: 1em;
 }
-.dropdown-btn{
+
+.dropdown-btn {
     width: 100%;
     text-align: left;
     background: none;
@@ -69,39 +74,46 @@
     font: inherit;
     cursor: pointer;
 }
-#sidebar svg{
+
+#sidebar svg {
     flex-shrink: 0;
     fill: var(--text-clr);
 }
-#sidebar a span, #sidebar .dropdown-btn span{
+
+#sidebar a span,
+#sidebar .dropdown-btn span {
     flex-grow: 1;
+    margin-left: 5px;
 }
-#sidebar a:hover, #sidebar .dropdown-btn:hover{
+
+#sidebar a:hover,
+#sidebar .dropdown-btn:hover {
     background-color: var(--field-hover-clr);
 }
-#sidebar .sub-menu{
+
+#sidebar .sub-menu {
     display: grid;
     grid-template-rows: 0fr;
     transition: 300ms ease-in-out;
 
-    > div{
+    >div {
         overflow: hidden;
     }
 }
 
-#sidebar .sub-menu.show{
+#sidebar .sub-menu.show {
     grid-template-rows: 1fr;
 }
 
-.dropdown-btn svg{
+.dropdown-btn svg {
     transition: 200ms ease;
 }
 
-.rotate svg:last-child{
+.rotate svg:last-child {
     rotate: 180deg;
 }
 
-#sidebar .sub-menu a{
+#sidebar .sub-menu a {
     padding-left: 2em;
 }
 
@@ -115,7 +127,7 @@
     background-color: transparent;
 }
 
-#toggle-btn{
+#toggle-btn {
     margin-left: auto;
     padding: 1em;
     border: none;
@@ -127,12 +139,12 @@
     align-items: center;
     justify-content: center;
 
-    svg{
+    svg {
         transition: rotate 150ms ease;
     }
 }
 
-#toggle-btn:hover{
+#toggle-btn:hover {
     background-color: var(--field-hover-clr);
 }
 
@@ -145,7 +157,4 @@ main {
     padding-bottom: 2rem;
     background-color: transparent;
 }
-
-
-
 
