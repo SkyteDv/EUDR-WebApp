@@ -153,7 +153,7 @@ function setupPopupButtons() {
             removeExistingCameraDiv();
 
             // Create the new popup
-            createCameraPopup(currentOrderDdsReference);
+            createCameraPopup(currentOrderId, currentOrderDdsReference);
         });
     });
 

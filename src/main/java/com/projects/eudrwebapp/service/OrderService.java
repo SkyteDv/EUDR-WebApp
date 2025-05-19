@@ -2,10 +2,7 @@ package com.projects.eudrwebapp.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.projects.eudrwebapp.model.Order;
-import com.projects.eudrwebapp.model.OrderStatus;
-import com.projects.eudrwebapp.model.SupplierStatsDTO;
-import com.projects.eudrwebapp.model.User;
+import com.projects.eudrwebapp.model.*;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import org.hibernate.exception.ConstraintViolationException;
@@ -109,7 +106,8 @@ public class OrderService {
                     OrderStatus.PENDING,
                     supplierUser,
                     customerUser,
-                    (String) orderData.get("responsible_party")
+                    (String) orderData.get("responsible_party"),
+                    RiskLevel.LOW
             );
             orderRepository.save(order);
             createdOrders++;
@@ -131,49 +129,54 @@ public class OrderService {
     }
 
     public List<SupplierStatsDTO> getSupplierStatsForCustomer(User customer) {
-    List<Order> orders = orderRepository.findAll(); // Optional: effizienter mit eigenem Query für Customer
+        List<Order> orders = orderRepository.findAll(); // Optional: effizienter mit eigenem Query für Customer
 
-    // Filter: nur Orders dieses Customers
-    List<Order> customerOrders = orders.stream()
-            .filter(o -> o.getCustomer().getId().equals(customer.getId()))
-            .toList();
+        // Filter: nur Orders dieses Customers
+        List<Order> customerOrders = orders.stream()
+                .filter(o -> o.getCustomer().getId().equals(customer.getId()))
+                .toList();
 
-    // Gruppiere nach Supplier
-    Map<User, List<Order>> ordersBySupplier = customerOrders.stream()
-            .collect(Collectors.groupingBy(Order::getSupplier));
+        // Gruppiere nach Supplier
+        Map<User, List<Order>> ordersBySupplier = customerOrders.stream()
+                .collect(Collectors.groupingBy(Order::getSupplier));
 
-    // Erzeuge DTOs
-    List<SupplierStatsDTO> result = new ArrayList<>();
+        // Erzeuge DTOs
+        List<SupplierStatsDTO> result = new ArrayList<>();
 
-    for (Map.Entry<User, List<Order>> entry : ordersBySupplier.entrySet()) {
-        User supplier = entry.getKey();
-        List<Order> supplierOrders = entry.getValue();
+        for (Map.Entry<User, List<Order>> entry : ordersBySupplier.entrySet()) {
+            User supplier = entry.getKey();
+            List<Order> supplierOrders = entry.getValue();
 
-        long total = supplierOrders.size();
-        long green = supplierOrders.stream()
-                .filter(o -> o.getDdsStatus().equals("Yes"))
-                .count();
-        long red = supplierOrders.stream()
-                .filter(o -> o.getDdsStatus().equals("Not Available"))
-                .count();
-        long yellow = supplierOrders.stream()
-                .filter(o -> o.getDdsStatus().equals("No"))
-                .count();
+            long total = supplierOrders.size();
+            long green = supplierOrders.stream()
+                    .filter(o -> o.getDdsStatus().equals("Yes"))
+                    .count();
+            long red = supplierOrders.stream()
+                    .filter(o -> o.getDdsStatus().equals("Not Available"))
+                    .count();
+            long yellow = supplierOrders.stream()
+                    .filter(o -> o.getDdsStatus().equals("No"))
+                    .count();
 
-        SupplierStatsDTO dto = new SupplierStatsDTO(
-                supplier.getUsername(),
-                supplier.getId(),
-                total,
-                green,
-                red,
-                yellow
-        );
+            SupplierStatsDTO dto = new SupplierStatsDTO(
+                    supplier.getUsername(),
+                    supplier.getId(),
+                    total,
+                    green,
+                    red,
+                    yellow
+            );
 
-        result.add(dto);
+            result.add(dto);
+        }
+        return result;
     }
 
-    return result;
-}
+
+
+
+
+
 
 }
 

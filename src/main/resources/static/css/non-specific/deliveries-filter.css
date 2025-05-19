@@ -1,164 +1,195 @@
-.global-filter {
-    display: none !important;
-    font-size: 0.85vw !important;
+#backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease;
+    z-index: 99999;
 }
 
-.section-header {
+#backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.global-filter {
+    display: none;
+    font-size: 0.9rem;
+}
+
+.global-filter.open {
+    position: fixed;
+    z-index: 100000000000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 1.2rem;
+    padding: 2rem;
     display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 35rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.global-filter #filterHeader {
+    width: 100%;
+    background-color: transparent;
+    display: inline-flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     align-items: center;
     align-content: center;
-    background-color: transparent;
-    height: 3rem;
-    box-sizing: border-box;
 }
 
-.section-header h1 {
-    margin-left: 0.5rem;
-    font-size: 2rem;
-    color: #333; /* Dark gray text for the title */
-}
-
-.global-filter {
-    background-color: #ffffff;
-    border-radius: 1.4rem;
-    padding: 0.5rem 2rem 0.5rem 2rem;
+.filter-buttons {
     display: flex;
-    height: 4rem;
-    flex-direction: row;
-    gap: 1rem;
-    align-items: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-#filter-choice-input-dds-label {
-    width: 6rem;
-}
-
-#filter-choice-input-risk {
-    width: 8rem;
+    justify-content: space-between;
+    gap: 0.5rem;
 }
 
 .global-filter .filterTitle {
-    font-size: 1.1rem;
-    font-weight: 450;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--text-clr, #333);
 }
 
-.global-filter .filter-choice-input, .filter-text-input {
-    text-align: start;
-    padding: 0.5rem 1rem;
+/* Generic label/input wrappers */
+.filter-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+/* Dropdown & text inputs */
+.global-filter .filter-choice-input,
+.global-filter .filter-text-input {
+    padding: 0.6rem 1rem;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 0.9rem;
-}
-
-.global-filter .filter-choice-input {
-    width: 13rem;
-}
-
-.global-filter .filter-text-input {
-    width: 12rem;
-}
-
-.global-filter #FilterForDDS, .timespan {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    gap: 0.75rem;
-    height: 2.75rem;
+    border-radius: 0.75rem;
     background-color: white;
-    border-radius: 0.9rem;
-    border: 1px solid #ccc;
-    padding: 0.2rem 1rem;
+    width: 100%;
 }
 
-.date-search-input {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    padding: 0.1rem 0.1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: white;
-    color: #333;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.global-actions {
+.filter-row {
     display: flex;
     gap: 1rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ensure the customer input fills its container */
+.customer-field .filter-text-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* DDS toggle area */
+#FilterForDDS {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.75rem;
+    background-color: white;
+    font-size: 1rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+    color: var(--text-clr, #333);
+}
+
+/* Hide the default checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+/* The slider track */
+.slider {
+    position: relative;
+    width: 42px;
+    height: 1.5rem;
+    background-color: #ccc;
+    vertical-align: middle;
+    border-radius: 9999px;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+/* The circular knob */
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    top: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Checked state changes the background and moves knob */
+.switch input:checked + .slider {
+    background-color: var(--button-bg-color, #4caf50);
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(20px);
+}
+
+/* Optional: add focus outline */
+.switch input:focus-visible + .slider {
+    outline: 2px solid var(--button-hover-bg-clr, #388e3c);
+    outline-offset: 2px;
+}
+
+/* Date range */
+.timespan {
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     align-content: center;
-}
-
-.global-actions .search-input {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+    gap: 0.75rem;
     border: 1px solid #ccc;
-    border-radius: 8px;
 }
 
-@media (max-width: 1800px) {
-    .section-header {
-        flex: 0.4;
-        flex-direction: column;
-    }
-
-    .global-filter {
-        flex: 1;
-        height: 3rem;
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-        margin: 2rem 0rem;
-        font-size: 1vw;
-        /*  display: none; */
-    }
+.timespan p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #444;
 }
 
-@media (max-width: 1350px) {
-    .section-header {
-        flex: 0.8;
-        flex-direction: column;
-    }
-
-    .global-filter {
-        flex: 1;
-        height: 3rem;
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-        margin: 2rem 0rem;
-        font-size: 2vw;
-        /*  display: none; */
-    }
+.date-search-input {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 0.6rem;
+    background-color: white;
+    color: #333;
+    font-size: 0.95rem;
+    flex: 1;
 }
-
-@media (max-width: 800px) {
-    .section-header {
-        flex: 1.2;
-        flex-direction: column;
-    }
-
-    .global-filter {
-        flex: 1;
-        height: 3rem;
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-        margin: 2rem 0rem;
-        font-size: 4vw;
-        /*  display: none; */
-    }
-}
-
-
-
 

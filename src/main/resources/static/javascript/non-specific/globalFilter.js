@@ -1,3 +1,18 @@
+const filterBtn = document.getElementById("filterBtn")
+const filterDiv = document.getElementById("filterDiv")
+const backdropDiv = document.getElementById("backdrop")
+
+
+function toggleFilterDiv() {
+    console.log("Toggling filterDiv")
+    filterDiv.classList.toggle("open");
+    backdropDiv.classList.toggle("active");
+}
+
+filterBtn.addEventListener("click", () => {
+    toggleFilterDiv();
+})
+
 // Global state for filter results
 let notAttachedFilterState = null;
 let attachedFilterState = null;
@@ -124,5 +139,9 @@ function resetFilters() {
 }
 
 // Event listeners for Apply and Reset buttons
-document.querySelector('#applyFilterButton').addEventListener('click', applyFilters);
+document.querySelector('#applyFilterButton').addEventListener('click', function  () {
+    applyFilters();
+    toggleFilterDiv();
+});
+
 document.querySelector('#resetFilterButton').addEventListener('click', resetFilters);

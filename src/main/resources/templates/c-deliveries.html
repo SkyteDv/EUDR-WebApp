@@ -19,6 +19,7 @@
     <script src="/javascript/non-specific/customTableSearch.js" defer></script>
     <script src="/javascript/non-specific/account-menu.js" defer></script>
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
+    <script src="/javascript/non-specific/globalFilter.js" defer></script>
 </head>
 <body>
 
@@ -51,7 +52,6 @@
         &#9776; <!-- unicode for ☰ -->
     </div>
 </header>
-
 
 <aside id="sidebar">
     <ul>
@@ -113,43 +113,14 @@
     <div class="deliveries-header">
         <h1>Deliveries</h1>
 
-        <div class="global-filter">
-            <p class="filterTitle">Filter by</p>
-
-            <label class="filter-label">
-                <select class="filter-choice-input" id="filter-choice-input-risk">
-                    <option value="low">Low Risk</option>
-                    <option value="medium">Medium Risk</option>
-                    <option value="high">High Risk</option>
-                </select>
-            </label>
-            <p class="filterTitle">DDs Attached:</p>
-            <label class="filter-label">
-                <select class="filter-choice-input" id="filter-choice-input-dds-label">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                    <option value="denied">DENIED</option>
-                </select>
-            </label>
-
-            <label class="filter-label">
-                <input type="text" class="filter-text-input" placeholder="Customer">
-            </label>
-
-            <div class="filter-buttons">
-                <button id="resetFilterButton" class="clean-button">
-                    <span class="material-icons">restart_alt</span>
-                </button>
-                <button id="applyFilterButton" class="clean-button">
-                    <span class="material-icons">playlist_add_check</span>
-                </button>
-            </div>
-        </div>
-
         <div class="search-filter">
             <label>
                 <input type="text" data-table-id="ordersTable" class="search-input" placeholder="Search Deliveries..." id="searchInput">
             </label>
+            <button id="filterBtn" class="clean-button expandable">
+                <i class="material-icons">tune</i>
+                <span class="button-text">Filter</span>
+            </button>
             <button id="refreshDeliveriesButton" class="clean-button">
                 <i class="fas fa-rotate-right"></i>
             </button>
@@ -177,7 +148,7 @@
             <tbody>
             <tr th:each="order : ${deliveries}"
                 th:classappend="${order.ddsStatus == 'Not Available'} ? 'red-outline' : ''">
-                <td data-label="Risk Level" th:text="${order.calculateRiskLevel()}"></td>
+                <td data-label="Risk Level"></td>
                 <td data-label="DDS on Delivery">
                     <span th:if="${order.ddsStatus == 'Yes'}" style="color: green; font-weight: bold;">Yes</span>
                     <span th:if="${order.ddsStatus == 'No'}" style="color: orange; font-weight: bold;">No</span>
@@ -204,13 +175,55 @@
     </div>
 </main>
 
-<script>
-    function editDelivery(ddsReferenceNumber) {
-        // Here you can add functionality to edit the delivery,
-        // such as opening a modal with the delivery's current data to update
-        alert('Editing Delivery with Reference Number: ' + ddsReferenceNumber);
-    }
-</script>
+<div id="backdrop"></div>
+<div id="filterDiv" class="global-filter">
+    <section id="filterHeader">
+        <p class="filterTitle">Filter Order Tables</p>
+        <div class="filter-buttons">
+            <button id="resetFilterButton" class="clean-button expandable">
+                <span class="material-icons">restart_alt</span>
+                <span class="button-text">Reset</span>
+            </button>
+            <button id="applyFilterButton" class="clean-button expandable">
+                <span class="material-icons">done</span>
+                <span class="button-text">Apply</span>
+            </button>
+        </div>
+    </section>
+    <label class="filter-label">
+        <select class="filter-choice-input">
+            <option value="global">Global</option>
+            <option value="not-attached">Deliveries To Process</option>
+            <option value="attached">Deliveries DDS Attached</option>
+        </select>
+    </label>
+
+    <p class="filterTitle">by</p>
+
+    <div class="filter-row">
+        <label class="filter-label customer-field" style="flex: 6;">
+            <input type="text" class="filter-text-input" placeholder="Customer" />
+        </label>
+
+        <div id="FilterForDDS" style="flex: 4;">
+            <span>Only with DDS</span>
+            <label class="switch filter-label">
+                <input type="checkbox" id="ddsAvailable" name="ddsAvailable" />
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    <div class="timespan">
+        <p class="filterTitle">Between</p>
+        <label class="filter-label">
+            <input type="date" id="from" class="date-search-input" placeholder="From">
+        </label>
+        <p>-</p>
+        <label class="filter-label">
+            <input type="date" id="till" class="date-search-input" placeholder="Till">
+        </label>
+    </div>
+</div>
 
 </body>
 </html>

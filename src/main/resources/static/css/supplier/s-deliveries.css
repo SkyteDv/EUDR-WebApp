@@ -4,14 +4,37 @@
     box-sizing: border-box;
 }
 
-main {
-    height: 100vh;
-    width: 100%;
-    padding-top: calc(6vh + 2rem);
-    padding-right: 2rem;
-    padding-left: calc(60px + 2rem);
-    padding-bottom: 2rem;
+.global-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.global-actions .search-input {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
     background-color: transparent;
+    height: 3rem;
+    box-sizing: border-box;
+}
+
+.section-header h1 {
+    margin-left: 0.5rem;
+    font-size: 2rem;
+    color: #333; /* Dark gray text for the title */
 }
 
 /* Table Area Container */
@@ -80,27 +103,48 @@ main {
 
 
 .search-filter-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
     width: 100%;
 }
 
-.search-filter-wrapper .search-input {
-    flex: 1 1 90%;
-    padding: 0.5rem 1rem;
+/* New container to position button absolutely inside input */
+.search-input-container {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5rem 2.75rem 0.5rem 1rem; /* right padding for the button */
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
+    box-sizing: border-box;
 }
 
-.search-filter-wrapper .clean-button {
-    margin-left: 0.5rem;
-    flex: 0 0 auto;
-    padding: 0.5rem 1rem;
+/* Button inside input field */
+.searchConfig {
+    position: absolute;
+    top: 50%;
+    right: 0.3rem;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
     cursor: pointer;
+    padding: 0.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: .5em;
+    transition: background-color 0.2s ease;
+}
+
+.searchConfig:hover {
+    background-color: var(--field-hover-clr);
+}
+
+.searchConfig svg {
+    fill: var(--text-clr);
 }
 
 .wrapper {
@@ -144,6 +188,7 @@ main {
 .red-outline {
     border: 2px solid red !important;
 }
+
 
 
 /* Optional: Zebra striping for rows */

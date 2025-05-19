@@ -1,4 +1,4 @@
-export function createCameraPopup(currentOrderDdsReference) {
+export function createCameraPopup(currentOrderId, currentOrderDdsReference) {
     // Remove existing one if present
     const existing = document.getElementById("cameraDiv");
     if (existing) existing.remove();
@@ -127,7 +127,7 @@ export function createCameraPopup(currentOrderDdsReference) {
 
     async function completeAttachment(qrData) {
         try {
-            const response = await fetch(`/api/deliveries/attached/${qrData}`, {
+            const response = await fetch(`/api/deliveries/attached/${currentOrderId}`, {
                 method: 'POST',
             });
             if (response.ok) {

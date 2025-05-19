@@ -76,27 +76,24 @@
 }
 
 @media (max-width: 1800px) {
-    .global-filter {
-        display: none!important;
-    }
 
     main {
-        font-size: 0.8vmax;
+        font-size: 0.9vmax;
     }
 
     .deliveries-table th {
-        font-size: 1.2vmax;
+        font-size: 1.3vmax;
         font-weight: bold;
     }
 }
 
 @media (max-width: 1200px) {
     main {
-        font-size: 1vmax;
+        font-size: 1.3vmax;
     }
 
     .deliveries-table th {
-        font-size: 1.2vmax;
+        font-size: 1.3vmax;
         font-weight: bold;
     }
 }
@@ -104,7 +101,7 @@
 /* Responsive Advanced Table */
 @media (max-width: 900px) {
     main {
-        font-size: 1rem !important;
+        font-size: 1.2rem !important;
     }
 
     .global-filter {

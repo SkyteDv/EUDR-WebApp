@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deliveries</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
@@ -25,9 +24,7 @@
     </div>
 
     <nav class="navbar">
-        <a href="/supplier/dashboard" class="nav-link">Dashboard</a>
-        <a href="#" class="nav-link">Customers</a>
-        <a href="/supplier/deliveries" class="nav-link active">Deliveries</a>
+        <h1>Folium</h1>
     </nav>
     <div class="account-wrapper">
         <a href="#" id="account-toggle">
@@ -84,7 +81,6 @@
         </li>
     </ul>
 </aside>
-
 
 <div id="wrapper-side-popup">
     <div id="side-popup-details">
@@ -148,61 +144,23 @@
     <!--Camera Div Spot-->
 </div>
 
-
 <main class="page-content">
     <div class="section-header">
         <h1>Deliveries</h1>
-
-        <div class="global-filter">
-            <p class="filterTitle">Filter</p>
-            <label class="filter-label">
-                <select class="filter-choice-input">
-                    <option value="global">Global</option>
-                    <option value="not-attached">Del. (Not Attached)</option>
-                    <option value="attached">Del. (Attached)</option>
-                </select>
-            </label>
-            <p class="filterTitle">by</p>
-
-            <label class="filter-label">
-                <input type="text" class="filter-text-input" placeholder="Customer">
-            </label>
-
-            <div id="FilterForDDS">
-                <label class="filter-label">
-                    <span>DDS </span>
-                    <input type="checkbox" id="ddsAvailable" name="ddsAvailable">
-                </label>
-            </div>
-            <div class="timespan">
-                <p>Between</p>
-                <label class="filter-label">
-                    <input type="date" id="from" class="date-search-input" placeholder="From">
-                </label>
-                <p>-</p>
-                <label class="filter-label">
-                    <input type="date" id="till" class="date-search-input" placeholder="Till">
-                </label>
-            </div>
-            <div class="filter-buttons">
-                <button id="resetFilterButton" class="clean-button">
-                    <span class="material-icons">restart_alt</span>
-                </button>
-                <button id="applyFilterButton" class="clean-button">
-                    <span class="material-icons">playlist_add_check</span>
-                </button>
-            </div>
-        </div>
 
         <div class="global-actions">
             <label>
                 <input type="text" id="searchInput" class="search-input" placeholder="Search Deliveries...">
             </label>
+            <button id="filterBtn" class="clean-button expandable">
+                <i class="material-icons">tune</i>
+                <span class="button-text">Filter</span>
+            </button>
             <button id="refreshDeliveriesButton" class="clean-button">
                 <i class="fas fa-rotate-right"></i>
             </button>
-        </div>
 
+        </div>
     </div>
 
     <div class="delivery-panels">
@@ -211,11 +169,21 @@
             <div class="panel-header">
                 <h2>Deliveries To Process</h2>
                 <div class="search-filter-wrapper">
-                    <label for="searchInputLeft"></label>
-                    <input type="text" id="searchInputLeft" data-table-id="activeDeliveriesTable" class="search-input" placeholder="Search Active Deliveries...">
-                    <button class="filterConfig clean-button">
-                        <i class="material-icons">settings</i>
-                    </button>
+
+                    <div class="search-input-container">
+                        <label for="searchInputLeft"></label>
+                        <input type="text"
+                               id="searchInputLeft"
+                               data-table-id="activeDeliveriesTable"
+                               class="search-input"
+                               placeholder="Search Active Deliveries...">
+                        <button class="searchConfig" aria-label="Open Filter">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                 width="20px" fill="#e3e3e3">
+                                <path d="M96-216v-72h384v72H96Zm0-180v-72h192v72H96Zm0-180v-72h192v72H96Zm717 360L660-369q-23 16-50.5 24.5T552-336q-79.68 0-135.84-56.23-56.16-56.22-56.16-136Q360-608 416.23-664q56.22-56 136-56Q632-720 688-663.84q56 56.16 56 135.84 0 30-8.5 57.5T711-420l153 153-51 51ZM552-408q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Z"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -259,10 +227,17 @@
             <div class="panel-header">
                 <h2>Deliveries DDS Attached</h2>
                 <div class="search-filter-wrapper">
-                    <label for="searchInputRight"></label><input type="text" id="searchInputRight" class="search-input" placeholder="Search Attached Deliveries...">
-                    <button class="filterConfig clean-button">
-                        <i class="material-icons">settings</i>
-                    </button>
+                    <label for="searchInputLeft"></label>
+                    <div class="search-input-container">
+                        <label for="searchInputRight"></label><input type="text" id="searchInputRight" data-table-id="activeDeliveriesTable"
+                                                                     class="search-input" placeholder="Search Active Deliveries...">
+                        <button class="searchConfig" aria-label="Open Filter">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                 width="20px" fill="#e3e3e3">
+                                <path d="M96-216v-72h384v72H96Zm0-180v-72h192v72H96Zm0-180v-72h192v72H96Zm717 360L660-369q-23 16-50.5 24.5T552-336q-79.68 0-135.84-56.23-56.16-56.22-56.16-136Q360-608 416.23-664q56.22-56 136-56Q632-720 688-663.84q56 56.16 56 135.84 0 30-8.5 57.5T711-420l153 153-51 51ZM552-408q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Z"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -277,7 +252,7 @@
                             <p><strong>Product:</strong> <span th:text="${order.productName}"></span></p>
                         </div>
                         <div class="right-card-internal-header" th:attr="data-order-id=${order.id}">
-                            <button class="details-button" th:onclick="|window.location='/supplier/deliveries/details/${order.id}'|" title="Details">
+                            <button class="details-button" title="Details">
                                 <span class="material-icons">library_books</span>
                             </button>
                             <button class="done-button" type="button" title="Mark as Done" onclick="markAsShipped(this)">
@@ -290,6 +265,56 @@
         </section>
     </div>
 </main>
+
+<div id="backdrop"></div>
+<div id="filterDiv" class="global-filter">
+    <section id="filterHeader">
+        <p class="filterTitle">Filter Order Tables</p>
+        <div class="filter-buttons">
+            <button id="resetFilterButton" class="clean-button expandable">
+                <span class="material-icons">restart_alt</span>
+                <span class="button-text">Reset</span>
+            </button>
+            <button id="applyFilterButton" class="clean-button expandable">
+                <span class="material-icons">done</span>
+                <span class="button-text">Apply</span>
+            </button>
+        </div>
+    </section>
+    <label class="filter-label">
+        <select class="filter-choice-input">
+            <option value="global">Global</option>
+            <option value="not-attached">Deliveries To Process</option>
+            <option value="attached">Deliveries DDS Attached</option>
+        </select>
+    </label>
+
+    <p class="filterTitle">by</p>
+
+    <div class="filter-row">
+        <label class="filter-label customer-field" style="flex: 6;">
+            <input type="text" class="filter-text-input" placeholder="Customer" />
+        </label>
+
+        <div id="FilterForDDS" style="flex: 4;">
+            <span>Only with DDS</span>
+            <label class="switch filter-label">
+                <input type="checkbox" id="ddsAvailable" name="ddsAvailable" />
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    <div class="timespan">
+        <p class="filterTitle">Between</p>
+        <label class="filter-label">
+            <input type="date" id="from" class="date-search-input" placeholder="From">
+        </label>
+        <p>-</p>
+        <label class="filter-label">
+            <input type="date" id="till" class="date-search-input" placeholder="Till">
+        </label>
+    </div>
+</div>
 
 <div id="statusPopup" class="status-popup">
     <div class="status-popup-content">
@@ -305,7 +330,7 @@
 <script src="/javascript/supplier/s-deliveries/s-initializeTableSearch.js"></script>
 <script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js"></script>
 <script src="/javascript/supplier/s-deliveries/doneDeliveryLogic.js"></script>
-<script src="/javascript/supplier/s-deliveries/s-globalFilter.js"></script>
+<script src="/javascript/non-specific/globalFilter.js"></script>
 <script src="/javascript/non-specific/account-menu.js"></script>
 <script src="/javascript/non-specific/sidebar-toggle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>

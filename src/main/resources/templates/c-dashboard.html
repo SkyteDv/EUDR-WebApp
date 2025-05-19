@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/customer/c-dashboard.css">
     <link rel="stylesheet" href="/css/customer/account-menu.css">
     <link rel="stylesheet" href="/css/non-specific/sidebar.css">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <body>
 
@@ -93,14 +93,58 @@
 </aside>
 
 <main>
-    <div class="test">
-        <p>Test1</p>
+    <div id="content-container">
+        <div id="stats-wrapper">
+            <div id="stats-container">
+                <div id="swapper">
+                    <button id="swapper-global"><span>Global Stats</span></button>
+                    <button id="swapper-country"><span>Country Stats</span></button>
+                </div>
+                <section class="stat-section" id="deliveries-section">
+                    <p class="section-title">Deliveries</p>
+                    <div class="stat-grid">
+                        <div class="stat-card" id="deliveries-active-total"><p>Active Orders: <span></span></p></div>
+                        <div class="stat-card" id="deliveries-completed-total"><p>Tot. Del.: <span></span></p></div>
+                        <div class="stat-card" id="deliveries-active-high-risk"><p>High-Risk Del.: <span></span></p></div>
+                        <div class="stat-card" id="deliveries-high-risk-percentage"><p>High-Risk Del.: <span></span></p></div>
+                    </div>
+                </section>
+
+                <section class="stat-section" id="suppliers-section">
+                    <p class="section-title">Suppliers</p>
+                    <div class="stat-grid">
+                        <div class="stat-card" id="suppliers-active-total"><p>Act. Sup.: <span></span></p></div>
+                        <div class="stat-card" id="suppliers-historical-total"><p>Hist. Sup.: <span></span></p></div>
+                    </div>
+                </section>
+
+                <section class="stat-section" id="dds-section">
+                    <p class="section-title">DDS Data</p>
+                    <div class="stat-grid">
+                        <div class="stat-card" id="dds-green-rate"><p>DDS Green Rate: <span></span></p></div>
+                        <div class="stat-card" id="dds-history"><p>DDS History: <span></span></p></div>
+                    </div>
+                </section>
+
+                <section class="stat-section" id="actions-section">
+                    <p class="section-title">Actions</p>
+                    <div id="actions-buttons">
+                        <button class="clean-button"><span>Mitigate Risk</span></button>
+                        <button class="clean-button"><span>Export Data</span></button>
+                        <button class="clean-button"><span>Help</span></button>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div id="regionsDiv"></div>
     </div>
 </main>
 
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/javascript/customer/c-dashboard/geo-chart.js"></script>
 <script src="/javascript/non-specific/sidebar-toggle.js"></script>
 <script src="/javascript/non-specific/account-menu.js"></script>
+<script src="/javascript/customer/c-dashboard/dashboardSwapper.js"></script>
 
 </body>
 </html>
