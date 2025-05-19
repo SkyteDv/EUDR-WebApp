@@ -30,7 +30,8 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
 
-//  Constructor injection (no need for @Autowired, Spring will inject this automatically)
+    // Constructor injection (no need for @Autowired, Spring will inject this
+    // automatically)
     @Autowired
     public OrderService(OrderRepository orderRepository, UserRepository userRepository, ObjectMapper objectMapper) {
         this.orderRepository = orderRepository;
@@ -43,7 +44,9 @@ public class OrderService {
     public void importOrders(InputStream inputStream, String osapiensID, String fetchingFor) throws Exception {
         long startTime = System.currentTimeMillis(); // Start timer
 
-        List<Map<String, Object>> ordersData = objectMapper.readValue(inputStream, new TypeReference<List<Map<String, Object>>>() {});
+        List<Map<String, Object>> ordersData = objectMapper.readValue(inputStream,
+                new TypeReference<List<Map<String, Object>>>() {
+                });
 
         int createdOrders = 0;
         int skippedDueToWrongUser = 0;
@@ -66,8 +69,6 @@ public class OrderService {
                 skippedDueToWrongUser++;
                 continue;
             }
-
-
 
             if (orderRepository.findByErpReferenceNumber(erpReferenceNumber).isPresent()) {
                 skippedDueToDuplicateDelivery++;
@@ -164,20 +165,40 @@ public class OrderService {
                     total,
                     green,
                     red,
-                    yellow
-            );
+                    yellow);
 
             result.add(dto);
         }
+
         return result;
     }
 
+    public SupplierStatsDTO getSupplierStatsForCustomerAndSupplier(User customer, User supplier) {
+        List<Order> orders = orderRepository.findAll(); // Besser: eigenes Repository-Query
 
+        List<Order> supplierOrders = orders.stream()
+                .filter(o -> o.getCustomer().getId().equals(customer.getId()))
+                .filter(o -> o.getSupplier().getId().equals(supplier.getId()))
+                .toList();
 
+        long total = supplierOrders.size();
+        long green = supplierOrders.stream()
+                .filter(o -> "Yes".equalsIgnoreCase(o.getDdsStatus()))
+                .count();
+        long red = supplierOrders.stream()
+                .filter(o -> "Not Available".equalsIgnoreCase(o.getDdsStatus()))
+                .count();
+        long yellow = supplierOrders.stream()
+                .filter(o -> "No".equalsIgnoreCase(o.getDdsStatus()))
+                .count();
 
-
-
+        return new SupplierStatsDTO(
+                supplier.getUsername(),
+                supplier.getId(),
+                total,
+                green,
+                red,
+                yellow);
+    }
 
 }
-
-

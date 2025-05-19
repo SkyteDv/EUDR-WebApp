@@ -1,10 +1,21 @@
 package com.projects.eudrwebapp.model;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Entity
@@ -15,6 +26,7 @@ public class User {
 
     @Column(unique = true)
     private String username;
+    private String email;
     private String password;
     private String userType;
     private String osapiensID;
@@ -23,11 +35,7 @@ public class User {
     private Country location;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "user_associate",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "supplier_id")
-    )
+    @JoinTable(name = "user_associate", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
     private List<User> associates = new ArrayList<>();
 
     public List<User> getAssociates() {
@@ -38,10 +46,12 @@ public class User {
         this.associates = associates;
     }
 
-    public User() {}
+    public User() {
+    }
 
     public User(String username, String password, String userType, String osapiensID, Country location) {
         this.username = username;
+        
         this.password = password;
         this.userType = userType;
         this.osapiensID = osapiensID;
@@ -78,6 +88,14 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setUsername(String username) {

@@ -1,67 +1,82 @@
+/* === Layout für Supplier Detailseite === */
 .detail-page {
-    padding: 2rem;
-    background-color: #f4f4f4;
-    min-height: calc(100vh - 6vh);
+    height: 100vh;
+    width: 100%;
+    padding-top: calc(6vh + 2rem);
+    padding-left: calc(60px + 2rem);
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+    background-color: transparent;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
+
+
+/* Überschrift */
 .detail-page h1 {
-    text-align: center;
     font-size: 2rem;
+    font-weight: 600;
     color: #333;
-    margin-bottom: 2rem;
 }
 
+/* === Card-Layout === */
 .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
 }
 
 .card {
     background-color: white;
     border-radius: 10px;
-    padding: 1.5rem 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    flex: 1 1 30rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
 }
 
 .card h2 {
-    margin-top: 0;
-    color: #7a6fbe;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
 }
 
 .card p {
+    font-size: 1rem;
     margin: 0.5rem 0;
+    color: #555;
 }
 
+.card p strong {
+    color: #222;
+}
+
+/* === Tabelle für Lieferungen === */
 .delivery-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-.delivery-table th, .delivery-table td {
-    text-align: left;
-    padding: 0.75rem;
-    border-bottom: 1px solid #eee;
     font-size: 0.95rem;
 }
 
+.delivery-table th,
+.delivery-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.delivery-table thead {
+    background-color: #e0e0e0;
+}
+
 .delivery-table th {
-    background-color: #eaeaed;
     font-weight: 600;
     color: #333;
 }
 
 .delivery-table tr:nth-child(even) {
     background-color: #f9f9f9;
-}
-
-@media (max-width: 768px) {
-    .detail-page h1 {
-        font-size: 1.5rem;
-    }
-
-    .card-grid {
-        grid-template-columns: 1fr;
-    }
 }

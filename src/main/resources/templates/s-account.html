@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile (Supplier)</title>
+    <link rel="stylesheet" href="/css/non-specific/global.css">
+    <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/account-menu.css">
+    <link rel="stylesheet" href="/css/account.css">
+    <link rel="stylesheet" href="/css/non-specific/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo">
+            <h4>SUPPLIER</h4>
+        </div>
+
+        <div class="account-wrapper">
+            <a href="#" id="account-toggle">👤 Hello <span th:text="${session.username}">User</span> ▼</a>
+            <div class="dropdown-menu" id="account-menu">
+                <a href="/account">Profile</a>
+                <a href="/settings">Settings</a>
+                <form th:action="@{/user/logout}" method="post">
+                    <button type="submit" class="dropdown-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <!-- Main Content -->
+    <main class="account-page">
+
+        <nav class="account-tabs">
+            <button class="tab-link active" data-target="overview">Profile Overview</button>
+            <button class="tab-link" data-target="personal">Personal Information</button>
+            <button class="tab-link" data-target="password">Change Password</button>
+            <button class="tab-link" data-target="notifications">Notifications</button>
+            <button class="tab-link" data-target="security">Security</button>
+            <button class="tab-link" data-target="delete">Delete Account</button>
+        </nav>
+
+        <section class="content-area">
+            <div id="overview" class="section active">
+                <h1>Profile Overview</h1>
+                <p>Here you can see your general profile information as a supplier.</p>
+            </div>
+
+            <div id="personal" class="section">
+                <h1>Personal Information</h1>
+
+                <form th:action="@{/account/personal/save}" method="post" class="personal-form">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" th:value="${user.username}" required>
+
+                    <label for="osapiensID">Osapiens ID</label>
+                    <input type="text" id="osapiensID" name="osapiensID" th:value="${user.osapiensID}" required>
+
+                    <button type="submit" class="save-button">Save Changes</button>
+                </form>
+
+                <p th:if="${successMessage}" class="success-msg" th:text="${successMessage}"></p>
+                <p th:if="${errorMessage}" class="error-msg" th:text="${errorMessage}"></p>
+            </div>
+
+            <div id="password" class="section">
+                <h1>Change Password</h1>
+
+                <form th:action="@{/account/password/change}" method="post" class="password-form">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+                    <button type="submit" class="save-button">Update Password</button>
+                </form>
+
+                <p th:if="${successMessage}" class="success-msg" th:text="${successMessage}"></p>
+                <p th:if="${errorMessage}" class="error-msg" th:text="${errorMessage}"></p>
+            </div>
+
+            <div id="notifications" class="section">
+                <h1>Notifications</h1>
+                <p>Manage your email notification settings.</p>
+
+                <form th:action="@{/account/email/save}" method="post" class="email-form">
+                    <label for="email">Notification Email</label>
+                    <input type="email" id="email" name="email" th:value="${user.email}" required
+                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                        title="Please enter a valid email address.">
+                    <button type="submit" class="save-button">Save Email</button>
+                </form>
+
+                <p th:if="${successMessage}" class="success-msg" th:text="${successMessage}"></p>
+                <p th:if="${errorMessage}" class="error-msg" th:text="${errorMessage}"></p>
+            </div>
+
+            <div id="security" class="section">
+                <h1>Security</h1>
+                <p>Enable two-factor authentication or view your login activity.</p>
+            </div>
+
+            <div id="delete" class="section">
+                <h1>Delete Account</h1>
+                <p>Warning: This action is irreversible. Please enter your current password to confirm account deletion.
+                </p>
+
+                <form th:action="@{/account/delete}" method="post" class="delete-form">
+                    <label for="deletePassword">Current Password</label>
+                    <input type="password" id="deletePassword" name="password" required>
+
+                    <button type="submit" class="delete-button">Delete My Account</button>
+                </form>
+
+                <p th:if="${successMessage}" class="success-msg" th:text="${successMessage}"></p>
+                <p th:if="${errorMessage}" class="error-msg" th:text="${errorMessage}"></p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/javascript/non-specific/account-menu.js"></script>
+    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
+    <script>
+        document.querySelectorAll('.tab-link').forEach(button => {
+            button.addEventListener('click', () => {
+                const target = button.getAttribute('data-target');
+                document.querySelectorAll('.tab-link').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                document.getElementById(target).classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

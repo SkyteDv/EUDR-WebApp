@@ -21,37 +21,32 @@
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="/javascript/non-specific/globalFilter.js" defer></script>
 </head>
+
 <body>
 
-<header class="header">
-    <div class="logo-container">
-        <a href="/"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
-        <h4>CUSTOMER</h4>
-    </div>
-
-    <nav class="navbar">
-        <a href="/customer/dashboard" class="nav-link">Dashboard</a>
-        <a href="/customer/suppliers/overview" class="nav-link">Suppliers</a>
-        <a href="/customer/deliveries" class="nav-link active">Deliveries</a>
-    </nav>
-
-    <div class="account-wrapper">
-        <a href="#" id="account-toggle">
-            👤 Hello <span th:text="${session.username}">Benutzer</span> ▼
-          </a>
-        <div class="dropdown-menu" id="account-menu">
-            <a href="/account">Profil</a>
-            <a href="/settings">Einstellungen</a>
-            <form th:action="@{/user/logout}" method="post">
-                <button type="submit" class="dropdown-btn">Logout</button>
-            </form>
+    <header class="header">
+        <div class="logo-container">
+            <a href="/"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+            <h4>CUSTOMER</h4>
         </div>
-    </div>
 
-    <div class="menu-toggle" id="menu-toggle">
-        &#9776; <!-- unicode for ☰ -->
-    </div>
-</header>
+        <div class="account-wrapper">
+            <a href="#" id="account-toggle">
+                👤 Hello <span th:text="${session.username}">Benutzer</span> ▼
+            </a>
+            <div class="dropdown-menu" id="account-menu">
+                <a href="/account">Profil</a>
+                <a href="/settings">Einstellungen</a>
+                <form th:action="@{/user/logout}" method="post">
+                    <button type="submit" class="dropdown-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="menu-toggle" id="menu-toggle">
+            &#9776; <!-- unicode for ☰ -->
+        </div>
+    </header>
 
 <aside id="sidebar">
     <ul>
@@ -175,6 +170,7 @@
     </div>
 </main>
 
+
 <div id="backdrop"></div>
 <div id="filterDiv" class="global-filter">
     <section id="filterHeader">
@@ -226,4 +222,5 @@
 </div>
 
 </body>
+
 </html>
