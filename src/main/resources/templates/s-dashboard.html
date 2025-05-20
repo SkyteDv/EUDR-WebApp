@@ -56,7 +56,7 @@
 
             <!-- Dashboard -->
             <li>
-                <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+                <button onclick="toggleSubMenu(this)" class="dropdown-btn active" >
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e8eaed">
                         <path
@@ -71,7 +71,7 @@
                 </button>
                 <ul class="sub-menu">
                     <div>
-                        <li><a href="/supplier/dashboard">Overview</a></li>
+                        <li class="active"><a href="/supplier/dashboard">Overview</a></li>
                     </div>
                 </ul>
             </li>
@@ -117,33 +117,7 @@
 
     <main>
 
-        <div id="linechart" style="width: 100%; height: 500px; margin-top: 2rem;"></div>
-
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
-            google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                const data = google.visualization.arrayToDataTable([
-                    ['Date', 'Orders with DDS', 'Orders without DDS'],
-                    ['2025-05-01', 50, 10],
-                    ['2025-05-02', 60, 5],
-                    ['2025-05-03', 55, 8],
-                    ['2025-05-04', 70, 4],
-                    ['2025-05-05', 80, 3]
-                ]);
-
-                const options = {
-                    title: 'DDS Presence Over Time',
-                    curveType: 'function',
-                    legend: { position: 'bottom' }
-                };
-
-                const chart = new google.visualization.LineChart(document.getElementById('linechart'));
-                chart.draw(data, options);
-            }
-        </script>
+        
 
     </main>
 
