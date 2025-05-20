@@ -1,9 +1,7 @@
 package com.projects.eudrwebapp.controller;
 
-import com.projects.eudrwebapp.model.CountryDeliveryDTO;
-import com.projects.eudrwebapp.model.Order;
-import com.projects.eudrwebapp.model.OrderStatus;
-import com.projects.eudrwebapp.model.User;
+import com.projects.eudrwebapp.model.*;
+import com.projects.eudrwebapp.repository.ImportStatusRepository;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import com.projects.eudrwebapp.service.*;
@@ -29,6 +27,7 @@ public class InternalAPIController {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final ImportStatusRepository importStatusRepository;
     private final HelperService helperService;
     private final QRCodeService qrCodeService;
     private final PDFService pdfService;
@@ -42,7 +41,9 @@ public class InternalAPIController {
                                  QRCodeService qrCodeService,
                                  OrderRepository orderRepository,
                                  PDFService pdfService,
-                                 DataService dataService, HttpSession httpSession) {
+                                 DataService dataService,
+                                 HttpSession httpSession,
+                                 ImportStatusRepository importStatusRepository) {
         this.userRepository = userRepository;
         this.helperService = helperService;
         this.qrCodeService = qrCodeService;
@@ -51,7 +52,25 @@ public class InternalAPIController {
         this.orderService = orderService;
         this.dataService = dataService;
         this.httpSession = httpSession;
+        this.importStatusRepository = importStatusRepository;
     }
+
+    @GetMapping("/import-status")
+    public ResponseEntity<Boolean> isImportDone(HttpSession session) {
+        String userId = String.valueOf(session.getAttribute("userId"));
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+        User user = userOpt.get();
+        String osapiensId = user.getOsapiensID();
+        boolean isDone = importStatusRepository.findById(osapiensId)
+                .map(ImportStatus::isCompleted)
+                .orElse(false);
+
+        return ResponseEntity.ok(isDone);
+    }
+
 
     @PostMapping("/refresh-deliveries")
     public ResponseEntity<Map<String, String>> refreshDeliveries(HttpSession session) {

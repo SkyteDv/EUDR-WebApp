@@ -1,3 +1,6 @@
+import { showLoadingOverlay, hideLoadingOverlay } from '/javascript/non-specific/loading-spinner.js';
+
+
 const rootStyles = getComputedStyle(document.documentElement);
 const baseAccColor = rootStyles.getPropertyValue('--base-acc-clr').trim();
 const fieldHoverColor = rootStyles.getPropertyValue('--field-hover-clr').trim();
@@ -100,13 +103,35 @@ document.addEventListener('countrySelected', (e) => {
     displayStats(countryIso);
 });
 
-document.addEventListener('DOMContentLoaded', async() => {
-    await fetchCountryData();
-    changeToGlobal();
-});
+async function waitForImportToComplete(timeout = 30000, interval = 1000) {
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < timeout) {
+        try {
+            const res = await fetch('/api/import-status');
+            const isDone = await res.json();
+
+            if (isDone) {
+                console.log('✅ Import complete');
+                return;
+            }
+
+            console.log('⏳ Waiting for import...');
+        } catch (err) {
+            console.error('Error checking import status:', err);
+        }
+
+        await new Promise(resolve => setTimeout(resolve, interval));
+    }
+
+    console.warn('⚠️ Timed out waiting for import to complete');
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
-    setSpansNA(); // explicitly clear stats on load
+    showLoadingOverlay();
+    setSpansNA();
+    await waitForImportToComplete();
     await fetchCountryData();
     changeToGlobal();
+    hideLoadingOverlay();
 });

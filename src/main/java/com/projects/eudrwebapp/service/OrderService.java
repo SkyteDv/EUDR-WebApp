@@ -3,6 +3,7 @@ package com.projects.eudrwebapp.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projects.eudrwebapp.model.*;
+import com.projects.eudrwebapp.repository.ImportStatusRepository;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import org.hibernate.exception.ConstraintViolationException;
@@ -17,6 +18,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,20 +31,25 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+    private final ImportStatusRepository importStatusRepository;;
 
     // Constructor injection (no need for @Autowired, Spring will inject this
     // automatically)
     @Autowired
-    public OrderService(OrderRepository orderRepository, UserRepository userRepository, ObjectMapper objectMapper) {
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository, ObjectMapper objectMapper, ImportStatusRepository importStatusRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.objectMapper = objectMapper;
+        this.importStatusRepository = importStatusRepository;
     }
 
     @Async
     @Transactional
     public void importOrders(InputStream inputStream, String osapiensID, String fetchingFor) throws Exception {
         long startTime = System.currentTimeMillis(); // Start timer
+
+        // ✅ Mark import as started
+        importStatusRepository.save(new ImportStatus(osapiensID, false, LocalDateTime.now()));
 
         List<Map<String, Object>> ordersData = objectMapper.readValue(inputStream,
                 new TypeReference<List<Map<String, Object>>>() {
@@ -110,12 +117,16 @@ public class OrderService {
                     (String) orderData.get("responsible_party"),
                     RiskLevel.LOW
             );
+
             orderRepository.save(order);
             createdOrders++;
         }
 
         long endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
+
+        // ✅ Mark import as completed
+        importStatusRepository.save(new ImportStatus(osapiensID, true, LocalDateTime.now()));
 
         System.out.println("=== Import Performance Log ===");
         System.out.println("Total Orders in Input: " + ordersData.size());
@@ -128,6 +139,7 @@ public class OrderService {
         System.out.println("Total Time: " + duration + " ms");
         System.out.println("===============================");
     }
+
 
     public List<SupplierStatsDTO> getSupplierStatsForCustomer(User customer) {
         List<Order> orders = orderRepository.findAll(); // Optional: effizienter mit eigenem Query für Customer

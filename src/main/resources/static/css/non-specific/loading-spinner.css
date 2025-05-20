@@ -1,0 +1,68 @@
+.loading-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99996;
+    background: radial-gradient(circle, rgb(173, 236, 251), rgb(208, 234, 255), #dcedfa);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+    text-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.loading-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.loading-overlay.show {
+    opacity: 1;
+}
+
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 8px solid transparent;
+    border-top: 8px solid #d6a9e8;
+    border-right: 8px solid #b486d1;
+    border-bottom: 8px solid #634197;
+    border-left: 8px solid #2b0351;
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite, spinColors 3s ease-in-out infinite;
+    margin-bottom: 1.2rem;
+    box-shadow:
+            0 0 15px rgba(180, 134, 209, 0.36),
+            0 0 30px rgba(99, 65, 151, 0.23),
+            0 0 45px rgba(43, 3, 81, 0.18);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spinColors {
+    0% {
+        border-top-color: #d6a9e8;
+        border-right-color: #b486d1;
+        border-bottom-color: #634197;
+        border-left-color: #2b0351;
+    }
+    50% {
+        border-top-color: #b486d1;
+        border-right-color: #634197;
+        border-bottom-color: #2b0351;
+        border-left-color: #d6a9e8;
+    }
+    100% {
+        border-top-color: #d6a9e8;
+        border-right-color: #b486d1;
+        border-bottom-color: #634197;
+        border-left-color: #2b0351;
+    }
+}
