@@ -41,11 +41,6 @@ public class CDashboardController {
         if (!authService.validateUserAuth(session, "CUSTOMER")) {
             return "redirect:/";
         }
-        String userid = String.valueOf(session.getAttribute("userId"));
-
-        Map<String, String> data = dataService.getDashboardData1(userid);
-
-
         return "c-dashboard";
     }
 

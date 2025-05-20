@@ -30,7 +30,7 @@ public class RiskNotificationService {
         for (Order order : highRiskOrders) {
             String subject = "⚠️ High-Risk Order Alert: " + order.getErpReferenceNumber();
             String body = String.format("""
-                A high-risk order requires for Customer %s requires your attention:
+                A high-risk order for Customer %s requires your attention:
 
                 ▸ ERP Reference: %s
                 ▸ Product: %s (%s)

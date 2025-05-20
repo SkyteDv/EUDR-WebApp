@@ -72,7 +72,7 @@ function displayStats(key) {
         'suppliers.activeTotal': '#suppliers-active-total span',
         'suppliers.historicalTotal': '#suppliers-historical-total span',
         'dds.greenRate': '#dds-green-rate span',
-        'dds.history': '#dds-history span'
+        'dds.attachRate': '#dds-attachRate span'
     };
 
     for (const [key, selector] of Object.entries(statMapping)) {
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await fetchCountryData();
     setSpansNA(); // explicitly clear stats on load
+    await fetchCountryData();
     changeToGlobal();
 });

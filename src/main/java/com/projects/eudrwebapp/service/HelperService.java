@@ -26,4 +26,11 @@ public class HelperService {
         orderService.importOrders(inputStream, osapiensId, userType);
     }
 
+    public double roundToPercentage(double value, int decimalPlaces) {
+        if (decimalPlaces < 0) throw new IllegalArgumentException("Decimal places must be non-negative.");
+
+        double scale = Math.pow(10, decimalPlaces);
+        return Math.round(value * 100 * scale) / scale; // multiply by 100 inside
+    }
+
 }

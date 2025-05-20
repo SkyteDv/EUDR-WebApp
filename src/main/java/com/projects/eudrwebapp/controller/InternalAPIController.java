@@ -1,6 +1,5 @@
 package com.projects.eudrwebapp.controller;
 
-import com.google.zxing.WriterException;
 import com.projects.eudrwebapp.model.CountryDeliveryDTO;
 import com.projects.eudrwebapp.model.Order;
 import com.projects.eudrwebapp.model.OrderStatus;
@@ -17,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,35 +184,13 @@ public class InternalAPIController {
     @GetMapping("/dashboard-data/country-data")
     public ResponseEntity<Map<String, Map<String, String>>> getCountryData(HttpSession session) {
         String userid = String.valueOf(session.getAttribute("userId"));
-        Map<String, Map<String, String>> countryStatsMap = new HashMap<>();
 
-        Map<String, String> global = new HashMap<>();
-        String put = global.put("deliveries.activeTotal", dataService.activeOrdersByCustomer(userid));// More active orders globally
-        global.put("deliveries.completedTotal", dataService.completedOrdersByCustomer(userid));     // Much higher total deliveries worldwide
-        global.put("deliveries.activeHighRisk", dataService.highRiskDeliveriesByCustomer(userid));         // Higher count of high-risk active deliveries
-        global.put("deliveries.highRiskPercentage", "9.1%");      // Higher risk percentage globally
-        global.put("suppliers.activeTotal", "2,860");             // More active suppliers globally
-        global.put("suppliers.historicalTotal", "15,420");        // Historical suppliers count worldwide
-        global.put("dds.greenRate", "76%");                        // Slightly lower green rate globally due to scale
-        global.put("dds.history", "Improving steadily");
+        Map<String, String> global = dataService.getGlobalDashboardData(userid);
+        Map<String, Map<String, String>> dataMap = dataService.getCountryDashboardData(userid);
 
-        // Example data for Germany (DE)
-        Map<String, String> germany = new HashMap<>();
-        germany.put("deliveries.activeTotal", "425");
-        germany.put("deliveries.completedTotal", "1240");
-        germany.put("deliveries.activeHighRisk", "15");
-        germany.put("deliveries.highRiskPercentage", "3.5%");
-        germany.put("suppliers.activeTotal", "62");
-        germany.put("suppliers.historicalTotal", "105");
-        germany.put("dds.greenRate", "89%");
-        germany.put("dds.history", "Stable");
+        dataMap.put("GLOBAL", global);
 
-        countryStatsMap.put("GLOBAL", global);
-        countryStatsMap.put("DE", germany);
-
-        // You can add more countries similarly (e.g., FR, IT, US, etc.)
-
-        return ResponseEntity.ok(countryStatsMap);
+        return ResponseEntity.ok(dataMap);
     }
 
 
