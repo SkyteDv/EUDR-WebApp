@@ -1,72 +1,128 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/non-specific/global.css">
-    <link rel="stylesheet" href="/css/non-specific/index.css">
-    <link rel="stylesheet" href="/css/non-specific/background-slideshow.css">
-    <title>Homepage</title>
+    <link rel="stylesheet" href="/css/non-specific/landing.css" disabled>
+    <link rel="stylesheet" href="/css/non-specific/landingDesign.css" disabled>
+    <link rel="stylesheet" href="/css/non-specific/login.css" disabled>
+    <link rel="stylesheet" href="/css/non-specific/register.css" disabled>
+
+    <!-- Lightmode-Dateien – NICHT dieselbe ID benutzen -->
+    <link id="light-css" rel="stylesheet" href="/css/non-specific/landingLightmode.css">
+    <link id="switch-css" rel="stylesheet" href="/css/non-specific/switch.css">
+    <link rel="icon" href="/images/icons/logo_for_slides.png" type="image/png">
+
+    <script src="/javascript/non-specific/themeSwitcher.js" defer></script>
+
+    <title>Folium</title>
 </head>
 
 <body>
-
-<div class="container">
-    <div class="overlay"></div>
-    <img class="fade-image" src="/images/palm%20oil.jpg" alt="Palm Oil">
-    <img class="fade-image" src="/images/rainforest3.jpg" alt="Rainforest Image">
-    <img class="fade-image" src="/images/rainforest1.jpg" alt="Rainforest Image">
-    <img class="fade-image" src="/images/rainforest2.jpg" alt="Rainforest Image">
-    <div class="content-container">
-        <div id="heading-container">
-            <img src="/images/icons/logo_for_slides.png" alt="Logo" class="logo-icon">
-            <div class="text-content">
-                <h1 class="heading">Folium</h1>
-                <p class="slogan">Simplify Compliance. Maximize Trust</p>
-            </div>
-        </div>
-        <div id="button-container">
-            <button onclick="window.location.href='/user/login'" class="cssbuttons-io-button">
-                Login
-                <div class="icon">
-                    <svg
-                            height="24"
-                            width="24"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path
-                                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-                                fill="currentColor"
-                        ></path>
-                    </svg>
-                </div>
-            </button>
-            <button onclick="window.location.href='/user/register'" class="cssbuttons-io-button">
-                Sign Up
-                <div class="icon">
-                    <svg
-                            height="24"
-                            width="24"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path
-                                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-                                fill="currentColor"
-                        ></path>
-                    </svg>
-                </div>
-            </button>
-        </div>
+    <div class="slideshow-background">
+        <img class="fade-image" src="/images/palm%20oil.jpg" alt="Palm Oil">
+        <img class="fade-image" src="/images/rainforest3.jpg" alt="Rainforest Image">
+        <img class="fade-image" src="/images/rainforest1.jpg" alt="Rainforest Image">
+        <img class="fade-image" src="/images/rainforest2.jpg" alt="Rainforest Image">
+        <div class="overlay"></div>
     </div>
-</div>
+
+    <header class="main-header">
+        <div class="logo">
+            <a href="/" class="logo-link">
+                <img src="/images/icons/logo_for_slides.png" alt="Folium Logo" class="logo-image">
+                <span class="logo-text">FOLIUM</span>
+            </a>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li>
+                    <label class="theme-toggle">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider"></span>
+                    </label>
+                </li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="/user/login">Login</a></li>
+                <li><a href="/user/register" class="cta">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="blur-wrapper">
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <h1>Ensure Supply Chain Transparency</h1>
+            <p>Your EUDR compliance platform for risk assessment, DDS tracking, and supplier monitoring.</p>
+            <a href="/user/register" class="btn-primary">Get Started</a>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="info-section">
+            <h2>What is Folium?</h2>
+            <p>Placeholder text for explaining the purpose of the platform. Highlight pain points and regulatory
+                relevance.
+            </p>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <h2>Key Features</h2>
+            <ul class="features-list">
+                <li>Supplier Risk Analysis</li>
+                <li>Due Diligence Statement (DDS) Management</li>
+                <li>Interactive Dashboards</li>
+                <li>Multi-role Access: Customer & Supplier View</li>
+                <li>Secure & Scalable Architecture</li>
+            </ul>
+        </section>
+
+        <!-- Target Groups Section -->
+        <section class="target-groups">
+            <h2>Who Is It For?</h2>
+            <div class="target-columns">
+                <div>
+                    <h3>Suppliers</h3>
+                    <p>Manage compliance data, upload DDS, track deliveries.</p>
+                </div>
+                <div>
+                    <h3>Customers</h3>
+                    <p>Analyze risk, monitor suppliers, maintain regulatory standards.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login/Register Call-to-Action -->
+        <section id="login" class="auth-section">
+            <h2>Already have an account?</h2>
+            <a href="/user/login" class="btn-secondary">Login</a>
+            <h2>New here?</h2>
+            <a href="/user/register" class="btn-primary">Create Account</a>
+        </section>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>&copy; 2025 Folium. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Imprint</a>
+            <a href="#">Terms of Use</a>
+        </div>
+    </footer>
+
 
 
 
 
 </body>
+
+</html>

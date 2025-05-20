@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f7f7f7;
@@ -48,6 +50,16 @@
             margin-bottom: 30px;
         }
 
+        .fade-image {
+            z-index: 10;
+        }
+
+        .content-container {
+            position: relative;
+            z-index: 100;
+        }
+
+
         /* Button for navigation */
         .home-btn {
             display: inline-block;
@@ -65,22 +77,24 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="overlay"></div>
+    <div class="container">
+        <div class="overlay"></div>
         <img class="fade-image" src="/images/palm%20oil.jpg" alt="Palm Oil">
         <img class="fade-image" src="/images/rainforest3.jpg" alt="Rainforest Image">
         <img class="fade-image" src="/images/rainforest1.jpg" alt="Rainforest Image">
         <img class="fade-image" src="/images/rainforest2.jpg" alt="Rainforest Image">
-    <div class="content-container">
-        <div class="error-container">
-            <h1>404</h1>
-            <p>Oops! The page you're looking for doesn't exist.</p>
-            <a href="/" class="home-btn">Go to Homepage</a>
+        <div class="content-container">
+            <div class="error-container">
+                <h1>404</h1>
+                <p>Oops! The page you're looking for doesn't exist.</p>
+                <a href="/" class="home-btn">Go to Homepage</a>
+            </div>
         </div>
     </div>
-</div>
 
 </body>
+
 </html>

@@ -1,0 +1,383 @@
+/* === Global Reset & Base Styles === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100%;
+    color: #fff;
+    background-color: transparent;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* === Background Slideshow === */
+.slideshow-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.slideshow-background img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: fadeSlideshow 24s infinite;
+}
+
+.slideshow-background img:nth-of-type(1) {
+    animation-delay: 0s;
+}
+
+.slideshow-background img:nth-of-type(2) {
+    animation-delay: 6s;
+}
+
+.slideshow-background img:nth-of-type(3) {
+    animation-delay: 12s;
+}
+
+.slideshow-background img:nth-of-type(4) {
+    animation-delay: 18s;
+}
+
+@keyframes fadeSlideshow {
+    0% {
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    33% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* === Dark Mode Theme Switch Styling === */
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #444;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #00e39f;
+}
+
+input:checked+.slider:before {
+    transform: translateX(24px);
+}
+
+/* Optional: Dark mode background highlight for toggle container */
+nav .theme-toggle {
+    margin-right: 1rem;
+}
+
+
+/* === Header Navigation === */
+.main-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.main-header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00e39f;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover,
+.main-nav .cta {
+    color: #00e39f;
+}
+
+/* === Hero Section === */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    text-align: center;
+    padding: 2rem;
+    background-color: transparent;
+    /* ← wichtig */
+    backdrop-filter: none;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    color: #ccc;
+}
+
+.btn-primary {
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #00e39f;
+    color: #111;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #00b376;
+}
+
+/* === Sections (About, Features, Target Groups) === */
+section {
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    background-color: transparent;
+    /* ← wichtig */
+    backdrop-filter: none;
+}
+
+.blur-wrapper {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+
+section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #00e39f;
+}
+
+section p,
+section li {
+    color: #ddd;
+    font-size: 1rem;
+    max-width: 800px;
+    margin: 0 auto 1rem;
+    line-height: 1.6;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+}
+
+.features-list li {
+    margin-bottom: 0.75rem;
+}
+
+.target-columns {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.target-columns div {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 300px;
+}
+
+/* === Auth Section === */
+.auth-section a {
+    display: inline-block;
+    margin: 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid #00e39f;
+    color: #00e39f;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #00e39f;
+    color: #111;
+}
+
+/* === Footer === */
+.main-footer {
+    padding: 2rem;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.logo img,
+.logo-image {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+section+section {
+    margin-top: -1px;
+    /* verhindert Lücken */
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00e39f;
+    letter-spacing: 1px;
+}
+
+/* Fix Toggle-Position auf Seiten mit reduziertem Inhalt, z.B. Login/Register */
+.main-nav ul {
+  align-items: center;
+}
+
+.main-nav li {
+  display: flex;
+  align-items: center;
+}
+
+/* Optional: Etwas Abstand unterhalb des Schalters */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+/* Auf Login-/Registerseiten ggf. Abstand zur rechten Seite verringern */
+@media (max-width: 600px) {
+  .main-nav ul {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: center;
+  }
+}

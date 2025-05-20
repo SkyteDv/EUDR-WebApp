@@ -1,0 +1,419 @@
+/* === Light Mode CSS – Zusammenfassung aller vier Dateien in hell === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100%;
+    color: #222;
+    background-color: transparent;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+.slideshow-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.slideshow-background img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: fadeSlideshow 24s infinite;
+}
+
+.slideshow-background img:nth-of-type(1) {
+    animation-delay: 0s;
+}
+
+.slideshow-background img:nth-of-type(2) {
+    animation-delay: 6s;
+}
+
+.slideshow-background img:nth-of-type(3) {
+    animation-delay: 12s;
+}
+
+.slideshow-background img:nth-of-type(4) {
+    animation-delay: 18s;
+}
+
+@keyframes fadeSlideshow {
+    0% {
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    33% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.overlay {
+    background: rgba(255, 255, 255, 0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.main-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.main-header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007acc;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.main-nav a {
+    color: #222;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover,
+.main-nav .cta {
+    color: #007acc;
+}
+
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #111;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    color: #444;
+}
+
+.btn-primary {
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #007acc;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #005fa3;
+}
+
+section {
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+}
+
+.blur-wrapper {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+}
+
+section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #007acc;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+section p,
+section li {
+    color: #222;
+    font-size: 1rem;
+    max-width: 800px;
+    margin: 0 auto 1rem;
+    line-height: 1.6;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+}
+
+.features-list li {
+    margin-bottom: 0.75rem;
+}
+
+.target-columns {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.target-columns div {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 300px;
+}
+
+.auth-section a {
+    display: inline-block;
+    margin: 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid #007acc;
+    color: #007acc;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #007acc;
+    color: #fff;
+}
+
+.main-footer {
+    padding: 2rem;
+    text-align: center;
+    background-color: rgba(240, 240, 240, 1);
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #000;
+}
+
+.logo img,
+.logo-image {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+section+section {
+    margin-top: -1px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #007acc;
+    letter-spacing: 1px;
+}
+
+.login-form-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    max-width: 450px;
+    margin: 2rem 0;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    color: #222;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.login-form-container h1,
+.login-form-container h2,
+.login-form-container label,
+.login-form-container p,
+.login-form-container a,
+.login-form-container span {
+    color: #111 !important;
+}
+
+
+.input-field {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #222;
+    transition: background 0.3s;
+    appearance: none;
+}
+
+.input-field::placeholder {
+    color: #888;
+}
+
+.input-field:focus {
+    outline: none;
+    background-color: #fff;
+}
+
+select.input-field {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23222' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+.forgot,
+.sign-up-link p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.sign-up-link a,
+.forgot a {
+    color: #007acc;
+    text-decoration: none;
+}
+
+.sign-up-link a:hover,
+.forgot a:hover {
+    text-decoration: underline;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+
+select.input-field {
+    color: #222;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+}
+
+
+
+
+@media (max-width: 480px) {
+    .login-form-container {
+        padding: 1.5rem;
+    }
+}
+
+/* Fix Toggle-Position auf Seiten mit reduziertem Inhalt, z.B. Login/Register */
+.main-nav ul {
+    align-items: center;
+}
+
+.main-nav li {
+    display: flex;
+    align-items: center;
+}
+
+/* Optional: Etwas Abstand unterhalb des Schalters */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
+}
+
+/* Auf Login-/Registerseiten ggf. Abstand zur rechten Seite verringern */
+@media (max-width: 600px) {
+    .main-nav ul {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-header {
+        flex-direction: column;
+        align-items: center;
+    }
+}

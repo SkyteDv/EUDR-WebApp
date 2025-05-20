@@ -1,98 +1,98 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/non-specific/global.css">
-    <link rel="stylesheet" href="/css/non-specific/register.css">
-    <link rel="stylesheet" href="/css/non-specific/background-slideshow.css">
-    <title>Register</title>
+    <title>Register – Folium</title>
+    <!-- Dark Mode Stylesheets -->
+    <link rel="stylesheet" href="/css/non-specific/landing.css" disabled>
+    <link rel="stylesheet" href="/css/non-specific/landingDesign.css" disabled>
+    <link rel="stylesheet" href="/css/non-specific/login.css" disabled>
+    <link rel="stylesheet" href="/css/non-specific/register.css" disabled>
+
+    <!-- Light Mode Stylesheets -->
+    <link rel="stylesheet" href="/css/non-specific/landingLightmode.css" id="light-css">
+    <link rel="stylesheet" href="/css/non-specific/switch.css" id="switch-css">
+
+    <link rel="icon" href="/images/icons/logo_for_slides.png" type="image/png">
+
+    <script src="/javascript/non-specific/themeSwitcher.js" defer></script>
+
 </head>
+
 <body>
+    <div class="slideshow-background">
+        <img class="fade-image" src="/images/palm%20oil.jpg" alt="Palm Oil">
+        <img class="fade-image" src="/images/rainforest3.jpg" alt="Rainforest Image">
+        <img class="fade-image" src="/images/rainforest1.jpg" alt="Rainforest Image">
+        <img class="fade-image" src="/images/rainforest2.jpg" alt="Rainforest Image">
+        <div class="overlay"></div>
+    </div>
 
-<div class="container">
-   <div class="overlay"></div>
-   <img class="fade-image" src="/images/palm%20oil.jpg" alt="Palm Oil">
-   <img class="fade-image" src="/images/rainforest3.jpg" alt="Rainforest Image">
-   <img class="fade-image" src="/images/rainforest1.jpg" alt="Rainforest Image">
-   <img class="fade-image" src="/images/rainforest2.jpg" alt="Rainforest Image">
+    <header class="main-header">
+        <div class="logo">
+            <a href="/" class="logo-link">
+                <img src="/images/icons/logo_for_slides.png" alt="Folium Logo" class="logo-image">
+                <span class="logo-text">FOLIUM</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li>
+                    <label class="theme-toggle">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider"></span>
+                    </label>
+                </li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#contact">Contact</a></li>
+                <li><a href="/user/login" class="cta">Login</a></li>
+                <li><a href="/user/register">Register</a></li>
+            </ul>
+        </nav>
+    </header>
 
-   <div class="content-container">
+    <section class="hero-section" style="min-height: 100vh; justify-content: center;">
+        <div class="login-form-container">
+            <h2 style="color: #fff; margin-bottom: 1.5rem;">Create an Account</h2>
 
-       <div class="register-header">
-           <h1>Sign Up</h1>
-       </div>
+            <!-- Error Message -->
+            <div th:if="${registerError}" style="color: #ff8080; font-weight: bold; margin-bottom: 1rem;">
+                <p th:text="${registerError}"></p>
+            </div>
 
-       <!-- Error Message -->
-       <div th:if="${registerError}" style="color: red; font-weight: bold;">
-           <p th:text="${registerError}"></p>
-       </div>
+            <!-- Register Form -->
+            <form th:action="@{/user/register}" th:object="${user}" method="post" class="login-form">
+                <input type="text" class="input-field" th:field="*{username}" placeholder="Username" required>
 
-       <!-- Register Form -->
-       <form th:action="@{/user/register}" th:object="${user}" method="post">
+                <input type="password" class="input-field" th:field="*{password}" placeholder="Password" required>
 
-           <!-- Username Input -->
-           <div class="input-box">
-               <label>
-                   <input type="text" class="input-field" th:field="*{username}" placeholder="Username" autocomplete="off" required>
-               </label>
-           </div>
+                <input type="text" class="input-field" th:field="*{osapiensID}" placeholder="Osapiens ID" required>
 
-           <!-- Password Input -->
-           <div class="input-box">
-               <label>
-                   <input type="password" class="input-field" th:field="*{password}" placeholder="Password" autocomplete="off" required>
-               </label>
-           </div>
+                <select class="input-field" th:field="*{location}" required>
+                    <option value="" disabled selected>Select Country</option>
+                    <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
+                </select>
 
-           <!-- Osapiens ID Input -->
-           <div class="input-box">
-               <label>
-                   <input type="text" class="input-field" th:field="*{osapiensID}" placeholder="Osapiens ID" autocomplete="off" required>
-               </label>
-           </div>
+                <select class="input-field" th:field="*{userType}" id="userType" name="userType" required>
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="CUSTOMER">Customer</option>
+                    <option value="SUPPLIER">Supplier</option>
+                </select>
 
-           <div class="input-box">
-               <label>
-                   <select class="input-field" th:field="*{location}" required>
-                       <option value="" disabled selected>Select Country</option>
-                       <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
-                   </select>
-               </label>
-           </div>
+                <button class="btn-primary" type="submit">Register</button>
 
-           <!-- User Type Dropdown -->
-           <div class="input-box">
-               <label>
-                   <select class="input-field" th:field="*{userType}" id="userType" name="userType" required>
-                       <option value="" disabled selected>Select Role</option>
-                       <option value="CUSTOMER">Customer</option>
-                       <option value="SUPPLIER">Supplier</option>
-                   </select>
-               </label>
-           </div>
-
-           <!-- Submit Button -->
-           <div class="input-submit">
-               <button class="submit-btn" type="submit" id="submit"></button>
-               <label for="submit">Register</label>
-           </div>
-
-           <!-- Cancel / Login Link -->
-           <div class="sign-up-link">
-               <p><a href="/">Cancel</a></p>
-               <p>Already have an account? <a href="/user/login">Login</a></p>
-           </div>
-
-       </form>
-
-
-   </div>
-
-
-
-</div>
-
+                <div class="sign-up-link" style="margin-top: 1.5rem;">
+                    <p><a href="/">Cancel</a></p>
+                    <p>Already have an account? <a href="/user/login">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
 </body>
+
 </html>

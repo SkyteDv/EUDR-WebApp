@@ -1,7 +1,9 @@
+/* === Allgemeines Layout === */
 .main {
     font-size: 0.8vw;
 }
 
+/* === Headerbereich === */
 .deliveries-header {
     display: flex;
     justify-content: space-between;
@@ -26,11 +28,28 @@
     border-radius: 8px;
 }
 
-/* Table */
+/* === Tabelle: Wrapper für Scroll & Sticky === */
+main {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 6vh); /* Fixhöhe inkl. Header */
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.deliveries-table {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* === Tabelle selbst === */
 .deliveries-table table {
-    overflow: hidden;
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .deliveries-table th,
@@ -38,18 +57,31 @@
     padding: 1rem;
     text-align: center;
     border-bottom: 1px solid #eee;
+    min-width: 120px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
+/* === Sticky Table Header === */
 .deliveries-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     background-color: #eaeaed;
     color: #333;
-    padding: 1.2rem 1rem;
     font-size: 0.9vw;
     font-weight: 600;
+    box-shadow: inset 0 -1px #ddd;
 }
 
 .deliveries-table td {
     background-color: white;
+}
+
+.deliveries-table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
 .deliveries-table td a {
@@ -58,14 +90,28 @@
     font-weight: 500;
 }
 
-.deliveries-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
 .deliveries-table td a:hover {
     text-decoration: underline;
 }
 
+/* === Sortierbare Header === */
+th.sortable {
+    cursor: pointer;
+    position: relative;
+}
+
+th .sort-icon {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+th.sorted-asc .sort-icon,
+th.sorted-desc .sort-icon {
+    color: #7a6fbe;
+}
+
+/* === Sonstige Styles === */
 .highlight {
     background-color: rgba(0, 255, 255, 0.3);
     font-weight: bold;
@@ -75,15 +121,13 @@
     border: 2px solid red !important;
 }
 
+/* === Media Queries === */
 @media (max-width: 1800px) {
-
     main {
         font-size: 0.9vmax;
     }
-
     .deliveries-table th {
         font-size: 1.3vmax;
-        font-weight: bold;
     }
 }
 
@@ -91,21 +135,19 @@
     main {
         font-size: 1.3vmax;
     }
-
     .deliveries-table th {
         font-size: 1.3vmax;
-        font-weight: bold;
     }
 }
 
-/* Responsive Advanced Table */
+/* === Mobile Ansicht: Stack Table === */
 @media (max-width: 900px) {
     main {
         font-size: 1.2rem !important;
     }
 
     .global-filter {
-        display: none!important;
+        display: none !important;
     }
 
     .deliveries-table table,
@@ -117,8 +159,8 @@
         display: block;
     }
 
-    .deliveries-table thead tr {
-        display: none; 
+    .deliveries-table thead {
+        display: none;
     }
 
     .deliveries-table tr {
@@ -155,22 +197,3 @@
         text-align: right;
     }
 }
-
-th.sortable {
-    cursor: pointer;
-    position: relative;
-}
-
-th .sort-icon {
-    margin-left: 0.5rem;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-th.sorted-asc .sort-icon,
-th.sorted-desc .sort-icon {
-    color: #7a6fbe;
-}
-
-
-
