@@ -173,7 +173,7 @@
                 <tbody>
                     <tr th:each="order : ${deliveries}"
                         th:classappend="${order.ddsStatus == 'Not Available'} ? 'red-outline' : ''">
-                        <td data-label="Risk Level"></td>
+                        <td data-label="Risk Level" th:text="${order.riskLevel}"></td>
                         <td data-label="DDS on Delivery">
                             <span th:if="${order.ddsStatus == 'Yes'}"
                                 style="color: green; font-weight: bold;">Yes</span>

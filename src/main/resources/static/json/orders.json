@@ -7,10 +7,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-01",
     "estimatedDeliveryDate": "2025-04-10",
-    "ddsReferenceNumber": "DDS9001",
+    "ddsReferenceNumber": "DDS0001",
     "supplierOsapiensID": "SUP009",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Emma Richardson"
+    "responsible_party": "emma.richardson@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10002",
@@ -20,10 +20,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-02",
     "estimatedDeliveryDate": "2025-04-12",
-    "ddsReferenceNumber": "DDS9002",
+    "ddsReferenceNumber": "DDS0002",
     "supplierOsapiensID": "SUP010",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Liam Caldwell"
+    "responsible_party": "liam.caldwell@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10003",
@@ -33,10 +33,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-03",
     "estimatedDeliveryDate": "2025-04-13",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0003",
     "supplierOsapiensID": "SUP014",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Olivia Sinclair"
+    "responsible_party": "olivia.sinclair@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10004",
@@ -46,10 +46,10 @@
     "destination": "Bremen",
     "orderDate": "2025-04-04",
     "estimatedDeliveryDate": "2025-04-15",
-    "ddsReferenceNumber": "DDS9004",
+    "ddsReferenceNumber": "DDS0004",
     "supplierOsapiensID": "SUP014",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Noah Whitmore"
+    "responsible_party": "noah.whitmore@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10005",
@@ -59,10 +59,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-05",
     "estimatedDeliveryDate": "2025-04-16",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0005",
     "supplierOsapiensID": "SUP015",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Ava Kensington"
+    "responsible_party": "ava.kensington@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10006",
@@ -72,10 +72,10 @@
     "destination": "Valencia",
     "orderDate": "2025-04-06",
     "estimatedDeliveryDate": "2025-04-17",
-    "ddsReferenceNumber": "DDS9006",
+    "ddsReferenceNumber": "DDS0006",
     "supplierOsapiensID": "SUP015",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "William Harrington"
+    "responsible_party": "william.harrington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10007",
@@ -85,10 +85,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-07",
     "estimatedDeliveryDate": "2025-04-18",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0007",
     "supplierOsapiensID": "SUP016",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Sophia Montgomery"
+    "responsible_party": "sophia.montgomery@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10001",
@@ -98,10 +98,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-01",
     "estimatedDeliveryDate": "2025-04-10",
-    "ddsReferenceNumber": "DDS9001",
+    "ddsReferenceNumber": "DDS0008",
     "supplierOsapiensID": "SUP016",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Emma Richardson"
+    "responsible_party": "emma.richardson@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10002",
@@ -111,10 +111,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-02",
     "estimatedDeliveryDate": "2025-04-12",
-    "ddsReferenceNumber": "DDS9002",
+    "ddsReferenceNumber": "DDS0009",
     "supplierOsapiensID": "SUP011",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Liam Caldwell"
+    "responsible_party": "liam.caldwell@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10003",
@@ -124,10 +124,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-03",
     "estimatedDeliveryDate": "2025-04-13",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0010",
     "supplierOsapiensID": "SUP012",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Olivia Sinclair"
+    "responsible_party": "olivia.sinclair@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10004",
@@ -137,10 +137,10 @@
     "destination": "Bremen",
     "orderDate": "2025-04-04",
     "estimatedDeliveryDate": "2025-04-15",
-    "ddsReferenceNumber": "DDS9004",
+    "ddsReferenceNumber": "DDS0011",
     "supplierOsapiensID": "SUP019",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Noah Whitmore"
+    "responsible_party": "noah.whitmore@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10005",
@@ -150,10 +150,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-05",
     "estimatedDeliveryDate": "2025-04-16",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0012",
     "supplierOsapiensID": "SUP018",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Ava Kensington"
+    "responsible_party": "ava.kensington@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10006",
@@ -163,10 +163,10 @@
     "destination": "Valencia",
     "orderDate": "2025-04-06",
     "estimatedDeliveryDate": "2025-04-17",
-    "ddsReferenceNumber": "DDS9006",
+    "ddsReferenceNumber": "DDS0013",
     "supplierOsapiensID": "SUP012",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "William Harrington"
+    "responsible_party": "william.harrington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10007",
@@ -176,10 +176,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-07",
     "estimatedDeliveryDate": "2025-04-18",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0014",
     "supplierOsapiensID": "SUP017",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Sophia Montgomery"
+    "responsible_party": "sophia.montgomery@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10008",
@@ -189,10 +189,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-08",
     "estimatedDeliveryDate": "2025-04-19",
-    "ddsReferenceNumber": "DDS9008",
+    "ddsReferenceNumber": "DDS0015",
     "supplierOsapiensID": "SUP013",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "James Pembroke"
+    "responsible_party": "james.pembroke@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10009",
@@ -202,10 +202,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-09",
     "estimatedDeliveryDate": "2025-04-20",
-    "ddsReferenceNumber": "DDS9009",
+    "ddsReferenceNumber": "DDS0016",
     "supplierOsapiensID": "SUP011",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Isabella Worthington"
+    "responsible_party": "isabella.worthington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10010",
@@ -215,10 +215,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-10",
     "estimatedDeliveryDate": "2025-04-21",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0017",
     "supplierOsapiensID": "SUP008",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Benjamin Ashford"
+    "responsible_party": "benjamin.ashford@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10011",
@@ -228,10 +228,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-11",
     "estimatedDeliveryDate": "2025-04-22",
-    "ddsReferenceNumber": "DDS9011",
+    "ddsReferenceNumber": "DDS0018",
     "supplierOsapiensID": "SUP06",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Mia Kingsley"
+    "responsible_party": "mia.kingsley@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10012",
@@ -244,7 +244,7 @@
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP020",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Lucas Beaumont"
+    "responsible_party": "lucas.beaumont@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10013",
@@ -254,10 +254,10 @@
     "destination": "Valencia",
     "orderDate": "2025-04-13",
     "estimatedDeliveryDate": "2025-04-24",
-    "ddsReferenceNumber": "DDS9013",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP020",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Charlotte Ellington"
+    "responsible_party": "charlotte.ellington@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10014",
@@ -267,10 +267,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-14",
     "estimatedDeliveryDate": "2025-04-25",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0021",
     "supplierOsapiensID": "SUP019",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Alexander Carmichael"
+    "responsible_party": "alexander.carmichael@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10015",
@@ -280,10 +280,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-15",
     "estimatedDeliveryDate": "2025-04-26",
-    "ddsReferenceNumber": "DDS9015",
+    "ddsReferenceNumber": "DDS0022",
     "supplierOsapiensID": "SUP011",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Amelia St. Clair"
+    "responsible_party": "amelia.st.@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10016",
@@ -293,10 +293,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-16",
     "estimatedDeliveryDate": "2025-04-27",
-    "ddsReferenceNumber": "DDS9016",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST009",
-    "responsible_party": "Ethan Blackwood"
+    "responsible_party": "ethan.blackwood@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10017",
@@ -306,10 +306,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-17",
     "estimatedDeliveryDate": "2025-04-28",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0024",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST008",
-    "responsible_party": "Harper Wellingham"
+    "responsible_party": "harper.wellingham@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10018",
@@ -319,10 +319,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-18",
     "estimatedDeliveryDate": "2025-04-29",
-    "ddsReferenceNumber": "DDS9018",
+    "ddsReferenceNumber": "DDS0025",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST016",
-    "responsible_party": "Daniel Fairchild"
+    "responsible_party": "daniel.fairchild@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10019",
@@ -332,10 +332,10 @@
     "destination": "Bremen",
     "orderDate": "2025-04-19",
     "estimatedDeliveryDate": "2025-04-30",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0026",
     "supplierOsapiensID": "SUP011",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Evelyn Radcliffe"
+    "responsible_party": "evelyn.radcliffe@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10020",
@@ -345,10 +345,10 @@
     "destination": "Valencia",
     "orderDate": "2025-04-20",
     "estimatedDeliveryDate": "2025-05-01",
-    "ddsReferenceNumber": "DDS9020",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP012",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Michael Thornfield"
+    "responsible_party": "michael.thornfield@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10021",
@@ -358,10 +358,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-21",
     "estimatedDeliveryDate": "2025-05-02",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0028",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Abigail Whitaker"
+    "responsible_party": "abigail.whitaker@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10022",
@@ -371,10 +371,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-22",
     "estimatedDeliveryDate": "2025-05-03",
-    "ddsReferenceNumber": "DDS9022",
+    "ddsReferenceNumber": "DDS0029",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Samuel Harrington"
+    "responsible_party": "samuel.harrington@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10023",
@@ -387,7 +387,7 @@
     "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Emily Redgrave"
+    "responsible_party": "emily.redgrave@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10024",
@@ -397,10 +397,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-24",
     "estimatedDeliveryDate": "2025-05-05",
-    "ddsReferenceNumber": "DDS9024",
+    "ddsReferenceNumber": "DDS0031",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Josephine Marlowe"
+    "responsible_party": "josephine.marlowe@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10025",
@@ -410,10 +410,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-25",
     "estimatedDeliveryDate": "2025-05-06",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0032",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Christopher Ashbury"
+    "responsible_party": "christopher.ashbury@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10026",
@@ -423,10 +423,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-26",
     "estimatedDeliveryDate": "2025-05-07",
-    "ddsReferenceNumber": "DDS9026",
+    "ddsReferenceNumber": "DDS0033",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Grace Huntington"
+    "responsible_party": "grace.huntington@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10027",
@@ -436,10 +436,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-27",
     "estimatedDeliveryDate": "2025-05-08",
-    "ddsReferenceNumber": "DDS9027",
+    "ddsReferenceNumber": "DDS0034",
     "supplierOsapiensID": "SUP003",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Andrew Kensington"
+    "responsible_party": "andrew.kensington@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10028",
@@ -449,10 +449,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-28",
     "estimatedDeliveryDate": "2025-05-09",
-    "ddsReferenceNumber": "DDS9028",
+    "ddsReferenceNumber": "DDS0035",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Victoria Caldwell"
+    "responsible_party": "victoria.caldwell@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10029",
@@ -462,10 +462,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-29",
     "estimatedDeliveryDate": "2025-05-10",
-    "ddsReferenceNumber": "DDS9029",
+    "ddsReferenceNumber": "DDS0036",
     "supplierOsapiensID": "SUP002",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Nathaniel Winthrop"
+    "responsible_party": "nathaniel.winthrop@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10030",
@@ -475,10 +475,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-30",
     "estimatedDeliveryDate": "2025-05-11",
-    "ddsReferenceNumber": "DDS9030",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Penelope Beauchamp"
+    "responsible_party": "penelope.beauchamp@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10031",
@@ -488,10 +488,10 @@
     "destination": "Bremen",
     "orderDate": "2025-05-01",
     "estimatedDeliveryDate": "2025-05-12",
-    "ddsReferenceNumber": "DDS9031",
+    "ddsReferenceNumber": "DDS0038",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Sebastian Montgomery"
+    "responsible_party": "sebastian.montgomery@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10032",
@@ -501,10 +501,10 @@
     "destination": "Valencia",
     "orderDate": "2025-05-02",
     "estimatedDeliveryDate": "2025-05-13",
-    "ddsReferenceNumber": "DDS9032",
+    "ddsReferenceNumber": "DDS0039",
     "supplierOsapiensID": "SUP003",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Lillian Ashford"
+    "responsible_party": "lillian.ashford@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10033",
@@ -514,10 +514,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-05-03",
     "estimatedDeliveryDate": "2025-05-14",
-    "ddsReferenceNumber": "DDS9033",
+    "ddsReferenceNumber": "DDS0040",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Theodore Kingsley"
+    "responsible_party": "theodore.kingsley@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10034",
@@ -527,10 +527,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-05-04",
     "estimatedDeliveryDate": "2025-05-15",
-    "ddsReferenceNumber": "DDS9034",
+    "ddsReferenceNumber": "DDS0041",
     "supplierOsapiensID": "SUP002",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Eleanor Pembroke"
+    "responsible_party": "eleanor.pembroke@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10035",
@@ -540,10 +540,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-05-05",
     "estimatedDeliveryDate": "2025-05-16",
-    "ddsReferenceNumber": "DDS9035",
+    "ddsReferenceNumber": "DDS0042",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Gabriel Whitmore"
+    "responsible_party": "gabriel.whitmore@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10036",
@@ -553,10 +553,10 @@
     "destination": "Genoa",
     "orderDate": "2025-05-06",
     "estimatedDeliveryDate": "2025-05-17",
-    "ddsReferenceNumber": "DDS9036",
+    "ddsReferenceNumber": "DDS0043",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Clara Ellington"
+    "responsible_party": "clara.ellington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10037",
@@ -566,10 +566,10 @@
     "destination": "Marseille",
     "orderDate": "2025-05-07",
     "estimatedDeliveryDate": "2025-05-18",
-    "ddsReferenceNumber": "DDS9037",
+    "ddsReferenceNumber": "DDS0044",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Dominic Radcliffe"
+    "responsible_party": "dominic.radcliffe@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10038",
@@ -579,10 +579,10 @@
     "destination": "Valencia",
     "orderDate": "2025-05-08",
     "estimatedDeliveryDate": "2025-05-19",
-    "ddsReferenceNumber": "DDS9038",
+    "ddsReferenceNumber": "DDS0045",
     "supplierOsapiensID": "SUP003",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Beatrice St. John"
+    "responsible_party": "beatrice.st.@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10039",
@@ -592,10 +592,10 @@
     "destination": "Bremen",
     "orderDate": "2025-05-09",
     "estimatedDeliveryDate": "2025-05-20",
-    "ddsReferenceNumber": "DDS9039",
+    "ddsReferenceNumber": "DDS0046",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Henry Worthington"
+    "responsible_party": "henry.worthington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10040",
@@ -605,10 +605,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-05-10",
     "estimatedDeliveryDate": "2025-05-21",
-    "ddsReferenceNumber": "DDS9040",
+    "ddsReferenceNumber": "DDS0047",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Matilda Carmichael"
+    "responsible_party": "matilda.carmichael@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10041",
@@ -618,10 +618,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-05-11",
     "estimatedDeliveryDate": "2025-05-22",
-    "ddsReferenceNumber": "DDS9041",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST019",
-    "responsible_party": "David Zhang"
+    "responsible_party": "david.zhang@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10042",
@@ -631,10 +631,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-05-11",
     "estimatedDeliveryDate": "2025-05-23",
-    "ddsReferenceNumber": "DDS9042",
+    "ddsReferenceNumber": "DDS0049",
     "supplierOsapiensID": "SUP017",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Emma Müller"
+    "responsible_party": "emma.m\u00fcller@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10043",
@@ -644,10 +644,10 @@
     "destination": "Bremen",
     "orderDate": "2025-05-12",
     "estimatedDeliveryDate": "2025-05-24",
-    "ddsReferenceNumber": "DDS9043",
+    "ddsReferenceNumber": "DDS0050",
     "supplierOsapiensID": "SUP009",
     "customerOsapiensID": "CUST015",
-    "responsible_party": "Thomas Schmidt"
+    "responsible_party": "thomas.schmidt@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10044",
@@ -657,10 +657,10 @@
     "destination": "Le Havre",
     "orderDate": "2025-05-12",
     "estimatedDeliveryDate": "2025-05-25",
-    "ddsReferenceNumber": "DDS9044",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP014",
     "customerOsapiensID": "CUST006",
-    "responsible_party": "Sophie Dubois"
+    "responsible_party": "sophie.dubois@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10045",
@@ -670,10 +670,10 @@
     "destination": "Felixstowe",
     "orderDate": "2025-05-13",
     "estimatedDeliveryDate": "2025-05-26",
-    "ddsReferenceNumber": "DDS9045",
+    "ddsReferenceNumber": "DDS0052",
     "supplierOsapiensID": "SUP002",
     "customerOsapiensID": "CUST011",
-    "responsible_party": "Robert Johnson"
+    "responsible_party": "robert.johnson@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10046",
@@ -683,10 +683,10 @@
     "destination": "Gdansk",
     "orderDate": "2025-05-13",
     "estimatedDeliveryDate": "2025-05-27",
-    "ddsReferenceNumber": "DDS9046",
+    "ddsReferenceNumber": "DDS0053",
     "supplierOsapiensID": "SUP020",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Anna Kowalski"
+    "responsible_party": "anna.kowalski@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10047",
@@ -696,10 +696,10 @@
     "destination": "Barcelona",
     "orderDate": "2025-05-14",
     "estimatedDeliveryDate": "2025-05-28",
-    "ddsReferenceNumber": "DDS9047",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP007",
     "customerOsapiensID": "CUST018",
-    "responsible_party": "Carlos Mendez"
+    "responsible_party": "carlos.mendez@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10048",
@@ -709,10 +709,10 @@
     "destination": "Marseille",
     "orderDate": "2025-05-14",
     "estimatedDeliveryDate": "2025-05-29",
-    "ddsReferenceNumber": "DDS9048",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP013",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Lisa Nguyen"
+    "responsible_party": "lisa.nguyen@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10049",
@@ -722,10 +722,10 @@
     "destination": "Genoa",
     "orderDate": "2025-05-15",
     "estimatedDeliveryDate": "2025-05-30",
-    "ddsReferenceNumber": "DDS9049",
+    "ddsReferenceNumber": "DDS0056",
     "supplierOsapiensID": "SUP016",
     "customerOsapiensID": "CUST020",
-    "responsible_party": "Mohammed Al-Farsi"
+    "responsible_party": "mohammed.al-farsi@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10050",
@@ -735,10 +735,10 @@
     "destination": "Valencia",
     "orderDate": "2025-05-15",
     "estimatedDeliveryDate": "2025-05-31",
-    "ddsReferenceNumber": "DDS9050",
+    "ddsReferenceNumber": "DDS0057",
     "supplierOsapiensID": "SUP010",
     "customerOsapiensID": "CUST012",
-    "responsible_party": "Yuki Tanaka"
+    "responsible_party": "yuki.tanaka@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10051",
@@ -748,10 +748,10 @@
     "destination": "Lisbon",
     "orderDate": "2025-05-16",
     "estimatedDeliveryDate": "2025-06-01",
-    "ddsReferenceNumber": "DDS9051",
+    "ddsReferenceNumber": "DDS0058",
     "supplierOsapiensID": "SUP003",
     "customerOsapiensID": "CUST007",
-    "responsible_party": "Olivia Smith"
+    "responsible_party": "olivia.smith@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10052",
@@ -761,10 +761,10 @@
     "destination": "Dublin",
     "orderDate": "2025-05-16",
     "estimatedDeliveryDate": "2025-06-02",
-    "ddsReferenceNumber": "DDS9052",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP019",
     "customerOsapiensID": "CUST014",
-    "responsible_party": "Patrick O'Connor"
+    "responsible_party": "patrick.o'connor@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10053",
@@ -774,10 +774,10 @@
     "destination": "Copenhagen",
     "orderDate": "2025-05-17",
     "estimatedDeliveryDate": "2025-06-03",
-    "ddsReferenceNumber": "DDS9053",
+    "ddsReferenceNumber": "DDS0060",
     "supplierOsapiensID": "SUP008",
     "customerOsapiensID": "CUST009",
-    "responsible_party": "Elena Petrov"
+    "responsible_party": "elena.petrov@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10054",
@@ -787,10 +787,10 @@
     "destination": "Oslo",
     "orderDate": "2025-05-17",
     "estimatedDeliveryDate": "2025-06-04",
-    "ddsReferenceNumber": "DDS9054",
+    "ddsReferenceNumber": "DDS0061",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST016",
-    "responsible_party": "Björn Johansson"
+    "responsible_party": "bj\u00f6rn.johansson@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10055",
@@ -800,10 +800,10 @@
     "destination": "Stockholm",
     "orderDate": "2025-05-18",
     "estimatedDeliveryDate": "2025-06-05",
-    "ddsReferenceNumber": "DDS9055",
+    "ddsReferenceNumber": "DDS0062",
     "supplierOsapiensID": "SUP015",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Nina Andersen"
+    "responsible_party": "nina.andersen@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10056",
@@ -813,10 +813,10 @@
     "destination": "Helsinki",
     "orderDate": "2025-05-18",
     "estimatedDeliveryDate": "2025-06-06",
-    "ddsReferenceNumber": "DDS9056",
+    "ddsReferenceNumber": "DDS0063",
     "supplierOsapiensID": "SUP006",
     "customerOsapiensID": "CUST017",
-    "responsible_party": "Markus Virtanen"
+    "responsible_party": "markus.virtanen@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10057",
@@ -826,10 +826,10 @@
     "destination": "Riga",
     "orderDate": "2025-05-19",
     "estimatedDeliveryDate": "2025-06-07",
-    "ddsReferenceNumber": "DDS9057",
+    "ddsReferenceNumber": "DDS0064",
     "supplierOsapiensID": "SUP011",
     "customerOsapiensID": "CUST010",
-    "responsible_party": "Ieva Berzina"
+    "responsible_party": "ieva.berzina@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10058",
@@ -839,10 +839,10 @@
     "destination": "Tallinn",
     "orderDate": "2025-05-19",
     "estimatedDeliveryDate": "2025-06-08",
-    "ddsReferenceNumber": "DDS9058",
+    "ddsReferenceNumber": "DDS0065",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST013",
-    "responsible_party": "Tomas Novak"
+    "responsible_party": "tomas.novak@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10059",
@@ -852,10 +852,10 @@
     "destination": "Vilnius",
     "orderDate": "2025-05-20",
     "estimatedDeliveryDate": "2025-06-09",
-    "ddsReferenceNumber": "DDS9059",
+    "ddsReferenceNumber": "DDS0066",
     "supplierOsapiensID": "SUP018",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Laura Meier"
+    "responsible_party": "laura.meier@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10060",
@@ -865,10 +865,10 @@
     "destination": "Klaipeda",
     "orderDate": "2025-05-20",
     "estimatedDeliveryDate": "2025-06-10",
-    "ddsReferenceNumber": "DDS9060",
+    "ddsReferenceNumber": "DDS0067",
     "supplierOsapiensID": "SUP020",
     "customerOsapiensID": "CUST019",
-    "responsible_party": "Ahmed Khalid"
+    "responsible_party": "ahmed.khalid@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10061",
@@ -878,10 +878,10 @@
     "destination": "Gdynia",
     "orderDate": "2025-05-21",
     "estimatedDeliveryDate": "2025-06-11",
-    "ddsReferenceNumber": "DDS9061",
+    "ddsReferenceNumber": "DDS0068",
     "supplierOsapiensID": "SUP012",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Eva Nowak"
+    "responsible_party": "eva.nowak@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10062",
@@ -891,10 +891,10 @@
     "destination": "Constanta",
     "orderDate": "2025-05-21",
     "estimatedDeliveryDate": "2025-06-12",
-    "ddsReferenceNumber": "DDS9062",
+    "ddsReferenceNumber": "DDS0069",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST008",
-    "responsible_party": "Ivan Petrovic"
+    "responsible_party": "ivan.petrovic@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10063",
@@ -904,10 +904,10 @@
     "destination": "Varna",
     "orderDate": "2025-05-22",
     "estimatedDeliveryDate": "2025-06-13",
-    "ddsReferenceNumber": "DDS9063",
+    "ddsReferenceNumber": "DDS0070",
     "supplierOsapiensID": "SUP017",
     "customerOsapiensID": "CUST015",
-    "responsible_party": "Sophia Müller"
+    "responsible_party": "sophia.m\u00fcller@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10064",
@@ -917,10 +917,10 @@
     "destination": "Burgas",
     "orderDate": "2025-05-22",
     "estimatedDeliveryDate": "2025-06-14",
-    "ddsReferenceNumber": "DDS9064",
+    "ddsReferenceNumber": "DDS0071",
     "supplierOsapiensID": "SUP009",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Luca Rossi"
+    "responsible_party": "luca.rossi@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10065",
@@ -930,10 +930,10 @@
     "destination": "Piraeus",
     "orderDate": "2025-05-23",
     "estimatedDeliveryDate": "2025-06-15",
-    "ddsReferenceNumber": "DDS9065",
+    "ddsReferenceNumber": "DDS0072",
     "supplierOsapiensID": "SUP014",
     "customerOsapiensID": "CUST020",
-    "responsible_party": "Maria Papadopoulos"
+    "responsible_party": "maria.papadopoulos@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10066",
@@ -943,10 +943,10 @@
     "destination": "Thessaloniki",
     "orderDate": "2025-05-23",
     "estimatedDeliveryDate": "2025-06-16",
-    "ddsReferenceNumber": "DDS9066",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP002",
     "customerOsapiensID": "CUST006",
-    "responsible_party": "Nikolaos Georgiou"
+    "responsible_party": "nikolaos.georgiou@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10067",
@@ -956,10 +956,10 @@
     "destination": "Izmir",
     "orderDate": "2025-05-24",
     "estimatedDeliveryDate": "2025-06-17",
-    "ddsReferenceNumber": "DDS9067",
+    "ddsReferenceNumber": "DDS0074",
     "supplierOsapiensID": "SUP020",
     "customerOsapiensID": "CUST011",
-    "responsible_party": "Aylin Demir"
+    "responsible_party": "aylin.demir@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10068",
@@ -969,10 +969,10 @@
     "destination": "Istanbul",
     "orderDate": "2025-05-24",
     "estimatedDeliveryDate": "2025-06-18",
-    "ddsReferenceNumber": "DDS9068",
+    "ddsReferenceNumber": "DDS0075",
     "supplierOsapiensID": "SUP007",
     "customerOsapiensID": "CUST018",
-    "responsible_party": "Emre Yilmaz"
+    "responsible_party": "emre.yilmaz@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10069",
@@ -982,10 +982,10 @@
     "destination": "Mersin",
     "orderDate": "2025-05-25",
     "estimatedDeliveryDate": "2025-06-19",
-    "ddsReferenceNumber": "DDS9069",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP013",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Fatma Kaya"
+    "responsible_party": "fatma.kaya@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10070",
@@ -995,10 +995,10 @@
     "destination": "Alexandria",
     "orderDate": "2025-05-25",
     "estimatedDeliveryDate": "2025-06-20",
-    "ddsReferenceNumber": "DDS9070",
+    "ddsReferenceNumber": "DDS0077",
     "supplierOsapiensID": "SUP016",
     "customerOsapiensID": "CUST012",
-    "responsible_party": "Hassan Mohamed"
+    "responsible_party": "hassan.mohamed@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10071",
@@ -1008,10 +1008,10 @@
     "destination": "Damietta",
     "orderDate": "2025-05-26",
     "estimatedDeliveryDate": "2025-06-21",
-    "ddsReferenceNumber": "DDS9071",
+    "ddsReferenceNumber": "DDS0078",
     "supplierOsapiensID": "SUP010",
     "customerOsapiensID": "CUST007",
-    "responsible_party": "Amir El-Sayed"
+    "responsible_party": "amir.el-sayed@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10072",
@@ -1021,10 +1021,10 @@
     "destination": "Port Said",
     "orderDate": "2025-05-26",
     "estimatedDeliveryDate": "2025-06-22",
-    "ddsReferenceNumber": "DDS9072",
+    "ddsReferenceNumber": "DDS0079",
     "supplierOsapiensID": "SUP003",
     "customerOsapiensID": "CUST014",
-    "responsible_party": "Yara Fawzy"
+    "responsible_party": "yara.fawzy@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10073",
@@ -1034,10 +1034,10 @@
     "destination": "Beirut",
     "orderDate": "2025-05-27",
     "estimatedDeliveryDate": "2025-06-23",
-    "ddsReferenceNumber": "DDS9073",
+    "ddsReferenceNumber": "DDS0080",
     "supplierOsapiensID": "SUP019",
     "customerOsapiensID": "CUST009",
-    "responsible_party": "Leila Khoury"
+    "responsible_party": "leila.khoury@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10074",
@@ -1047,10 +1047,10 @@
     "destination": "Haifa",
     "orderDate": "2025-05-27",
     "estimatedDeliveryDate": "2025-06-24",
-    "ddsReferenceNumber": "DDS9074",
+    "ddsReferenceNumber": "DDS0081",
     "supplierOsapiensID": "SUP008",
     "customerOsapiensID": "CUST016",
-    "responsible_party": "David Cohen"
+    "responsible_party": "david.cohen@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10075",
@@ -1060,10 +1060,10 @@
     "destination": "Ashdod",
     "orderDate": "2025-05-28",
     "estimatedDeliveryDate": "2025-06-25",
-    "ddsReferenceNumber": "DDS9075",
+    "ddsReferenceNumber": "DDS0082",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Rachel Levi"
+    "responsible_party": "rachel.levi@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10076",
@@ -1073,10 +1073,10 @@
     "destination": "Limassol",
     "orderDate": "2025-05-28",
     "estimatedDeliveryDate": "2025-06-26",
-    "ddsReferenceNumber": "DDS9076",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP015",
     "customerOsapiensID": "CUST017",
-    "responsible_party": "Andreas Ioannou"
+    "responsible_party": "andreas.ioannou@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10077",
@@ -1086,10 +1086,10 @@
     "destination": "Larnaca",
     "orderDate": "2025-05-29",
     "estimatedDeliveryDate": "2025-06-27",
-    "ddsReferenceNumber": "DDS9077",
+    "ddsReferenceNumber": "DDS0084",
     "supplierOsapiensID": "SUP006",
     "customerOsapiensID": "CUST010",
-    "responsible_party": "Eleni Michael"
+    "responsible_party": "eleni.michael@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10078",
@@ -1099,10 +1099,10 @@
     "destination": "Valletta",
     "orderDate": "2025-05-29",
     "estimatedDeliveryDate": "2025-06-28",
-    "ddsReferenceNumber": "DDS9078",
+    "ddsReferenceNumber": "DDS0085",
     "supplierOsapiensID": "SUP011",
     "customerOsapiensID": "CUST013",
-    "responsible_party": "Joseph Caruana"
+    "responsible_party": "joseph.caruana@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10079",
@@ -1112,10 +1112,10 @@
     "destination": "Tunis",
     "orderDate": "2025-05-30",
     "estimatedDeliveryDate": "2025-06-29",
-    "ddsReferenceNumber": "DDS9079",
+    "ddsReferenceNumber": "DDS0086",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Amira Ben Salah"
+    "responsible_party": "amira.ben@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10080",
@@ -1125,10 +1125,10 @@
     "destination": "Algiers",
     "orderDate": "2025-05-30",
     "estimatedDeliveryDate": "2025-06-30",
-    "ddsReferenceNumber": "DDS9080",
+    "ddsReferenceNumber": "DDS0087",
     "supplierOsapiensID": "SUP018",
     "customerOsapiensID": "CUST019",
-    "responsible_party": "Karim Bouchard"
+    "responsible_party": "karim.bouchard@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10081",
@@ -1138,10 +1138,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-01",
     "estimatedDeliveryDate": "2025-04-10",
-    "ddsReferenceNumber": "DDS9001",
+    "ddsReferenceNumber": "DDS0088",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Emma Richardson"
+    "responsible_party": "emma.richardson@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10082",
@@ -1151,10 +1151,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-02",
     "estimatedDeliveryDate": "2025-04-12",
-    "ddsReferenceNumber": "DDS9002",
+    "ddsReferenceNumber": "DDS0089",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Liam Caldwell"
+    "responsible_party": "liam.caldwell@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10083",
@@ -1164,10 +1164,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-03",
     "estimatedDeliveryDate": "2025-04-13",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0090",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Olivia Sinclair"
+    "responsible_party": "olivia.sinclair@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10084",
@@ -1177,10 +1177,10 @@
     "destination": "Bremen",
     "orderDate": "2025-04-04",
     "estimatedDeliveryDate": "2025-04-15",
-    "ddsReferenceNumber": "DDS9004",
+    "ddsReferenceNumber": "DDS0091",
     "supplierOsapiensID": "SUP007",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Noah Whitmore"
+    "responsible_party": "noah.whitmore@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10085",
@@ -1190,10 +1190,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-05",
     "estimatedDeliveryDate": "2025-04-16",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0092",
     "supplierOsapiensID": "SUP007",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Ava Kensington"
+    "responsible_party": "ava.kensington@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10086",
@@ -1203,10 +1203,10 @@
     "destination": "Valencia",
     "orderDate": "2025-04-06",
     "estimatedDeliveryDate": "2025-04-17",
-    "ddsReferenceNumber": "DDS9006",
+    "ddsReferenceNumber": "DDS0093",
     "supplierOsapiensID": "SUP002",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "William Harrington"
+    "responsible_party": "william.harrington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10087",
@@ -1216,10 +1216,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-07",
     "estimatedDeliveryDate": "2025-04-18",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0094",
     "supplierOsapiensID": "SUP007",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Sophia Montgomery"
+    "responsible_party": "sophia.montgomery@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10088",
@@ -1229,10 +1229,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-08",
     "estimatedDeliveryDate": "2025-04-19",
-    "ddsReferenceNumber": "DDS9008",
+    "ddsReferenceNumber": "DDS0095",
     "supplierOsapiensID": "SUP008",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "James Pembroke"
+    "responsible_party": "james.pembroke@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10089",
@@ -1242,10 +1242,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-09",
     "estimatedDeliveryDate": "2025-04-20",
-    "ddsReferenceNumber": "DDS9009",
+    "ddsReferenceNumber": "DDS0096",
     "supplierOsapiensID": "SUP008",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Isabella Worthington"
+    "responsible_party": "isabella.worthington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10090",
@@ -1255,10 +1255,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-10",
     "estimatedDeliveryDate": "2025-04-21",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0097",
     "supplierOsapiensID": "SUP008",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Benjamin Ashford"
+    "responsible_party": "benjamin.ashford@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10091",
@@ -1268,10 +1268,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-11",
     "estimatedDeliveryDate": "2025-04-22",
-    "ddsReferenceNumber": "DDS9011",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP008",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Mia Kingsley"
+    "responsible_party": "mia.kingsley@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10092",
@@ -1281,10 +1281,10 @@
     "destination": "Bremen",
     "orderDate": "2025-04-12",
     "estimatedDeliveryDate": "2025-04-23",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0099",
     "supplierOsapiensID": "SUP009",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Lucas Beaumont"
+    "responsible_party": "lucas.beaumont@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10093",
@@ -1294,10 +1294,10 @@
     "destination": "Valencia",
     "orderDate": "2025-04-13",
     "estimatedDeliveryDate": "2025-04-24",
-    "ddsReferenceNumber": "DDS9013",
+    "ddsReferenceNumber": "DDS0100",
     "supplierOsapiensID": "SUP009",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Charlotte Ellington"
+    "responsible_party": "charlotte.ellington@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10094",
@@ -1307,10 +1307,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-14",
     "estimatedDeliveryDate": "2025-04-25",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0101",
     "supplierOsapiensID": "SUP009",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Alexander Carmichael"
+    "responsible_party": "alexander.carmichael@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10095",
@@ -1320,10 +1320,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-15",
     "estimatedDeliveryDate": "2025-04-26",
-    "ddsReferenceNumber": "DDS9015",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP009",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Amelia St. Clair"
+    "responsible_party": "amelia.st.@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10096",
@@ -1333,10 +1333,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-16",
     "estimatedDeliveryDate": "2025-04-27",
-    "ddsReferenceNumber": "DDS9016",
+    "ddsReferenceNumber": "DDS0103",
     "supplierOsapiensID": "SUP0010",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Ethan Blackwood"
+    "responsible_party": "ethan.blackwood@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10097",
@@ -1346,10 +1346,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-17",
     "estimatedDeliveryDate": "2025-04-28",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0104",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Harper Wellingham"
+    "responsible_party": "harper.wellingham@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10098",
@@ -1359,10 +1359,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-18",
     "estimatedDeliveryDate": "2025-04-29",
-    "ddsReferenceNumber": "DDS9018",
+    "ddsReferenceNumber": "DDS0105",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Daniel Fairchild"
+    "responsible_party": "daniel.fairchild@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10099",
@@ -1372,10 +1372,10 @@
     "destination": "Bremen",
     "orderDate": "2025-04-19",
     "estimatedDeliveryDate": "2025-04-30",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0106",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Evelyn Radcliffe"
+    "responsible_party": "evelyn.radcliffe@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10100",
@@ -1385,10 +1385,10 @@
     "destination": "Valencia",
     "orderDate": "2025-04-20",
     "estimatedDeliveryDate": "2025-05-01",
-    "ddsReferenceNumber": "DDS9020",
+    "ddsReferenceNumber": "DDS0107",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Michael Thornfield"
+    "responsible_party": "michael.thornfield@gmail.com"
   },
   {
     "erpReferenceNumber": "ERP10101",
@@ -1398,10 +1398,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-21",
     "estimatedDeliveryDate": "2025-05-02",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0108",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Abigail Whitaker"
+    "responsible_party": "abigail.whitaker@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10102",
@@ -1411,10 +1411,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-22",
     "estimatedDeliveryDate": "2025-05-03",
-    "ddsReferenceNumber": "DDS9022",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP006",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Samuel Harrington"
+    "responsible_party": "samuel.harrington@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10103",
@@ -1424,10 +1424,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-23",
     "estimatedDeliveryDate": "2025-05-04",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0110",
     "supplierOsapiensID": "SUP006",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Emily Redgrave"
+    "responsible_party": "emily.redgrave@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10104",
@@ -1437,10 +1437,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-24",
     "estimatedDeliveryDate": "2025-05-05",
-    "ddsReferenceNumber": "DDS9024",
+    "ddsReferenceNumber": "DDS0111",
     "supplierOsapiensID": "SUP006",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Josephine Marlowe"
+    "responsible_party": "josephine.marlowe@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10105",
@@ -1450,10 +1450,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-25",
     "estimatedDeliveryDate": "2025-05-06",
-    "ddsReferenceNumber": "",
+    "ddsReferenceNumber": "DDS0112",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Christopher Ashbury"
+    "responsible_party": "christopher.ashbury@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10106",
@@ -1463,10 +1463,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-04-26",
     "estimatedDeliveryDate": "2025-05-07",
-    "ddsReferenceNumber": "DDS9026",
+    "ddsReferenceNumber": "DDS0113",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Grace Huntington"
+    "responsible_party": "grace.huntington@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10107",
@@ -1476,10 +1476,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-04-27",
     "estimatedDeliveryDate": "2025-05-08",
-    "ddsReferenceNumber": "DDS9027",
+    "ddsReferenceNumber": "DDS0114",
     "supplierOsapiensID": "SUP003",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Andrew Kensington"
+    "responsible_party": "andrew.kensington@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10108",
@@ -1489,10 +1489,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-04-28",
     "estimatedDeliveryDate": "2025-05-09",
-    "ddsReferenceNumber": "DDS9028",
+    "ddsReferenceNumber": "DDS0115",
     "supplierOsapiensID": "SUP004",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Victoria Caldwell"
+    "responsible_party": "victoria.caldwell@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10109",
@@ -1502,10 +1502,10 @@
     "destination": "Genoa",
     "orderDate": "2025-04-29",
     "estimatedDeliveryDate": "2025-05-10",
-    "ddsReferenceNumber": "DDS9029",
+    "ddsReferenceNumber": "DDS0116",
     "supplierOsapiensID": "SUP002",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Nathaniel Winthrop"
+    "responsible_party": "nathaniel.winthrop@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10110",
@@ -1515,10 +1515,10 @@
     "destination": "Marseille",
     "orderDate": "2025-04-30",
     "estimatedDeliveryDate": "2025-05-11",
-    "ddsReferenceNumber": "DDS9030",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP005",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Penelope Beauchamp"
+    "responsible_party": "penelope.beauchamp@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10111",
@@ -1528,10 +1528,10 @@
     "destination": "Bremen",
     "orderDate": "2025-05-01",
     "estimatedDeliveryDate": "2025-05-12",
-    "ddsReferenceNumber": "DDS9031",
+    "ddsReferenceNumber": "DDS0118",
     "supplierOsapiensID": "SUP006",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Sebastian Montgomery"
+    "responsible_party": "sebastian.montgomery@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10112",
@@ -1541,10 +1541,10 @@
     "destination": "Valencia",
     "orderDate": "2025-05-02",
     "estimatedDeliveryDate": "2025-05-13",
-    "ddsReferenceNumber": "DDS9032",
+    "ddsReferenceNumber": "DDS0119",
     "supplierOsapiensID": "SUP003",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Lillian Ashford"
+    "responsible_party": "lillian.ashford@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10113",
@@ -1554,10 +1554,10 @@
     "destination": "Rotterdam",
     "orderDate": "2025-05-03",
     "estimatedDeliveryDate": "2025-05-14",
-    "ddsReferenceNumber": "DDS9033",
+    "ddsReferenceNumber": "DDS0120",
     "supplierOsapiensID": "SUP006",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Theodore Kingsley"
+    "responsible_party": "theodore.kingsley@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10114",
@@ -1567,10 +1567,10 @@
     "destination": "Antwerp",
     "orderDate": "2025-05-04",
     "estimatedDeliveryDate": "2025-05-15",
-    "ddsReferenceNumber": "DDS9034",
+    "ddsReferenceNumber": "DDS0121",
     "supplierOsapiensID": "SUP002",
     "customerOsapiensID": "CUST001",
-    "responsible_party": "Eleanor Pembroke"
+    "responsible_party": "eleanor.pembroke@outlook.com"
   },
   {
     "erpReferenceNumber": "ERP10115",
@@ -1580,10 +1580,10 @@
     "destination": "Hamburg",
     "orderDate": "2025-05-05",
     "estimatedDeliveryDate": "2025-05-16",
-    "ddsReferenceNumber": "DDS9035",
+    "ddsReferenceNumber": "DDS0122",
     "supplierOsapiensID": "SUP006",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Gabriel Whitmore"
+    "responsible_party": "gabriel.whitmore@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10116",
@@ -1593,10 +1593,10 @@
     "destination": "Genoa",
     "orderDate": "2025-05-06",
     "estimatedDeliveryDate": "2025-05-17",
-    "ddsReferenceNumber": "DDS9036",
+    "ddsReferenceNumber": "DDS0123",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Clara Ellington"
+    "responsible_party": "clara.ellington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10117",
@@ -1606,10 +1606,10 @@
     "destination": "Marseille",
     "orderDate": "2025-05-07",
     "estimatedDeliveryDate": "2025-05-18",
-    "ddsReferenceNumber": "DDS9037",
+    "ddsReferenceNumber": "DDS0124",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST004",
-    "responsible_party": "Dominic Radcliffe"
+    "responsible_party": "dominic.radcliffe@yahoo.com"
   },
   {
     "erpReferenceNumber": "ERP10118",
@@ -1619,10 +1619,10 @@
     "destination": "Valencia",
     "orderDate": "2025-05-08",
     "estimatedDeliveryDate": "2025-05-19",
-    "ddsReferenceNumber": "DDS9038",
+    "ddsReferenceNumber": "DDS0125",
     "supplierOsapiensID": "SUP003",
     "customerOsapiensID": "CUST005",
-    "responsible_party": "Beatrice St. John"
+    "responsible_party": "beatrice.st.@hotmail.com"
   },
   {
     "erpReferenceNumber": "ERP10119",
@@ -1632,10 +1632,10 @@
     "destination": "Bremen",
     "orderDate": "2025-05-09",
     "estimatedDeliveryDate": "2025-05-20",
-    "ddsReferenceNumber": "DDS9039",
+    "ddsReferenceNumber": "",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST002",
-    "responsible_party": "Henry Worthington"
+    "responsible_party": "henry.worthington@protonmail.com"
   },
   {
     "erpReferenceNumber": "ERP10120",
@@ -1645,9 +1645,9 @@
     "destination": "Antwerp",
     "orderDate": "2025-05-10",
     "estimatedDeliveryDate": "2025-05-21",
-    "ddsReferenceNumber": "DDS9040",
+    "ddsReferenceNumber": "DDS0127",
     "supplierOsapiensID": "SUP001",
     "customerOsapiensID": "CUST003",
-    "responsible_party": "Matilda Carmichael"
+    "responsible_party": "matilda.carmichael@outlook.com"
   }
 ]
