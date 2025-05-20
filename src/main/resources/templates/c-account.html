@@ -24,15 +24,18 @@
         </div>
 
         <div class="account-wrapper">
-            <a href="#" id="account-toggle">👤 Hello <span th:text="${session.username}">Benutzer</span> ▼</a>
+            <a href="#" id="account-toggle">
+                👤 Hello <span th:text="${session.username}">User</span> ▼
+            </a>
             <div class="dropdown-menu" id="account-menu">
-                <a href="/account">Profil</a>
-                <a href="/settings">Einstellungen</a>
+                <a href="/account">Profile</a>
+                <a href="/settings">Settings</a>
                 <form th:action="@{/user/logout}" method="post">
                     <button type="submit" class="dropdown-btn">Logout</button>
                 </form>
             </div>
         </div>
+
     </header>
 
     <aside id="sidebar">
@@ -167,6 +170,12 @@
                     <label for="newPassword">New Password</label>
                     <input type="password" id="newPassword" name="newPassword" required>
 
+                    <div class="password-strength">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                    <small id="strengthText" class="strength-text">Enter a password to check strength</small>
+
+
                     <label for="confirmPassword">Confirm New Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" required>
 
@@ -223,24 +232,7 @@
 
     <script src="/javascript/non-specific/account-menu.js"></script>
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
-    <script>
-        document.querySelectorAll('.tab-link').forEach(button => {
-            button.addEventListener('click', () => {
-                const target = button.getAttribute('data-target');
-
-                // Alle Tabs deaktivieren
-                document.querySelectorAll('.tab-link').forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                // Alle Sektionen verstecken
-                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-                document.getElementById(target).classList.add('active');
-            });
-        });
-
-        
-
-    </script>
+    <script src="/javascript/non-specific/account.js"></script>
 
 </body>
 

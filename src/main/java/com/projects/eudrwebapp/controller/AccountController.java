@@ -66,7 +66,7 @@ public class AccountController {
             return "redirect:/user/login";
         }
 
-        return "c-settings";
+        return "settings";
     }
 
     @PostMapping("/account/personal/save")

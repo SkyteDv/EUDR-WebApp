@@ -1,26 +1,24 @@
-<!-- supplier-overview.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Supplier Overview</title>
+    <title>Settings</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/non-specific/sidebar.css">
     <link rel="stylesheet" href="/css/account-menu.css">
-    <link rel="stylesheet" href="/css/customer/c-suppliers-overview.css">
+    <link rel="stylesheet" href="/css/non-specific/settings.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/css/non-specific/deliveries-filter.css">
 
+    <script src="/javascript/non-specific/account-menu.js" defer></script>
+    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
 </head>
 
 <body>
-
     <header class="header">
         <div class="logo-container">
-            <a href="/supplier/dashboard"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+            <a href="/"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
             <h4>CUSTOMER</h4>
         </div>
 
@@ -36,7 +34,6 @@
                 </form>
             </div>
         </div>
-
     </header>
 
     <aside id="sidebar">
@@ -94,7 +91,7 @@
                     </div>
                 </ul>
             </li>
-            <li class="active">
+            <li>
                 <a href="/customer/suppliers/overview">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e3e3e3">
@@ -127,99 +124,37 @@
         </ul>
     </aside>
 
-    <main class="supplier-page">
-        <div class="section-header">
-            <h1>Supplier Overview</h1>
+    <main class="settings-page">
+        <h1>Settings</h1>
 
-            <div class="global-actions">
-                <label>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search Suppliers...">
-                </label>
-                <button id="supplierFilterBtn" class="clean-button expandable">
-                    <i class="material-icons">tune</i>
-                    <span class="button-text">Filter</span>
-                </button>
-                <button id="refreshSuppliersButton" class="clean-button" title="Refresh">
-                    <i class="fas fa-rotate-right"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="wrapper">
-            <table class="delivery-table">
-                <thead>
-                    <tr>
-                        <th class="sortable" data-column="0">Supplier<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="1">Total Deliveries<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="2">Green<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="3">Red<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="4">Yellow<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="5">Green Rate<i class="sort-icon fas fa-sort"></i></th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="stat : ${supplierStats}">
-                        <td th:text="${stat.supplierName}">Supplier A</td>
-                        <td th:text="${stat.totalDeliveries}">10</td>
-                        <td th:text="${stat.greenDeliveries}" class="status-cell">5</td>
-                        <td th:text="${stat.redDeliveries}" class="status-cell">2</td>
-                        <td th:text="${stat.yellowDeliveries}" class="status-cell">3</td>
-                        <td th:text="${#numbers.formatDecimal(stat.greenRate, 1, 1)} + '%'" th:class="'status-cell ' + 
-      (${stat.greenDeliveries} > 0 ? 'status-green' :
-      (${stat.yellowDeliveries} > 0 ? 'status-yellow' :
-      (${stat.redDeliveries} > 0 ? 'status-red' : '')))">
-                            50%
-                        </td>
-                        <td>
-                            <button class="details-button primary-action"
-                                th:onclick="|window.location='/customer/suppliers/details/${stat.supplierId}'|"
-                                title="View Details">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </main>
-
-    <div id="backdrop"></div>
-    <div id="supplierFilterDiv" class="global-filter">
-        <section id="filterHeader">
-            <p class="filterTitle">Filter Supplier Table</p>
-            <div class="filter-buttons">
-                <button id="resetSupplierFilter" class="clean-button expandable">
-                    <span class="material-icons">restart_alt</span>
-                    <span class="button-text">Reset</span>
-                </button>
-                <button id="applySupplierFilter" class="clean-button expandable">
-                    <span class="material-icons">done</span>
-                    <span class="button-text">Apply</span>
-                </button>
-            </div>
+        <section class="setting-section">
+            <h2>Appearance</h2>
+            <label>
+                <input type="checkbox" id="darkModeToggle">
+                Enable Dark Mode
+            </label>
         </section>
 
-        <label class="filter-label">
-            <input type="text" id="supplierNameFilter" class="filter-text-input" placeholder="Supplier Name">
-        </label>
+        <section class="setting-section">
+            <h2>Language</h2>
+            <label for="languageSelect">Preferred Language:</label>
+            <select id="languageSelect">
+                <option value="en" selected>English</option>
+                <option value="de">German</option>
+            </select>
+        </section>
 
-        <label class="filter-label">
-            <input type="number" id="minGreenRate" class="filter-text-input" placeholder="Min. Green Rate (%)" min="0"
-                max="100">
-        </label>
+        <section class="setting-section">
+            <h2>Notifications</h2>
+            <label>
+                <input type="checkbox" id="emailNotifications">
+                Receive email updates
+            </label>
+        </section>
+    </main>
 
-        <label class="filter-label">
-            <input type="number" id="maxRedDeliveries" class="filter-text-input" placeholder="Max. Red Deliveries"
-                min="0">
-        </label>
-    </div>
-
-
-    <script src="/javascript/non-specific/account-menu.js" defer></script>
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
-    <script src="/javascript/customer/c-supplier/c-supplier-overview.js" defer></script>
-    <script src="/javascript/customer/c-supplier/c-supplierFilter.js" defer></script>
+    <script src="/javascript/non-specific/settingConfig.js" defer></script>
 </body>
 
 </html>

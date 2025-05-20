@@ -30,21 +30,17 @@
     </nav>
 
     <div class="account-wrapper">
-        <a href="#" id="account-toggle">
-            👤 Hallo <span th:text="${session.username}">Benutzer</span> ▼
-        </a>
-        <div class="dropdown-menu" id="account-menu">
-            <a href="/account">Profil</a>
-            <a href="/settings">Einstellungen</a>
-            <form th:action="@{/user/logout}" method="post">
-                <button type="submit" class="dropdown-btn">Logout</button>
-            </form>
+            <a href="#" id="account-toggle">
+                👤 Hello <span th:text="${session.username}">User</span> ▼
+            </a>
+            <div class="dropdown-menu" id="account-menu">
+                <a href="/account">Profile</a>
+                <a href="/settings">Settings</a>
+                <form th:action="@{/user/logout}" method="post">
+                    <button type="submit" class="dropdown-btn">Logout</button>
+                </form>
+            </div>
         </div>
-    </div>
-
-    <div class="menu-toggle" id="menu-toggle">
-        &#9776; <!-- unicode for ☰ -->
-    </div>
 </header>
 
 
