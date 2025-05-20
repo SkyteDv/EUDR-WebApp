@@ -125,7 +125,7 @@ body {
 }
 
 input:checked+.slider {
-    background-color: #00e39f;
+    background-color: #afa7dc;
 }
 
 input:checked+.slider:before {
@@ -155,7 +155,7 @@ nav .theme-toggle {
 .main-header .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #00e39f;
+    color: #afa7dc;
 }
 
 .main-nav ul {
@@ -173,7 +173,7 @@ nav .theme-toggle {
 
 .main-nav a:hover,
 .main-nav .cta {
-    color: #00e39f;
+    color: #afa7dc;
 }
 
 /* === Hero Section === */
@@ -205,7 +205,7 @@ nav .theme-toggle {
 .btn-primary {
     margin-top: 2rem;
     padding: 0.75rem 1.5rem;
-    background-color: #00e39f;
+    background-color: #afa7dc;
     color: #111;
     font-weight: bold;
     border: none;
@@ -216,7 +216,7 @@ nav .theme-toggle {
 }
 
 .btn-primary:hover {
-    background-color: #00b376;
+    background-color: #6857A8;
 }
 
 /* === Sections (About, Features, Target Groups) === */
@@ -239,7 +239,7 @@ section {
 section h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #00e39f;
+    color: #afa7dc;
 }
 
 section p,
@@ -289,13 +289,13 @@ section li {
 
 .btn-secondary {
     background: transparent;
-    border: 2px solid #00e39f;
-    color: #00e39f;
+    border: 2px solid #afa7dc;
+    color: #afa7dc;
     transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-    background-color: #00e39f;
+    background-color: #afa7dc;
     color: #111;
 }
 
@@ -347,7 +347,7 @@ section+section {
 .logo-text {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #00e39f;
+    color: #afa7dc;
     letter-spacing: 1px;
 }
 
