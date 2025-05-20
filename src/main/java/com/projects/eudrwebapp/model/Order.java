@@ -21,6 +21,7 @@ public class Order {
     private String responsible_party;
     private RiskLevel riskLevel;
 
+    private boolean notified = false;
     private boolean ddsOnDeliveryNote;
 
     @Enumerated(EnumType.STRING)
@@ -58,7 +59,7 @@ public class Order {
         this.customer = customer;
         this.responsible_party = responsible_party;
         this.riskLevel = riskLevel;
-
+        this.notified = false;
     }
 
     public String getDdsStatus() {
@@ -191,6 +192,14 @@ public class Order {
 
     public void setRiskLevel(RiskLevel riskLevel) {
         this.riskLevel = riskLevel;
+    }
+
+    public boolean isNotified() {
+        return notified;
+    }
+
+    public void setNotified(boolean notified) {
+        this.notified = notified;
     }
 
     @Override

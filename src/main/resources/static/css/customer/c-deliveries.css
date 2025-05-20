@@ -28,9 +28,10 @@
 
 /* Table */
 .deliveries-table table {
-    overflow: hidden;
+    height: 100%;
     width: 100%;
     border-collapse: collapse;
+    
 }
 
 .deliveries-table th,

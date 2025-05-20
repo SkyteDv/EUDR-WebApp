@@ -143,6 +143,13 @@ public class InternalAPIController {
                 OrderStatus statusEnum = OrderStatus.valueOf(newStatus.toUpperCase());
                 order.setStatus(statusEnum);
                 System.out.println("Order status set to: " + statusEnum);
+
+                // Your custom risk logic: if shipped but DDS missing, increase risk level
+                if (statusEnum == OrderStatus.SHIPPED && !order.isDdsOnDeliveryNote()) {
+                    order.setRiskLevel(order.getRiskLevel().increase().increase());
+                    System.out.println("Risk level increased due to missing DDS on delivery note.");
+                }
+
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid status provided: " + newStatus);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
