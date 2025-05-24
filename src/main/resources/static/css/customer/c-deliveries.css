@@ -37,78 +37,106 @@ main {
     box-sizing: border-box;
 }
 
-.deliveries-table {
+.deliveries-table-wrapper {
     flex: 1;
     overflow-y: auto;
     position: relative;
-    border: 1px solid #ddd;
     border-radius: 8px;
+    background-color: white;
+    box-sizing: border-box;
 }
 
-/* === Tabelle selbst === */
-.deliveries-table table {
+.delivery-table {
+    box-sizing: border-box;
+    overflow: hidden;
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+    margin: 0;
+    padding: 0;
+
 }
 
-.deliveries-table th,
-.deliveries-table td {
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-    min-width: 120px;
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.delivery-table tbody {
+    overflow-y: scroll;
 }
 
-/* === Sticky Table Header === */
-.deliveries-table th {
+/* Table headers with higher contrast */
+.delivery-table th {
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: #eaeaed;
-    color: #333;
-    font-size: 0.9vw;
-    font-weight: 600;
-    box-shadow: inset 0 -1px #ddd;
+    background-color: #e0e0e0; /* Darker light gray background for header */
+    color: #333; /* Dark text color */
+    padding: 0.8rem;
+    text-align: center;
+    font-weight: 500;
+    border-collapse: collapse;
+    border-bottom: 1px solid #ddd; /* Border under header */
 }
 
-.deliveries-table td {
-    background-color: white;
+/* Style for the table rows */
+.delivery-table td {
+    padding: 1rem;
+    text-align: center;
 }
 
-.deliveries-table tr:nth-child(even) {
+
+.delivery-table th:nth-child(1),
+.delivery-table td:nth-child(1) {
+    width: 150px;
+    white-space: nowrap;
+}
+
+.delivery-table th:nth-child(2),
+.delivery-table td:nth-child(2) {
+    width: 150px;
+    white-space: nowrap;
+}
+
+.delivery-table th:nth-child(3),
+.delivery-table td:nth-child(3) {
+    width: 150px;
+    white-space: nowrap;
+}
+
+/* Let other columns be flexible */
+.delivery-table th:nth-child(n+4),
+.delivery-table td:nth-child(n+4) {
+    width: auto;
+}
+
+/* Darker background for first 3 columns with some transparency */
+.delivery-table tbody tr td:nth-child(-n+3) {
+    background-color: rgba(215, 215, 241, 0.2); /* light gray with transparency */
+}
+
+.delivery-table thead th:nth-child(3),
+.delivery-table tbody tr td:nth-child(3) {
+    border-right: 2px solid #999; /* adjust color & thickness as needed */
+    /* Optional: add some padding to separate the border visually */
+    padding-right: 8px;
+
+}
+
+
+/* Optional: Zebra striping for rows */
+.delivery-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.deliveries-table td a {
-    color: #7a6fbe;
-    text-decoration: underline;
-    font-weight: 500;
+/* Hover effect for table rows */
+.delivery-table tr:hover {
+    background-color: rgb(233, 231, 255); /* Light gray background when hovering */
+    cursor: pointer; /* Change cursor to a pointer to indicate interactivity */
 }
 
-.deliveries-table td a:hover {
-    text-decoration: underline;
+/* Optional: Highlight the row even more when clicked */
+.delivery-table tr:active {
+    background-color: #cac8ec;
 }
 
-/* === Sortierbare Header === */
-th.sortable {
-    cursor: pointer;
-    position: relative;
-}
-
-th .sort-icon {
-    margin-left: 0.5rem;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-th.sorted-asc .sort-icon,
-th.sorted-desc .sort-icon {
-    color: #7a6fbe;
+.delivery-table tr.selected {
+    background-color: #cbc9ff;
 }
 
 /* === Sonstige Styles === */
@@ -121,79 +149,57 @@ th.sorted-desc .sort-icon {
     border: 2px solid red !important;
 }
 
-/* === Media Queries === */
-@media (max-width: 1800px) {
-    main {
-        font-size: 0.9vmax;
-    }
-    .deliveries-table th {
-        font-size: 1.3vmax;
-    }
+.risk-label {
+    display: inline-block;
+    padding: 0.3em 0.8em;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+    min-width: 70px;
+    text-align: center;
+    user-select: none;
 }
 
-@media (max-width: 1200px) {
-    main {
-        font-size: 1.3vmax;
-    }
-    .deliveries-table th {
-        font-size: 1.3vmax;
-    }
+.risk-low {
+    background-color: #0a6720; /* Green */
 }
 
-/* === Mobile Ansicht: Stack Table === */
-@media (max-width: 900px) {
-    main {
-        font-size: 1.2rem !important;
-    }
-
-    .global-filter {
-        display: none !important;
-    }
-
-    .deliveries-table table,
-    .deliveries-table thead,
-    .deliveries-table tbody,
-    .deliveries-table th,
-    .deliveries-table td,
-    .deliveries-table tr {
-        display: block;
-    }
-
-    .deliveries-table thead {
-        display: none;
-    }
-
-    .deliveries-table tr {
-        margin-bottom: 1rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 1rem;
-        background: #fff;
-    }
-
-    .deliveries-table td {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.7rem 1rem;
-        text-align: left;
-        position: relative;
-    }
-
-    .deliveries-table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        text-transform: capitalize;
-        color: #555;
-        flex-basis: 30%;
-        text-align: left;
-        margin-right: 1rem;
-        white-space: nowrap;
-    }
-
-    .deliveries-table td span {
-        flex-grow: 1;
-        text-align: right;
-    }
+.risk-medium {
+    background-color: #ffc107; /* Amber/Yellow */
+    color: #212529; /* Dark text for better contrast */
 }
+
+.risk-high {
+    background-color: #dc3545; /* Red */
+}
+
+/* Status badges */
+.status-badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    font-size: 0.9em;
+    text-transform: capitalize;
+}
+
+.status-PENDING { background-color: var(--button-hover-bg-clr) }      /* orange */
+.status-SHIPPED { background-color: #0275d8; }     /* blue */
+.status-IN_HARBOUR { background-color: #5bc0de; }  /* lighter blue */
+.status-COMPLETED { background-color: #5cb85c; }   /* green */
+.status-CANCELLED { background-color: #d9534f; }   /* red */
+
+/* DDS on Delivery true/false */
+.dds-yes {
+    color: green;
+    font-weight: bold;
+}
+
+.dds-no {
+    color: orange;
+    font-weight: bold;
+}
+
+

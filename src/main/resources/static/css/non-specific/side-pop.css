@@ -165,6 +165,10 @@
     flex: 1;
 }
 
+#manageRiskBtn {
+    flex: 1;
+}
+
 #danger-mark-sent {
     background-color: transparent;
     margin: 0rem 1rem;
@@ -190,7 +194,6 @@
 #danger-mark-sent #dangerBtn:hover {
     background-color: #a31111;
 }
-
 
 
 

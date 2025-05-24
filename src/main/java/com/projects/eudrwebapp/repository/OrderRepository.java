@@ -18,6 +18,9 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    //Overwritten Default (its the exact same)
+    Optional<Order> findById(Long orderId);
+
     List<Order> findByCustomerId(Long customerId);
 
     List<Order> findBySupplierId(Long supplier_id);

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/non-specific/deliveries-filter.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="/css/account-menu.css">
-    <link rel="stylesheet" href="/css/supplier/s-deliveries-side-pop.css">
+    <link rel="stylesheet" href="/css/non-specific/side-pop.css">
     <link rel="stylesheet" href="/css/supplier/s-deliveries-camera-visual.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -249,15 +249,15 @@
                             <tr th:each="order : ${activeDeliveries}" class="clickable-row"
                                 th:classappend="${#strings.isEmpty(order.ddsReferenceNumber)} ? 'red-outline' : ''"
                                 th:attr="data-id=${order.id}, data-erpReferenceNumber=${order.erpReferenceNumber},
-                                    data-ddsReferenceNumber=${order.ddsReferenceNumber},
-                                    data-ddsOnDeliveryNote=${order.ddsOnDeliveryNote},
-                                    data-orderDate=${order.orderDate},
-                                    data-estimatedDeliveryDate=${order.estimatedDeliveryDate},
-                                    data-orderDimensions=${order.dimensions},
-                                    data-customerName=${order.customer.username},
-                                    data-customerLocation=${order.customer.location},
-                                    data-productCategory=${order.productCategory},
-                                    data-productName=${order.productName}">
+                                        data-ddsReferenceNumber=${order.ddsReferenceNumber},
+                                        data-ddsOnDeliveryNote=${order.ddsOnDeliveryNote},
+                                        data-orderDate=${order.orderDate},
+                                        data-estimatedDeliveryDate=${order.estimatedDeliveryDate},
+                                        data-orderDimensions=${order.dimensions},
+                                        data-customerName=${order.customer.username},
+                                        data-customerLocation=${order.customer.location},
+                                        data-productCategory=${order.productCategory},
+                                        data-productName=${order.productName}">
                                 <td th:text="${order.erpReferenceNumber}"></td>
                                 <td
                                     th:text="${#strings.isEmpty(order.ddsReferenceNumber) ? 'Denied' : order.ddsReferenceNumber}">
@@ -380,7 +380,7 @@
     <script type="module" src="/javascript/supplier/s-deliveries/open-side-pop.js"></script>
     <script src="/javascript/non-specific/customTableSearch.js"></script>
     <script src="/javascript/supplier/s-deliveries/s-initializeTableSearch.js"></script>
-    <script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js"></script>
+    <script type="module" src="/javascript/non-specific/refreshDeliveries.js"></script>
     <script src="/javascript/supplier/s-deliveries/doneDeliveryLogic.js"></script>
     <script src="/javascript/non-specific/globalFilter.js"></script>
     <script src="/javascript/non-specific/account-menu.js"></script>

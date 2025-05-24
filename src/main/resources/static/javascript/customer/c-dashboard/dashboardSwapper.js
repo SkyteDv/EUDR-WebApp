@@ -128,7 +128,7 @@ async function waitForImportToComplete(timeout = 30000, interval = 1000) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    showLoadingOverlay();
+    showLoadingOverlay("Loading Dashboard Data...");
     setSpansNA();
     await waitForImportToComplete();
     await fetchCountryData();

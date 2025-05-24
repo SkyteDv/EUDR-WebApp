@@ -14,10 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -71,34 +69,57 @@ public class InternalAPIController {
         return ResponseEntity.ok(isDone);
     }
 
-
     @PostMapping("/refresh-deliveries")
     public ResponseEntity<Map<String, String>> refreshDeliveries(HttpSession session) {
-        System.out.println("Refresh deliveries");
         String userId = String.valueOf(session.getAttribute("userId"));
+        Optional<User> userOpt = userRepository.findById(userId);
 
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            try {
-                User currentUser = user.get();
-                String userType = currentUser.getUserType();
-                String osapiensID = currentUser.getOsapiensID();
-                helperService.updateDeliveries("/static/json/orders.json", osapiensID, userType);
-
-                // Return a response with a message key
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "Deliveries updated successfully");
-                return ResponseEntity.ok(response);
-            } catch (Exception e) {
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "Updating deliveries failed: " + e.getMessage());
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-            }
+        if (userOpt.isEmpty()) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "User not found in session");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "User not found in session");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+        User currentUser = userOpt.get();
+        String userType = currentUser.getUserType();
+        String osapiensID = currentUser.getOsapiensID();
+
+        try {
+            // Mark import as not completed at start
+            ImportStatus status = importStatusRepository.findById(userId)
+                    .orElse(new ImportStatus(userId, false, LocalDateTime.now()));
+            status.setCompleted(false);
+            status.setLastUpdated(LocalDateTime.now());
+            importStatusRepository.save(status);
+
+            session.setAttribute("lastFetchTime", System.currentTimeMillis());
+
+            // Run the update (can be async or sync)
+            helperService.updateDeliveries("/static/json/orders.json", osapiensID, userType);
+
+            // After successful update, mark completed
+            status.setCompleted(true);
+            status.setLastUpdated(LocalDateTime.now());
+            importStatusRepository.save(status);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Deliveries updated successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Updating deliveries failed: " + e.getMessage());
+
+            // Optional: set import status to false/failure state
+            importStatusRepository.findById(userId).ifPresent(s -> {
+                s.setCompleted(false);
+                s.setLastUpdated(LocalDateTime.now());
+                importStatusRepository.save(s);
+            });
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
+
 
     @GetMapping("/generate-order-pdf/{id}")
     public ResponseEntity<byte[]> generateOrderPDF(@PathVariable Long id) {

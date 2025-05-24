@@ -100,6 +100,29 @@ body {
     transform: translateX(0);
 }
 
+.clean-button.pulsate {
+    animation: pulse 2s infinite;
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(126, 117, 177, 0.6); /* based on --button-bg-color */
+        background-color: var(--button-bg-color);
+    }
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 10px 10px rgba(126, 117, 177, 0);
+        background-color: var(--button-hover-bg-clr);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(126, 117, 177, 0);
+        background-color: var(--button-bg-color);
+    }
+}
+
 
 
 

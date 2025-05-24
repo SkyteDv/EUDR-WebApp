@@ -94,6 +94,7 @@ public class UserController {
                     logger.info("Importing orders for Osapiens ID: {}", dbUser.getOsapiensID());
                     orderService.importOrders(inputStream, dbUser.getOsapiensID(), userType);
 
+                    session.setAttribute("lastFetchTime", System.currentTimeMillis());
                     // Set rememberMe cookie for 2 minutes if checkbox was selected
                     if (rememberMe != null && rememberMe.equalsIgnoreCase("on")) {
                         Cookie cookie = new Cookie("rememberMe", String.valueOf(dbUser.getId()));

@@ -10,17 +10,20 @@
     <link rel="stylesheet" href="/css/customer/account-menu.css">
     <link rel="stylesheet" href="/css/non-specific/deliveries-filter.css">
     <link rel="stylesheet" href="/css/non-specific/sidebar.css">
+    <link rel="stylesheet" href="/css/non-specific/side-pop.css">
+    <link rel="stylesheet" href="/css/non-specific/loading-spinner.css">
     <!-- Font Awesome CDN for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script src="/javascript/customer/c-deliveries/c-sortTableHeaders.js" defer></script>
-    <script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js" defer></script>
+    <script type="module" src="/javascript/non-specific/refreshDeliveries.js" defer></script>
     <script src="/javascript/customer/c-deliveries/c-initializeDeliveryTableSearch.js" defer></script>
     <script src="/javascript/non-specific/customTableSearch.js" defer></script>
     <script src="/javascript/non-specific/account-menu.js" defer></script>
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="/javascript/non-specific/globalFilter.js" defer></script>
+    <script src="/javascript/customer/c-deliveries/c-deliveries-openSidePopup.js" defer></script>
 </head>
 
 <body>
@@ -111,7 +114,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/customer/risk/overview">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e3e3e3">
                         <path
@@ -133,13 +136,74 @@
         </ul>
     </aside>
 
+    <div id="wrapper-side-popup">
+        <div id="side-popup-details">
+            <section id="side-popup-start">
+                <div id="popup-title-close">
+                    <button id="closeBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                             fill="#e8eaed">
+                            <path
+                                    d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+                        </svg>
+                    </button>
+                    <span id="popup-title" class="popup-title">Detail View</span>
+                </div>
+                <div class="data-card-holder">
+                    <!-- Order Details -->
+                    <div class="data-card" id="shipment-data">
+                        <h4>Order Information</h4>
+                        <p><strong>Shipment Ref:</strong> <span id="span-erpreferencenumber"></span></p>
+                        <p><strong>DDS Ref:</strong> <span id="span-ddsreferencenumber"></span></p>
+                        <p><strong>DDS on Delivery:</strong> <span id="span-ddsstatus"></span></p>
+                        <p><strong>Order Date:</strong> <span id="span-orderdate"></span></p>
+                        <p><strong>Expected Delivery Date:</strong> <span id="span-estimateddeliverydate"></span></p>
+                        <p><strong>Order Amount:</strong> Placeholder</p>
+                    </div>
+
+                    <!-- Customer Information -->
+                    <div class="data-card" id="customer-info">
+                        <h4>Supplier Information</h4>
+                        <p><strong>Supplier Name:</strong> <span id="span-supplier"></span></p>
+                        <p><strong>Customer Location:</strong> <span id="span-supplierlocation"></span></p>
+                    </div>
+
+                    <!-- Product Information -->
+                    <div class="data-card" id="product-info">
+                        <h4>Product Information</h4>
+                        <p><strong>Product Group:</strong> <span id="span-productcategory"></span></p>
+                        <p><strong>Product Name:</strong> <span id="span-productname"></span></p>
+                        <p><strong>Order Dimensions:</strong> <span id="span-dimensions"></span></p>
+                    </div>
+                </div>
+            </section>
+            <section id="side-popup-end">
+                <button id="editBtn" class="clean-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                         fill="#e3e3e3">
+                        <path
+                                d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+                    </svg>
+                    <span>Edit</span>
+                </button>
+                <button id="manageRiskBtn" class="clean-button pulsate">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                         fill="#e3e3e3">
+                        <path d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480v-315l-240 90v207q0 7 2 18h238v316Z"/></svg>
+                    <span>Manage Risk</span>
+                </button>
+            </section>
+        </div>
+
+    </div>
+
     <main>
         <div class="deliveries-header">
             <h1>Deliveries</h1>
 
             <div class="search-filter">
                 <label>
-                    <input type="text" data-table-id="ordersTable" class="search-input"
+                    <input type="text" data-table-id="activeDeliveriesTable" class="search-input"
                         placeholder="Search Deliveries..." id="searchInput">
                 </label>
                 <button id="filterBtn" class="clean-button expandable">
@@ -152,54 +216,72 @@
             </div>
         </div>
 
-        <div class="deliveries-table">
-            <table id="ordersTable">
+        <div class="deliveries-table-wrapper">
+            <table id="activeDeliveriesTable" class="delivery-table">
                 <thead>
                     <tr>
-                        <th data-column="riskLevel">Risk</th>
-                        <th data-column="ddsStatus">DDS on Delivery</th>
-                        <th data-column="ddsReferenceNumber">DDS Ref</th>
-                        <th data-column="erpReferenceNumber">Shipment Ref</th>
-                        <th data-column="destination">Destination</th>
-                        <th data-column="status">Status</th>
-                        <th data-column="supplier">Supplier</th>
-                        <th data-column="orderDate">Order Date</th>
-                        <th data-column="estimatedDeliveryDate">Est. Delivery</th>
-                        <th data-column="productCategory">Category</th>
-                        <th data-column="productName">Product Name</th>
-                        <th data-column="dimensions">Dimensions (m²)</th>
+                        <th>Risk</th>
+                        <th>Status</th>
+                        <th>DDS on Delivery</th>
+                        <th>DDS Ref</th>
+                        <th>Shipment Ref</th>
+                        <th>Destination</th>
+                        <th>Supplier</th>
+                        <th>Order Date</th>
+                        <th>Est. Delivery</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="order : ${deliveries}"
-                        th:classappend="${order.ddsStatus == 'Not Available'} ? 'red-outline' : ''">
-                        <td data-label="Risk Level" th:text="${order.riskLevel}"></td>
-                        <td data-label="DDS on Delivery">
-                            <span th:if="${order.ddsStatus == 'Yes'}"
-                                style="color: green; font-weight: bold;">Yes</span>
-                            <span th:if="${order.ddsStatus == 'No'}" style="color: orange; font-weight: bold;">No</span>
-                            <span th:if="${order.ddsStatus == 'Not Available'}"
-                                style="color: red; font-weight: bold;">DENIED</span>
-                        </td>
-                        <td data-label="DDS Ref">
-                            <span th:if="${order.ddsReferenceNumber == ''}"
-                                style="color: red; font-weight: bold;">DENIED</span>
-                            <span th:unless="${order.ddsReferenceNumber == ''}"
-                                th:text="${order.ddsReferenceNumber}"></span>
-                        </td>
-                        <td data-label="Shipment Ref" th:text="${order.erpReferenceNumber}"></td>
-                        <td data-label="Destination" th:text="${order.destination}"></td>
-                        <td data-label="Status" th:text="${order.status}"></td>
-                        <td data-label="Supplier">
-                            <a th:href="@{/customer/suppliers/details/{id}(id=${order.supplier.id})}"
-                                th:text="${order.supplier.username}"></a>
-                        </td>
-                        <td data-label="Order Date" th:text="${order.orderDate}"></td>
-                        <td data-label="Estimated Delivery" th:text="${order.estimatedDeliveryDate}"></td>
-                        <td data-label="Category" th:text="${order.productCategory}"></td>
-                        <td data-label="Product Name" th:text="${order.productName}"></td>
-                        <td data-label="Dimensions" th:text="${order.dimensions}"></td>
-                    </tr>
+                <tr th:each="order : ${deliveries}" class="clickable-row"
+                    th:classappend="${order.ddsStatus == 'Not Available'} ? 'red-outline' : ''"
+                    th:attr="data-id=${order.id},
+                             data-riskLevel=${order.riskLevel},
+                             data-ddsStatus=${order.ddsStatus},
+                             data-ddsReferenceNumber=${order.ddsReferenceNumber},
+                             data-erpReferenceNumber=${order.erpReferenceNumber},
+                             data-destination=${order.destination},
+                             data-status=${order.status},
+                             data-supplier=${order.supplier.username},
+                             data-supplierlocation=${order.supplier.location},
+                             data-orderDate=${order.orderDate},
+                             data-estimatedDeliveryDate=${order.estimatedDeliveryDate},
+                             data-productCategory=${order.productCategory},
+                             data-productName=${order.productName},
+                             data-dimensions=${order.dimensions}">
+
+                    <td>
+                      <span th:text="${order.riskLevel}"
+                            th:classappend="
+                              ${order.riskLevel.name() == 'LOW'} ? 'risk-label risk-low' :
+                              (${order.riskLevel.name() == 'MEDIUM'} ? 'risk-label risk-medium' :
+                              (${order.riskLevel.name() == 'HIGH'} ? 'risk-label risk-high' : ''))">
+                      </span>
+                    </td>
+
+                    <td>
+                        <span th:class="'status-badge status-' + ${order.status.name()}" th:text="${order.status}">
+                        </span>
+                    </td>
+                    <td>
+                        <i th:if="${order.ddsStatus == 'Yes'}" class="fas fa-check-circle"
+                           style="color: green; font-size: 1.2em; vertical-align: middle;" title="Yes"></i>
+                        <i th:if="${order.ddsStatus == 'No'}" class="fas fa-times-circle"
+                           style="color: gray; font-size: 1.2em; vertical-align: middle;" title="No"></i>
+                        <i th:if="${order.ddsStatus == 'Not Available'}" class="fas fa-ban"
+                           style="color: red; font-size: 1.2em; vertical-align: middle;" title="Denied"></i>
+                    </td>
+                    <td>
+                        <span th:if="${#strings.isEmpty(order.ddsReferenceNumber)}" style="color: red; font-weight: bold;">DENIED</span>
+                        <span th:unless="${#strings.isEmpty(order.ddsReferenceNumber)}" th:text="${order.ddsReferenceNumber}"></span>
+                    </td>
+                    <td th:text="${order.erpReferenceNumber}"></td>
+                    <td th:text="${order.destination}"></td>
+                    <td>
+                        <a th:href="@{/customer/suppliers/details/{id}(id=${order.supplier.id})}" th:text="${order.supplier.username}"></a>
+                    </td>
+                    <td th:text="${order.orderDate}"></td>
+                    <td th:text="${order.estimatedDeliveryDate}"></td>
+                </tr>
                 </tbody>
             </table>
         </div>
