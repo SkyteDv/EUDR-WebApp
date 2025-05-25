@@ -1,30 +1,27 @@
-.pulsate-button {
-    background-color: #4CAF50; /* Green */
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    animation: pulse 2s infinite;
-    transition: transform 0.2s ease-in-out;
+#backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease;
+    z-index: 999;
 }
 
-/* Pulsing animation */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
-        background-color: #4CAF50;
-    }
-    50% {
-        transform: scale(1.08);
-        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
-        background-color: #66bb6a; /* lighter green */
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-        background-color: #4CAF50;
-    }
+#backdrop.active {
+    opacity: 1;
+    visibility: visible;
 }
+
+#filterDiv {
+    background: var(--base-acc-clr);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+

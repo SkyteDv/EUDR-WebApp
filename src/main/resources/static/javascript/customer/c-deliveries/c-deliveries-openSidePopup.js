@@ -103,8 +103,5 @@ document.addEventListener("keydown", function(event) {
 
 // === TABLE ROW LISTENERS ===
 document.querySelectorAll(".clickable-row").forEach(row => {
-    if(row.classList.contains("red-outline")) {
-        return;
-    }
     row.addEventListener("click", () => openSidebarFromRow(row));
 });

@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="/css/customer/account-menu.css">
     <link rel="stylesheet" href="/css/non-specific/sidebar.css">
 
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="/javascript/non-specific/account-menu.js" defer></script>
 </head>
@@ -66,7 +70,7 @@
             </button>
             <ul class="sub-menu">
                 <div>
-                    <li><a href="">Data 1</a></li>
+                    <li><a href="/customer/dashboard">Data 1</a></li>
                     <li><a href="#">Data 2</a></li>
                     <li><a href="#">Data 3</a></li>
                 </div>
@@ -127,7 +131,74 @@
 </aside>
 
 <main>
-    <div class="content"></div>
+    <div class="content">
+        <div id="riskManagementDiv">
+            <section id="riskManagementHeader">
+                <p>
+                    <strong>Risk Level </strong>
+                    <span th:text="${order.riskLevel}"
+                         th:classappend="
+                              ${order.riskLevel.name() == 'LOW'} ? 'risk-label risk-low' :
+                              (${order.riskLevel.name() == 'MEDIUM'} ? 'risk-label risk-medium' :
+                              (${order.riskLevel.name() == 'HIGH'} ? 'risk-label risk-high' : ''))">
+                    </span>
+                </p>
+                <p>
+                    <strong>Order Status </strong>
+                    <span th:class="'status-badge status-' + ${order.status.name()}" th:text="${order.status}"></span>
+                </p>
+                <p>
+                    <strong>DDS Status</strong>
+                    <i th:if="${order.ddsStatus == 'Yes'}" class="fas fa-check-circle"
+                      style="color: green; font-size: 1.2em; vertical-align: middle;" title="Yes"></i>
+                    <i th:if="${order.ddsStatus == 'No'}" class="fas fa-times-circle"
+                       style="color: gray; font-size: 1.2em; vertical-align: middle;" title="No"></i>
+                    <i th:if="${order.ddsStatus == 'Not Available'}" class="fas fa-ban"
+                       style="color: red; font-size: 1.2em; vertical-align: middle;" title="Denied"></i>
+                </p>
+            </section>
+            <section id="riskManagementBody">
+                <p>Body</p>
+            </section>
+        </div>
+        <div id="orderDataWrapper">
+            <div id="orderDataDiv">
+                <section id="orderDataHeadSection">
+                    <span id="orderDataDivTitleSpan">Order Details</span>
+                </section>
+                <div id="dataCardHolder">
+                    <!-- Order Details -->
+                    <div class="dataCard" id="shipmentData">
+                        <h4>Order Information</h4>
+                        <p><strong>Shipment Ref:</strong> <span th:text="${order.erpReferenceNumber}">Placeholder</span></p>
+                        <p><strong>DDS Ref:</strong> <span th:text="${order.ddsReferenceNumber}">Placeholder</span></p>
+                        <p><strong>Order Date:</strong> <span th:text="${order.orderDate}">Placeholder</span></p>
+                        <p><strong>Expected Delivery Date:</strong> <span th:text="${order.estimatedDeliveryDate}">Placeholder</span></p>
+                        <p><strong>Destination Harbour:</strong> <span th:text="${order.destination}">Placeholder</span></p>
+                    </div>
+
+                    <!-- Customer Information -->
+                    <div class="dataCard" id="customerInfo">
+                        <h4>Supplier Information</h4>
+                        <p><strong>Supplier Name:</strong> <span th:text="${order.supplier.username}">Placeholder</span></p>
+                        <p><strong>Customer Location:</strong> <span th:text="${order.supplier.location}">Placeholder</span></p>
+                    </div>
+
+                    <!-- Product Information -->
+                    <div class="dataCard" id="productInfo">
+                        <h4>Product Information</h4>
+                        <p><strong>Product Group:</strong> <span th:text="${order.productCategory}">Placeholder</span></p>
+                        <p><strong>Product Name:</strong> <span th:text="${order.productName}">Placeholder</span></p>
+                        <p><strong>Order Dimensions:</strong> <span th:text="${order.dimensions}">Placeholder</span></p>
+                        <p><strong>Order Amount:</strong> <span>Placeholder</span></p>
+                    </div>
+                </div>
+                <div id="orderLocationDiv">
+                    <h3>Placeholder for Map</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 </body>

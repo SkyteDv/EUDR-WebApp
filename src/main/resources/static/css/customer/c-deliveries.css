@@ -1,6 +1,6 @@
 /* === Allgemeines Layout === */
-.main {
-    font-size: 0.8vw;
+main {
+    font-size: 0.85vw;
 }
 
 /* === Headerbereich === */
@@ -56,10 +56,6 @@ main {
 
 }
 
-.delivery-table tbody {
-    overflow-y: scroll;
-}
-
 /* Table headers with higher contrast */
 .delivery-table th {
     position: sticky;
@@ -69,7 +65,7 @@ main {
     color: #333; /* Dark text color */
     padding: 0.8rem;
     text-align: center;
-    font-weight: 500;
+    font-weight: 600;
     border-collapse: collapse;
     border-bottom: 1px solid #ddd; /* Border under header */
 }
@@ -189,10 +185,9 @@ main {
     user-select: none;
 }
 
-.status-PENDING { background-color: var(--button-hover-bg-clr) }      /* orange */
-.status-SHIPPED { background-color: #0275d8; }     /* blue */
-.status-IN_HARBOUR { background-color: #5bc0de; }  /* lighter blue */
-.status-COMPLETED { background-color: #5cb85c; }   /* green */
-.status-CANCELLED { background-color: #d9534f; }   /* red */
-
+.status-PENDING { background-color: var(--button-hover-bg-clr) }
+.status-SHIPPED { background-color: #0275d8; }
+.status-IN_HARBOUR { background-color: #5bc0de; }
+.status-COMPLETED { background-color: #5cb85c; }
+.status-CANCELLED { background-color: #d9534f; }
 

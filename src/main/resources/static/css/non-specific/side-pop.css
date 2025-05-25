@@ -169,6 +169,14 @@
     flex: 1;
 }
 
+#applyBtn {
+    flex: 1;
+}
+
+#resetBtn {
+    flex: 1;
+}
+
 #danger-mark-sent {
     background-color: transparent;
     margin: 0rem 1rem;

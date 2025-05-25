@@ -184,8 +184,8 @@ public class InternalAPIController {
 
                 // Your custom risk logic: if shipped but DDS missing, increase risk level
                 if (statusEnum == OrderStatus.SHIPPED && !order.isDdsOnDeliveryNote()) {
-                    order.setRiskLevel(order.getRiskLevel().increase().increase());
-                    System.out.println("Risk level increased due to missing DDS on delivery note.");
+                    order.setRiskLevel(order.getRiskLevel().increase());
+                    System.out.println("Risk level increased to MEDIUM due to missing DDS on delivery note when sent.");
                 }
 
             } catch (IllegalArgumentException e) {

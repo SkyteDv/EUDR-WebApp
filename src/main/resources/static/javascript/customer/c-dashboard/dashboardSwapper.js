@@ -3,7 +3,7 @@ import { showLoadingOverlay, hideLoadingOverlay } from '/javascript/non-specific
 
 const rootStyles = getComputedStyle(document.documentElement);
 const baseAccColor = rootStyles.getPropertyValue('--base-acc-clr').trim();
-const fieldHoverColor = rootStyles.getPropertyValue('--field-hover-clr').trim();
+const fieldHoverColor = rootStyles.getPropertyValue('--div-acc-purple-clr').trim();
 const buttonHover = rootStyles.getPropertyValue('--button-hover-bg-clr').trim();
 
 let swapper_globalBtn = document.getElementById("swapper-global");

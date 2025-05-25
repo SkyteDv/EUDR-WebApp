@@ -57,7 +57,7 @@
 }
 
 #swapper #swapper-country {
-    background-color: var(--field-hover-clr);
+    background-color: var(--div-acc-purple-clr);
 }
 
 #swapper #swapper-country:hover {

@@ -1,5 +1,185 @@
 .content {
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+    }
+}
+
+#riskManagementDiv {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    height: 100%;
+
+    #riskManagementHeader {
+        min-height: 5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 2rem;
+
+        p {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .risk-label {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            display: inline-block;
+            padding: 0.3em 0.8em;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            min-width: 70px;
+            text-align: center;
+            user-select: none;
+        }
+
+        .risk-low {
+            background-color: #0a6720; /* Green */
+        }
+
+        .risk-medium {
+            background-color: #ffc107; /* Amber/Yellow */
+            color: #212529; /* Dark text for better contrast */
+        }
+
+        .risk-high {
+            background-color: #bc202e; /* Red */
+        }
+
+        /* Status badges */
+        .status-badge {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 0.3em 0.8em;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            display: inline-block;
+            text-transform: capitalize;
+            text-align: center;
+            user-select: none;
+        }
+
+        .status-PENDING { background-color: var(--button-hover-bg-clr) }
+        .status-SHIPPED { background-color: #0275d8; }
+        .status-IN_HARBOUR { background-color: #5bc0de; }
+        .status-COMPLETED { background-color: #5cb85c; }
+        .status-CANCELLED { background-color: #d9534f; }
+    }
+
+    #riskManagementBody {
+        flex: 1;
+    }
+
+    @media (max-width: 900px) {
+        min-height: 800px;
+    }
+
+    section {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: var(--base-clr);
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+}
+
+#orderDataWrapper {
+    display: flex;
+    min-width: 500px;
+    max-width: 500px;
+    padding: 1rem;
+
+    @media (max-width: 1200px) {
+        min-width: 350px;
+    }
+
+    @media (max-width: 900px) {
+        min-width: 100%;
+
+        #orderDataDiv {
+            min-width: 100%;
+        }
+    }
+}
+
+#orderDataDiv {
+    border-radius: 10px;
+    padding: 1rem;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--base-clr);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    #orderDataHeadSection {
+        margin-top: 0.5rem;
+        text-align: center;
+
+        #orderDataDivTitleSpan {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+    }
+
+    #dataCardHolder {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex: 1;
+
+        .dataCard {
+            border-radius: 10px;
+            background-color: var(--base-acc-clr);
+            line-height: 30px;
+            padding: 1rem;
+
+            h4 {
+                font-size: 1.2em;
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                display: flex;
+                gap: 0.5rem;
+                justify-content: space-between;
+                align-items: center;
+                align-content: flex-start;
+                flex-direction: row;
+
+                strong {
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    #orderLocationDiv {
+        border-radius: 10px;
+        background-color: var(--base-acc-clr);
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+body {
+    @media (max-width: 900px) {
+        overflow-y: auto;
+    }
 }

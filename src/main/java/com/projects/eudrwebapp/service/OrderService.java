@@ -140,7 +140,6 @@ public class OrderService {
         System.out.println("===============================");
     }
 
-
     public List<SupplierStatsDTO> getSupplierStatsForCustomer(User customer) {
         List<Order> orders = orderRepository.findAll(); // Optional: effizienter mit eigenem Query für Customer
 
