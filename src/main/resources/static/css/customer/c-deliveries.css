@@ -150,9 +150,10 @@ main {
 }
 
 .risk-label {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     display: inline-block;
     padding: 0.3em 0.8em;
-    border-radius: 15px;
+    border-radius: 12px;
     font-weight: 600;
     font-size: 0.9rem;
     color: white;
@@ -171,18 +172,21 @@ main {
 }
 
 .risk-high {
-    background-color: #dc3545; /* Red */
+    background-color: #bc202e; /* Red */
 }
 
 /* Status badges */
 .status-badge {
-    padding: 3px 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    padding: 0.3em 0.8em;
     border-radius: 12px;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 0.9rem;
     color: white;
     display: inline-block;
-    font-size: 0.9em;
     text-transform: capitalize;
+    text-align: center;
+    user-select: none;
 }
 
 .status-PENDING { background-color: var(--button-hover-bg-clr) }      /* orange */
@@ -190,16 +194,5 @@ main {
 .status-IN_HARBOUR { background-color: #5bc0de; }  /* lighter blue */
 .status-COMPLETED { background-color: #5cb85c; }   /* green */
 .status-CANCELLED { background-color: #d9534f; }   /* red */
-
-/* DDS on Delivery true/false */
-.dds-yes {
-    color: green;
-    font-weight: bold;
-}
-
-.dds-no {
-    color: orange;
-    font-weight: bold;
-}
 
 
