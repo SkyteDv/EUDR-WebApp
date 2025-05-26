@@ -1,261 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Deliveries: Active</title>
-    <link rel="stylesheet" href="/css/non-specific/global.css">
-    <link rel="stylesheet" href="/css/non-specific/header.css">
-    <link rel="stylesheet" href="/css/customer/c-deliveries.css">
-    <link rel="stylesheet" href="/css/customer/account-menu.css">
-    <link rel="stylesheet" href="/css/non-specific/deliveries-filter.css">
-    <link rel="stylesheet" href="/css/non-specific/sidebar.css">
+    <link rel="stylesheet" href="/css/non-specific/global.css" />
+    <link rel="stylesheet" href="/css/non-specific/header.css" />
+    <link rel="stylesheet" href="/css/customer/c-deliveries.css" />
+    <link rel="stylesheet" href="/css/customer/account-menu.css" />
+    <link rel="stylesheet" href="/css/non-specific/deliveries-filter.css" />
+    <link rel="stylesheet" href="/css/non-specific/sidebar.css" />
     <!-- Font Awesome CDN for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
-    <script src="/javascript/customer/c-deliveries/c-sortTableHeaders.js" defer></script>
-    <script src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js" defer></script>
-    <script src="/javascript/customer/c-deliveries/c-initializeDeliveryTableSearch.js" defer></script>
+    <script
+      src="/javascript/customer/c-deliveries/c-sortTableHeaders.js"
+      defer
+    ></script>
+    <script
+      src="/javascript/supplier/s-deliveries/s-refreshDeliveries.js"
+      defer
+    ></script>
+    <script
+      src="/javascript/customer/c-deliveries/c-initializeDeliveryTableSearch.js"
+      defer
+    ></script>
     <script src="/javascript/non-specific/customTableSearch.js" defer></script>
     <script src="/javascript/non-specific/account-menu.js" defer></script>
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="/javascript/non-specific/globalFilter.js" defer></script>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <header class="header">
-        <div class="logo-container">
-            <a href="/"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
-            <h4>CUSTOMER</h4>
-        </div>
+      <div class="logo-container">
+        <a href="/"
+          ><img
+            src="/images/icons/logo_for_slides.png"
+            class="logo"
+            alt="HexaTrace Logo"
+        /></a>
+        <h4>CUSTOMER</h4>
+      </div>
 
-        <div class="account-wrapper">
-            <a href="#" id="account-toggle">
-                👤 Hello <span th:text="${session.username}">User</span> ▼
-            </a>
-            <div class="dropdown-menu" id="account-menu">
-                <a href="/account">Profile</a>
-                <a href="/settings">Settings</a>
-                <form th:action="@{/user/logout}" method="post">
-                    <button type="submit" class="dropdown-btn">Logout</button>
-                </form>
-            </div>
+      <div class="account-wrapper">
+        <a href="#" id="account-toggle">
+          👤 Hello <span th:text="${session.username}">User</span> ▼
+        </a>
+        <div class="dropdown-menu" id="account-menu">
+          <a href="/account">Profile</a>
+          <a href="/settings">Settings</a>
+          <form th:action="@{/user/logout}" method="post">
+            <button type="submit" class="dropdown-btn">Logout</button>
+          </form>
         </div>
+      </div>
     </header>
 
     <aside id="sidebar">
-        <ul>
-            <li id="sidebar-actions-container">
-                <span class="logo">Actions</span>
-                <button onclick=toggleSidebar() id="toggle-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#e8eaed">
-                        <path
-                            d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
-                    </svg>
-                </button>
-            </li>
-            <li>
-                <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#e8eaed">
-                        <path
-                            d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
-                    </svg>
-                    <span>Dashboard</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#e8eaed">
-                        <path
-                            d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
-                    </svg>
-                </button>
-                <ul class="sub-menu">
-                    <div>
-                        <li><a href="/customer/dashboard">Data 1</a></li>
-                        <li><a href="#">Data 2</a></li>
-                        <li><a href="#">Data 3</a></li>
-                    </div>
-                </ul>
-            </li>
-            <li>
-                <button onclick=toggleSubMenu(this) class="dropdown-btn active">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#e3e3e3">
-                        <path
-                            d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Zm320-228Z" />
-                    </svg>
-                    <span>Deliveries</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#e8eaed">
-                        <path
-                            d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
-                    </svg>
-                </button>
-                <ul class="sub-menu">
-                    <div>
-                        <li class="active"><a href="#">Active</a></li>
-                        <li><a href="/customer/deliveries/history">History</a></li>
-                    </div>
-                </ul>
-            </li>
-            <li>
-                <a href="/customer/suppliers/overview">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#e3e3e3">
-                        <path
-                            d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
-                    </svg>
-                    <span>Suppliers</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#e3e3e3">
-                        <path
-                            d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480v-315l-240 90v207q0 7 2 18h238v316Z" />
-                    </svg>
-                    <span>Mitigation</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#e3e3e3">
-                        <path
-                            d="M152-80h-32v-80h32q48 0 91.5-10.5T341-204q38 19 66.5 31.5T480-160q44 0 72.5-12.5T619-204q53 23 97.5 33.5T809-160h31v80h-31q-49 0-95.5-9T622-116q-40 19-73 27t-69 8q-36 0-68.5-8T339-116q-45 18-91.5 27T152-80Zm328-160q-60 0-105-40l-45-40q-27 27-60.5 46T198-247l-85-273q-5-17 3-31t25-19l59-16v-134q0-33 23.5-56.5T280-800h100v-80h200v80h100q33 0 56.5 23.5T760-720v134l59 16q17 5 25 19t3 31l-85 273q-38-8-71.5-27T630-320l-45 40q-45 40-105 40Zm2-80q31 0 55-20.5t44-43.5l46-53 41 42q11 11 22.5 20.5T713-355l46-149-279-73-278 73 46 149q11-10 22.5-19.5T293-395l41-42 46 53q20 24 45 44t57 20ZM280-607l200-53 200 53v-113H280v113Zm201 158Z" />
-                    </svg>
-                    <span>Harbours</span>
-                </a>
-            </li>
-        </ul>
+      <ul>
+        <li id="sidebar-actions-container">
+          <span class="logo">Actions</span>
+          <button onclick="toggleSidebar()" id="toggle-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"
+              />
+            </svg>
+            <span>Dashboard</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"
+              />
+            </svg>
+          </button>
+          <ul class="sub-menu">
+            <div>
+              <li><a href="/customer/dashboard">Data 1</a></li>
+              <li><a href="#">Data 2</a></li>
+              <li><a href="#">Data 3</a></li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <button onclick="toggleSubMenu(this)" class="dropdown-btn active">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e3e3e3"
+            >
+              <path
+                d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Zm320-228Z"
+              />
+            </svg>
+            <span>Deliveries</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"
+              />
+            </svg>
+          </button>
+          <ul class="sub-menu">
+            <div>
+              <li class="active"><a href="#">Active</a></li>
+              <li><a href="/customer/deliveries/history">History</a></li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <a href="/customer/suppliers/overview">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e3e3e3"
+            >
+              <path
+                d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z"
+              />
+            </svg>
+            <span>Suppliers</span>
+          </a>
+        </li>
+        <li>
+          <a href="/customer/mitigation">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e3e3e3"
+            >
+              <path
+                d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480v-315l-240 90v207q0 7 2 18h238v316Z"
+              />
+            </svg>
+            <span>Mitigation</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e3e3e3"
+            >
+              <path
+                d="M152-80h-32v-80h32q48 0 91.5-10.5T341-204q38 19 66.5 31.5T480-160q44 0 72.5-12.5T619-204q53 23 97.5 33.5T809-160h31v80h-31q-49 0-95.5-9T622-116q-40 19-73 27t-69 8q-36 0-68.5-8T339-116q-45 18-91.5 27T152-80Zm328-160q-60 0-105-40l-45-40q-27 27-60.5 46T198-247l-85-273q-5-17 3-31t25-19l59-16v-134q0-33 23.5-56.5T280-800h100v-80h200v80h100q33 0 56.5 23.5T760-720v134l59 16q17 5 25 19t3 31l-85 273q-38-8-71.5-27T630-320l-45 40q-45 40-105 40Zm2-80q31 0 55-20.5t44-43.5l46-53 41 42q11 11 22.5 20.5T713-355l46-149-279-73-278 73 46 149q11-10 22.5-19.5T293-395l41-42 46 53q20 24 45 44t57 20ZM280-607l200-53 200 53v-113H280v113Zm201 158Z"
+              />
+            </svg>
+            <span>Harbours</span>
+          </a>
+        </li>
+      </ul>
     </aside>
 
     <main>
-        <div class="deliveries-header">
-            <h1>Deliveries</h1>
+      <div class="deliveries-header">
+        <h1>Deliveries</h1>
 
-            <div class="search-filter">
-                <label>
-                    <input type="text" data-table-id="ordersTable" class="search-input"
-                        placeholder="Search Deliveries..." id="searchInput">
-                </label>
-                <button id="filterBtn" class="clean-button expandable">
-                    <i class="material-icons">tune</i>
-                    <span class="button-text">Filter</span>
-                </button>
-                <button id="refreshDeliveriesButton" class="clean-button">
-                    <i class="fas fa-rotate-right"></i>
-                </button>
-            </div>
+        <div class="search-filter">
+          <label>
+            <input
+              type="text"
+              data-table-id="ordersTable"
+              class="search-input"
+              placeholder="Search Deliveries..."
+              id="searchInput"
+            />
+          </label>
+          <button id="filterBtn" class="clean-button expandable">
+            <i class="material-icons">tune</i>
+            <span class="button-text">Filter</span>
+          </button>
+          <button id="refreshDeliveriesButton" class="clean-button">
+            <i class="fas fa-rotate-right"></i>
+          </button>
         </div>
+      </div>
 
-        <div class="deliveries-table">
-            <table id="ordersTable">
-                <thead>
-                    <tr>
-                        <th data-column="riskLevel">Risk</th>
-                        <th data-column="ddsStatus">DDS on Delivery</th>
-                        <th data-column="ddsReferenceNumber">DDS Ref</th>
-                        <th data-column="erpReferenceNumber">Shipment Ref</th>
-                        <th data-column="destination">Destination</th>
-                        <th data-column="status">Status</th>
-                        <th data-column="supplier">Supplier</th>
-                        <th data-column="orderDate">Order Date</th>
-                        <th data-column="estimatedDeliveryDate">Est. Delivery</th>
-                        <th data-column="productCategory">Category</th>
-                        <th data-column="productName">Product Name</th>
-                        <th data-column="dimensions">Dimensions (m²)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="order : ${deliveries}"
-                        th:classappend="${order.ddsStatus == 'Not Available'} ? 'red-outline' : ''">
-                        <td data-label="Risk Level" th:text="${order.riskLevel}"></td>
-                        <td data-label="DDS on Delivery">
-                            <span th:if="${order.ddsStatus == 'Yes'}"
-                                style="color: green; font-weight: bold;">Yes</span>
-                            <span th:if="${order.ddsStatus == 'No'}" style="color: orange; font-weight: bold;">No</span>
-                            <span th:if="${order.ddsStatus == 'Not Available'}"
-                                style="color: red; font-weight: bold;">DENIED</span>
-                        </td>
-                        <td data-label="DDS Ref">
-                            <span th:if="${order.ddsReferenceNumber == ''}"
-                                style="color: red; font-weight: bold;">DENIED</span>
-                            <span th:unless="${order.ddsReferenceNumber == ''}"
-                                th:text="${order.ddsReferenceNumber}"></span>
-                        </td>
-                        <td data-label="Shipment Ref" th:text="${order.erpReferenceNumber}"></td>
-                        <td data-label="Destination" th:text="${order.destination}"></td>
-                        <td data-label="Status" th:text="${order.status}"></td>
-                        <td data-label="Supplier">
-                            <a th:href="@{/customer/suppliers/details/{id}(id=${order.supplier.id})}"
-                                th:text="${order.supplier.username}"></a>
-                        </td>
-                        <td data-label="Order Date" th:text="${order.orderDate}"></td>
-                        <td data-label="Estimated Delivery" th:text="${order.estimatedDeliveryDate}"></td>
-                        <td data-label="Category" th:text="${order.productCategory}"></td>
-                        <td data-label="Product Name" th:text="${order.productName}"></td>
-                        <td data-label="Dimensions" th:text="${order.dimensions}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <div class="deliveries-table">
+        <table id="ordersTable">
+          <thead>
+            <tr>
+              <th data-column="riskLevel">Risk</th>
+              <th data-column="ddsStatus">DDS on Delivery</th>
+              <th data-column="ddsReferenceNumber">DDS Ref</th>
+              <th data-column="erpReferenceNumber">Shipment Ref</th>
+              <th data-column="destination">Destination</th>
+              <th data-column="status">Status</th>
+              <th data-column="supplier">Supplier</th>
+              <th data-column="orderDate">Order Date</th>
+              <th data-column="estimatedDeliveryDate">Est. Delivery</th>
+              <th data-column="productCategory">Category</th>
+              <th data-column="productName">Product Name</th>
+              <th data-column="dimensions">Dimensions (m²)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              th:each="order : ${deliveries}"
+              th:classappend="${order.ddsStatus == 'Not Available'} ? 'red-outline' : ''"
+            >
+              <td data-label="Risk Level" th:text="${order.riskLevel}"></td>
+              <td data-label="DDS on Delivery">
+                <span
+                  th:if="${order.ddsStatus == 'Yes'}"
+                  style="color: green; font-weight: bold"
+                  >Yes</span
+                >
+                <span
+                  th:if="${order.ddsStatus == 'No'}"
+                  style="color: orange; font-weight: bold"
+                  >No</span
+                >
+                <span
+                  th:if="${order.ddsStatus == 'Not Available'}"
+                  style="color: red; font-weight: bold"
+                  >DENIED</span
+                >
+              </td>
+              <td data-label="DDS Ref">
+                <span
+                  th:if="${order.ddsReferenceNumber == ''}"
+                  style="color: red; font-weight: bold"
+                  >DENIED</span
+                >
+                <span
+                  th:unless="${order.ddsReferenceNumber == ''}"
+                  th:text="${order.ddsReferenceNumber}"
+                ></span>
+              </td>
+              <td
+                data-label="Shipment Ref"
+                th:text="${order.erpReferenceNumber}"
+              ></td>
+              <td data-label="Destination" th:text="${order.destination}"></td>
+              <td data-label="Status" th:text="${order.status}"></td>
+              <td data-label="Supplier">
+                <a
+                  th:href="@{/customer/suppliers/details/{id}(id=${order.supplier.id})}"
+                  th:text="${order.supplier.username}"
+                ></a>
+              </td>
+              <td data-label="Order Date" th:text="${order.orderDate}"></td>
+              <td
+                data-label="Estimated Delivery"
+                th:text="${order.estimatedDeliveryDate}"
+              ></td>
+              <td data-label="Category" th:text="${order.productCategory}"></td>
+              <td data-label="Product Name" th:text="${order.productName}"></td>
+              <td data-label="Dimensions" th:text="${order.dimensions}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </main>
-
 
     <div id="backdrop"></div>
     <div id="filterDiv" class="global-filter">
-        <section id="filterHeader">
-            <p class="filterTitle">Filter Order Tables</p>
-            <div class="filter-buttons">
-                <button id="resetFilterButton" class="clean-button expandable">
-                    <span class="material-icons">restart_alt</span>
-                    <span class="button-text">Reset</span>
-                </button>
-                <button id="applyFilterButton" class="clean-button expandable">
-                    <span class="material-icons">done</span>
-                    <span class="button-text">Apply</span>
-                </button>
-            </div>
-        </section>
-        <label class="filter-label">
-            <select class="filter-choice-input">
-                <option value="global">Global</option>
-                <option value="not-attached">Deliveries To Process</option>
-                <option value="attached">Deliveries DDS Attached</option>
-            </select>
+      <section id="filterHeader">
+        <p class="filterTitle">Filter Order Tables</p>
+        <div class="filter-buttons">
+          <button id="resetFilterButton" class="clean-button expandable">
+            <span class="material-icons">restart_alt</span>
+            <span class="button-text">Reset</span>
+          </button>
+          <button id="applyFilterButton" class="clean-button expandable">
+            <span class="material-icons">done</span>
+            <span class="button-text">Apply</span>
+          </button>
+        </div>
+      </section>
+      <label class="filter-label">
+        <select class="filter-choice-input">
+          <option value="global">Global</option>
+          <option value="not-attached">Deliveries To Process</option>
+          <option value="attached">Deliveries DDS Attached</option>
+        </select>
+      </label>
+
+      <p class="filterTitle">by</p>
+
+      <div class="filter-row">
+        <label class="filter-label customer-field" style="flex: 6">
+          <input type="text" class="filter-text-input" placeholder="Customer" />
         </label>
 
-        <p class="filterTitle">by</p>
-
-        <div class="filter-row">
-            <label class="filter-label customer-field" style="flex: 6;">
-                <input type="text" class="filter-text-input" placeholder="Customer" />
-            </label>
-
-            <div id="FilterForDDS" style="flex: 4;">
-                <span>Only with DDS</span>
-                <label class="switch filter-label">
-                    <input type="checkbox" id="ddsAvailable" name="ddsAvailable" />
-                    <span class="slider"></span>
-                </label>
-            </div>
+        <div id="FilterForDDS" style="flex: 4">
+          <span>Only with DDS</span>
+          <label class="switch filter-label">
+            <input type="checkbox" id="ddsAvailable" name="ddsAvailable" />
+            <span class="slider"></span>
+          </label>
         </div>
-        <div class="timespan">
-            <p class="filterTitle">Between</p>
-            <label class="filter-label">
-                <input type="date" id="from" class="date-search-input" placeholder="From">
-            </label>
-            <p>-</p>
-            <label class="filter-label">
-                <input type="date" id="till" class="date-search-input" placeholder="Till">
-            </label>
-        </div>
+      </div>
+      <div class="timespan">
+        <p class="filterTitle">Between</p>
+        <label class="filter-label">
+          <input
+            type="date"
+            id="from"
+            class="date-search-input"
+            placeholder="From"
+          />
+        </label>
+        <p>-</p>
+        <label class="filter-label">
+          <input
+            type="date"
+            id="till"
+            class="date-search-input"
+            placeholder="Till"
+          />
+        </label>
+      </div>
     </div>
-
-</body>
-
+  </body>
 </html>

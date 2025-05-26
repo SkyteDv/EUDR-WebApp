@@ -1,21 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Supplier Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mitigation</title>
+
     <link rel="stylesheet" href="/css/non-specific/global.css" />
     <link rel="stylesheet" href="/css/non-specific/header.css" />
+    <link rel="stylesheet" href="/css/customer/account-menu.css" />
+
     <link rel="stylesheet" href="/css/non-specific/sidebar.css" />
-    <link rel="stylesheet" href="/css/account-menu.css" />
-    <link rel="stylesheet" href="/css/customer/c-supplier-details.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="/css/customer/c-mitigation.css" />
+    <script src="/javascript/non-specific/account-menu.js" defer></script>
+    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
   </head>
 
   <body>
@@ -124,12 +121,12 @@
           </button>
           <ul class="sub-menu">
             <div>
-              <li><a href="/customer/deliveries/active">Active</a></li>
+              <li><a href="#">Active</a></li>
               <li><a href="/customer/deliveries/history">History</a></li>
             </div>
           </ul>
         </li>
-        <li class="active">
+        <li>
           <a href="/customer/suppliers/overview">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -145,8 +142,8 @@
             <span>Suppliers</span>
           </a>
         </li>
-        <li>
-          <a href="/customer/mitigation">
+        <li class="active">
+          <a href="#">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
@@ -180,98 +177,176 @@
       </ul>
     </aside>
 
-    <main class="detail-page">
-      <h1 th:text="'Supplier: ' + ${supplier.username}"></h1>
+    <main class="main-content">
+      <!-- Summary Statistics -->
+      <div class="summary-stats">
+        <div>
+          <div class="stat-value" th:text="${riskyOrders.size()}">0</div>
+          <div class="stat-label">Risky Orders</div>
+        </div>
+        <div>
+          <div class="stat-value high-risk" th:text="${highRiskCount}">0</div>
+          <div class="stat-label">High Risk</div>
+        </div>
+        <div>
+          <div class="stat-value medium-risk" th:text="${mediumRiskCount}">
+            0
+          </div>
+          <div class="stat-label">Medium Risk</div>
+        </div>
+      </div>
 
-      <div class="card-grid">
-        <!-- Supplier Info -->
-        <section class="card">
-          <h2>Supplier Information</h2>
-          <p>
-            <strong>Name:</strong> <span th:text="${supplier.username}"></span>
-          </p>
-          <p>
-            <strong>Osapiens-ID:</strong>
-            <span th:text="${supplier.osapiensID}"></span>
-          </p>
-          <p>
-            <strong>User-ID:</strong> <span th:text="${supplier.id}"></span>
-          </p>
-        </section>
+      <!-- Mitigation Cards -->
+      <h2 class="section-title">Mitigation Overview</h2>
 
-        <!-- Deliveries -->
-        <section class="card">
-          <h2>Shared Deliveries</h2>
-          <table class="delivery-table">
-            <thead>
-              <tr>
-                <th>ERP Ref</th>
-                <th>Produkt</th>
-                <th>Order Date</th>
-                <th>DDS Ref</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="order : ${deliveries}">
-                <td th:text="${order.erpReferenceNumber}"></td>
-                <td th:text="${order.productName}"></td>
-                <td th:text="${order.orderDate}"></td>
-                <td
-                  th:text="${order.ddsReferenceNumber != null && order.ddsReferenceNumber != '' ? order.ddsReferenceNumber : '–'}"
-                ></td>
-                <td th:text="${order.status}"></td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
+      <div class="card-list" th:if="${#lists.size(riskyOrders) > 0}">
+        <div
+          th:each="order : ${riskyOrders}"
+          th:classappend="${order.riskLevel != null and order.riskLevel.name() == 'HIGH'} ? ' card-risk-high' : ' card-risk-medium'"
+          class="card"
+        >
+          <!-- Order Header -->
+          <div class="card-header">
+            <h3 class="card-title">
+              <span th:text="${order.productName}">Product</span>
+              <small class="card-category">
+                (<span th:text="${order.productCategory}">Category</span>)
+              </small>
+            </h3>
+            <span
+              class="risk-badge"
+              th:classappend="${order.riskLevel != null and order.riskLevel.name() == 'HIGH'} ? ' risk-high' : ' risk-medium'"
+            >
+              <span th:text="${order.riskLevel}">MEDIUM</span>
+            </span>
+          </div>
 
-        <!-- Platz für Erweiterung -->
-        <section class="card">
-          <h2>Riskchart</h2>
-          <canvas id="riskChart" width="300" height="300"></canvas>
-          <p
-            id="riskInfo"
-            th:text="'Risk evaluation based on ' + ${deliveries.size()} + ' deliveries.'"
-          ></p>
-        </section>
+          <!-- Basic Info -->
+          <div class="order-info-grid">
+            <div>
+              <strong>Order Date:</strong>
+              <span
+                th:text="${#temporals.format(order.orderDate, 'dd.MM.yyyy')}"
+                >01.01.2023</span
+              >
+            </div>
+            <div>
+              <strong>Estimated Delivery:</strong>
+              <span
+                th:text="${#temporals.format(order.estimatedDeliveryDate, 'dd.MM.yyyy')}"
+                >15.01.2023</span
+              >
+            </div>
+            <div>
+              <strong>ERP Reference:</strong>
+              <span th:text="${order.erpReferenceNumber}">REF123</span>
+            </div>
+            <div>
+              <strong>DDS Status:</strong>
+              <span th:switch="${order.ddsStatus}">
+                <span
+                  th:case="'Not Available'"
+                  class="dds-red"
+                  th:text="${order.ddsStatus}"
+                ></span>
+                <span
+                  th:case="'Yes'"
+                  class="dds-green"
+                  th:text="${order.ddsStatus}"
+                ></span>
+                <span
+                  th:case="*"
+                  class="dds-yellow"
+                  th:text="${order.ddsStatus}"
+                  >Unknown</span
+                >
+              </span>
+            </div>
+          </div>
+
+          <!-- Supplier Info -->
+          <div class="supplier-info">
+            <h4 class="supplier-title">Supplier Information</h4>
+            <p>
+              <strong>Name:</strong>
+              <span
+                th:text="${order.supplier != null ? order.supplier.username : 'Unknown Supplier'}"
+                >Supplier</span
+              >
+            </p>
+            <p>
+              <strong>Location:</strong>
+              <span
+                th:text="${order.supplier != null ? order.supplier.location : 'Unknown'}"
+                >Location</span
+              >
+            </p>
+            <p>
+              <strong>Responsible:</strong>
+              <span th:text="${order.responsible_party}">John Doe</span>
+            </p>
+          </div>
+
+          <!-- Risk Details -->
+          <div class="risk-details">
+            <h4 class="risk-title">Risk Details</h4>
+            <div>
+              <p
+                th:if="${order.riskLevel != null and order.riskLevel.name() == 'HIGH'}"
+                class="risk-text-high"
+              >
+                High risk detected. Immediate action recommended.
+              </p>
+              <p
+                th:if="${order.riskLevel != null and order.riskLevel.name() == 'MEDIUM'}"
+                class="risk-text-medium"
+              >
+                Medium risk detected. Monitoring recommended.
+              </p>
+              <p th:if="${order.riskLevel == null}">
+                No specific risk handling required.
+              </p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="action-buttons">
+            <button type="button" class="btn btn-blue">
+              Request Verification
+            </button>
+            <button type="button" class="btn btn-gray">Contact Supplier</button>
+            <button
+              type="button"
+              class="btn btn-green"
+              onclick="alert('This feature will be available soon.')"
+            >
+              View Alternatives
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div th:if="${#lists.isEmpty(riskyOrders)}" class="empty-state">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="empty-icon"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <h3 class="empty-title">No risks detected</h3>
+        <p class="empty-subtext">
+          All your current orders are within acceptable risk levels.
+        </p>
       </div>
     </main>
-
-    <script src="/javascript/non-specific/account-menu.js" defer></script>
-    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script th:inline="javascript">
-      const ctx = document.getElementById("riskChart").getContext("2d");
-
-      const data = {
-        labels: ["Green", "Yellow", "Red"],
-        datasets: [
-          {
-            data: [
-              ,
-              ,/*[[${greenCount}]]*/
-              /*[[${yellowCount}]]*/
-              /*[[${redCount}]]*/
-            ],
-            backgroundColor: ["#28a745", "#ffc107", "#dc3545"],
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      new Chart(ctx, {
-        type: "doughnut",
-        data: data,
-        options: {
-          plugins: {
-            legend: {
-              position: "bottom",
-            },
-          },
-        },
-      });
-    </script>
   </body>
 </html>
