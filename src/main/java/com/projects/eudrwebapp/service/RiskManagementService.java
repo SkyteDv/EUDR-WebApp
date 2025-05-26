@@ -50,9 +50,9 @@ public class RiskManagementService {
                     order.getDestination(),
                     order.getEstimatedDeliveryDate());
 
-            mailService.sendNotification(order.getResponsible_party(), subject, body);
+            //mailService.sendNotification(order.getResponsible_party(), subject, body);
             try {
-                Thread.sleep(250); // 1000 milliseconds = 1 second
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.err.println("Sleep interrupted");
