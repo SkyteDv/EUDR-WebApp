@@ -1,4 +1,4 @@
-package com.projects.eudrwebapp.model;
+package com.projects.eudrwebapp.model.Enum;
 
 public enum OrderStatus {
     PENDING,

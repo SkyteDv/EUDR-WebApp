@@ -3,6 +3,7 @@ package com.projects.eudrwebapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.projects.eudrwebapp.model.Enum.Country;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

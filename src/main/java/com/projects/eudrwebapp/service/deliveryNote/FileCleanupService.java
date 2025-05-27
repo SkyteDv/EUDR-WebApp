@@ -1,4 +1,4 @@
-package com.projects.eudrwebapp.service;
+package com.projects.eudrwebapp.service.deliveryNote;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

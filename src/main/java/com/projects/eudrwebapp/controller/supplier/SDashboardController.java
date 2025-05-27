@@ -2,7 +2,7 @@ package com.projects.eudrwebapp.controller.supplier;
 
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.UserRepository;
-import com.projects.eudrwebapp.service.AuthService;
+import com.projects.eudrwebapp.service.appAssistance.AuthService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,6 +1,9 @@
-package com.projects.eudrwebapp.service;
+package com.projects.eudrwebapp.service.appAssistance;
 
 import com.projects.eudrwebapp.model.*;
+import com.projects.eudrwebapp.model.DTO.CountryDeliveryDTO;
+import com.projects.eudrwebapp.model.Enum.OrderStatus;
+import com.projects.eudrwebapp.model.Enum.RiskLevel;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import org.springframework.stereotype.Service;

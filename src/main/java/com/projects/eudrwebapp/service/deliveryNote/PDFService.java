@@ -1,4 +1,4 @@
-package com.projects.eudrwebapp.service;
+package com.projects.eudrwebapp.service.deliveryNote;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;

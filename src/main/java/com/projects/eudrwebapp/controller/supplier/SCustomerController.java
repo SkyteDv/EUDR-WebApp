@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.projects.eudrwebapp.model.Order;
-import com.projects.eudrwebapp.model.SupplierCustomerDTO;
+import com.projects.eudrwebapp.model.DTO.SupplierCustomerDTO;
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;

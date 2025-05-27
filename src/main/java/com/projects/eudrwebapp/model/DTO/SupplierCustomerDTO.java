@@ -1,4 +1,4 @@
-package com.projects.eudrwebapp.model;
+package com.projects.eudrwebapp.model.DTO;
 
 import java.time.LocalDate;
 

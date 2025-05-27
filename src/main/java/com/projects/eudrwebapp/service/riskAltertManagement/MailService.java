@@ -1,4 +1,4 @@
-package com.projects.eudrwebapp.service;
+package com.projects.eudrwebapp.service.riskAltertManagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

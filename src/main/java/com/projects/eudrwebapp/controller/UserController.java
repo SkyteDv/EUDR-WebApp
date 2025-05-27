@@ -3,7 +3,7 @@ package com.projects.eudrwebapp.controller;
 import java.io.InputStream;
 import java.util.Optional;
 
-import com.projects.eudrwebapp.model.Country;
+import com.projects.eudrwebapp.model.Enum.Country;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
-import com.projects.eudrwebapp.service.HelperService;
+import com.projects.eudrwebapp.service.appAssistance.HelperService;
 import com.projects.eudrwebapp.service.OrderService;
 
 import jakarta.servlet.http.Cookie;

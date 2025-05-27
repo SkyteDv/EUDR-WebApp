@@ -1,8 +1,8 @@
 package com.projects.eudrwebapp.repository;
 
 import com.projects.eudrwebapp.model.Order;
-import com.projects.eudrwebapp.model.OrderStatus;
-import com.projects.eudrwebapp.model.RiskLevel;
+import com.projects.eudrwebapp.model.Enum.OrderStatus;
+import com.projects.eudrwebapp.model.Enum.RiskLevel;
 import com.projects.eudrwebapp.model.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;

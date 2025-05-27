@@ -1,7 +1,6 @@
 package com.projects.eudrwebapp.configuration;
 
-import com.projects.eudrwebapp.model.Country;
-import com.projects.eudrwebapp.model.Order;
+import com.projects.eudrwebapp.model.Enum.Country;
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;

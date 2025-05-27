@@ -2,7 +2,7 @@ package com.projects.eudrwebapp.controller.customer;
 
 import com.projects.eudrwebapp.model.Order;
 import com.projects.eudrwebapp.repository.OrderRepository;
-import com.projects.eudrwebapp.service.AuthService;
+import com.projects.eudrwebapp.service.appAssistance.AuthService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

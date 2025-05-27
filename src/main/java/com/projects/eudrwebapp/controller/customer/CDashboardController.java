@@ -1,21 +1,15 @@
 package com.projects.eudrwebapp.controller.customer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.projects.eudrwebapp.model.CountryDeliveryDTO;
-import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.UserRepository;
-import com.projects.eudrwebapp.service.AuthService;
-import com.projects.eudrwebapp.service.DataService;
+import com.projects.eudrwebapp.service.appAssistance.AuthService;
+import com.projects.eudrwebapp.service.appAssistance.DataService;
 import com.projects.eudrwebapp.service.OrderService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/customer/dashboard")

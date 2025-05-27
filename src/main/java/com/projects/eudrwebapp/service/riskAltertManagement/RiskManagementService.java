@@ -1,7 +1,7 @@
-package com.projects.eudrwebapp.service;
+package com.projects.eudrwebapp.service.riskAltertManagement;
 
 import com.projects.eudrwebapp.model.Order;
-import com.projects.eudrwebapp.model.RiskLevel;
+import com.projects.eudrwebapp.model.Enum.RiskLevel;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,12 @@ public class RiskManagementService {
 
     private final OrderRepository orderRepository;
     private final MailService mailService;
+    private final RiskEngine riskEngine;
 
-    public RiskManagementService(OrderRepository orderRepository, MailService mailService) {
+    public RiskManagementService(OrderRepository orderRepository, MailService mailService, RiskEngine riskEngine) {
         this.orderRepository = orderRepository;
         this.mailService = mailService;
+        this.riskEngine = riskEngine;
     }
 
     @Scheduled(fixedRate = 10000) // every 10 sec = 10.000.
@@ -63,16 +65,14 @@ public class RiskManagementService {
         orderRepository.saveAll(highRiskOrders); // batch save
     }
 
-    @Scheduled(fixedRate = 10000) //every 10 sec = 10.000.
+    @Scheduled(fixedRate = 10000) // every 10 seconds
     @Transactional
     public void updateOrderRiskLevels() {
-        System.out.println("Updating Risk Levels for DDS Denied Orders");
         List<Order> allOrders = orderRepository.findAll();
         for (Order order : allOrders) {
-            if (order.getDdsReferenceNumber().equalsIgnoreCase("") && order.getRiskLevel() == RiskLevel.LOW) {
-                order.setRiskLevel(order.getRiskLevel().increase());
-            }
+            riskEngine.assessOrderRisk(order);
         }
     }
+
 }
 

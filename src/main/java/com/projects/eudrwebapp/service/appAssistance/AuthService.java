@@ -1,4 +1,4 @@
-package com.projects.eudrwebapp.service;
+package com.projects.eudrwebapp.service.appAssistance;
 
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.UserRepository;

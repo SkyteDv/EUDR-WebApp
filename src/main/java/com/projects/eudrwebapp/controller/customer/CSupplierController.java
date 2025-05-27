@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.projects.eudrwebapp.model.Order;
-import com.projects.eudrwebapp.model.SupplierStatsDTO;
+import com.projects.eudrwebapp.model.DTO.SupplierStatsDTO;
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
-import com.projects.eudrwebapp.service.AuthService;
+import com.projects.eudrwebapp.service.appAssistance.AuthService;
 import com.projects.eudrwebapp.service.OrderService;
 
 import jakarta.servlet.http.HttpSession;

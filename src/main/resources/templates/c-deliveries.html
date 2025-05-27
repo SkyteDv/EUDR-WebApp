@@ -250,13 +250,14 @@
                              data-dimensions=${order.dimensions}">
 
                     <td>
-                      <span th:text="${order.riskLevel}"
+                      <span th:text="${order.getRiskAssessment().getLevel()}"
                             th:classappend="
-                              ${order.riskLevel.name() == 'LOW'} ? 'risk-label risk-low' :
-                              (${order.riskLevel.name() == 'MEDIUM'} ? 'risk-label risk-medium' :
-                              (${order.riskLevel.name() == 'HIGH'} ? 'risk-label risk-high' : ''))">
+                              ${order.getRiskAssessment().getLevel().name() == 'LOW'} ? 'risk-label risk-low' :
+                              (${order.getRiskAssessment().getLevel().name() == 'MEDIUM'} ? 'risk-label risk-medium' :
+                              (${order.getRiskAssessment().getLevel().name() == 'HIGH'} ? 'risk-label risk-high' : ''))">
                       </span>
                     </td>
+
 
                     <td>
                         <span th:class="'status-badge status-' + ${order.status.name()}" th:text="${order.status}">

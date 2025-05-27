@@ -3,19 +3,18 @@ package com.projects.eudrwebapp.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projects.eudrwebapp.model.*;
+import com.projects.eudrwebapp.model.DTO.SupplierStatsDTO;
+import com.projects.eudrwebapp.model.Enum.OrderStatus;
+import com.projects.eudrwebapp.model.Enum.RiskLevel;
 import com.projects.eudrwebapp.repository.ImportStatusRepository;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
-import org.hibernate.exception.ConstraintViolationException;
+import com.projects.eudrwebapp.service.riskAltertManagement.RiskEngine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,15 +31,17 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
     private final ImportStatusRepository importStatusRepository;;
+    private final RiskEngine riskEngine;
 
     // Constructor injection (no need for @Autowired, Spring will inject this
     // automatically)
     @Autowired
-    public OrderService(OrderRepository orderRepository, UserRepository userRepository, ObjectMapper objectMapper, ImportStatusRepository importStatusRepository) {
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository, ObjectMapper objectMapper, ImportStatusRepository importStatusRepository, RiskEngine riskEngine) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.objectMapper = objectMapper;
         this.importStatusRepository = importStatusRepository;
+        this.riskEngine = riskEngine;
     }
 
     @Async
@@ -115,9 +116,10 @@ public class OrderService {
                     supplierUser,
                     customerUser,
                     (String) orderData.get("responsible_party"),
-                    RiskLevel.LOW
+                    new RiskAssessment()
             );
 
+            riskEngine.assessOrderRisk(order);
             orderRepository.save(order);
             createdOrders++;
         }

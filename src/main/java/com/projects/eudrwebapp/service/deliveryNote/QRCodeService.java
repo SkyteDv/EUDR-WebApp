@@ -1,4 +1,4 @@
-package com.projects.eudrwebapp.service;
+package com.projects.eudrwebapp.service.deliveryNote;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -7,11 +7,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
