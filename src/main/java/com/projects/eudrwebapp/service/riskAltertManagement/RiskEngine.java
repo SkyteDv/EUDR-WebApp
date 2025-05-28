@@ -1,6 +1,7 @@
 package com.projects.eudrwebapp.service.riskAltertManagement;
 
 import com.projects.eudrwebapp.model.Enum.OrderStatus;
+import com.projects.eudrwebapp.model.Enum.ProductGroup;
 import com.projects.eudrwebapp.model.Order;
 import com.projects.eudrwebapp.model.RiskAssessment;
 import com.projects.eudrwebapp.model.Enum.RiskLevel;
@@ -8,6 +9,7 @@ import com.projects.eudrwebapp.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.EnumSet;
+import java.util.Objects;
 
 @Service
 public class RiskEngine {
@@ -15,10 +17,12 @@ public class RiskEngine {
     private final OrderRepository orderRepository;
 
     public enum RiskFlag {
-        MISSING_DDS_ATTACHED(33),
+        MISSING_DDS_ATTACHED(40),
         DDS_DENIED(33),
-        HIGH_RISK_PRODUCT_GROUP(20),
-        DESTINATION_HABOUR_FULL(20);
+        DESTINATION_HARBOUR_FULL(15),
+        HIGH_RISK_PRODUCT_GROUP(15),
+        MEDIUM_RISK_PRODUCT_GROUP(10),
+        LOW_RISK_PRODUCT_GROUP(0);
 
         private final int points;
 
@@ -39,20 +43,36 @@ public class RiskEngine {
         RiskAssessment new_assessment = new RiskAssessment();
         EnumSet<RiskFlag> activeFlags = EnumSet.noneOf(RiskFlag.class);
 
-        // TODO: Add logic here to detect flags from order data, e.g.
         if ((order.getStatus() == OrderStatus.SHIPPED || order.getStatus() == OrderStatus.IN_HARBOUR) && !order.isDdsOnDeliveryNote()) {
             activeFlags.add(RiskFlag.MISSING_DDS_ATTACHED);
         }
         if (order.getDdsReferenceNumber().trim().isEmpty()) {
             activeFlags.add(RiskFlag.DDS_DENIED);
         }
-        //     activeFlags.add(RiskFlag.MISSING_DDS_ATTACHED);
-        // if (order DDS is denied)
-        //     activeFlags.add(RiskFlag.DDS_DENIED);
-        // if (order product group is high risk)
-        //     activeFlags.add(RiskFlag.HIGH_RISK_PRODUCT_GROUP);
-        // if (destination harbour is full)
-        //     activeFlags.add(RiskFlag.DESTINATION_HABOUR_FULL);
+        try {
+            ProductGroup productGroup = ProductGroup.fromName(order.getProductCategory());
+
+            switch (productGroup.getRiskLevel()) {
+                case HIGH:
+                    activeFlags.add(RiskFlag.HIGH_RISK_PRODUCT_GROUP);
+                    break;
+                case MEDIUM:
+                    activeFlags.add(RiskFlag.MEDIUM_RISK_PRODUCT_GROUP);
+                    break;
+                case LOW:
+                    activeFlags.add(RiskFlag.LOW_RISK_PRODUCT_GROUP);
+                    break;
+                default:
+                    break;
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Unknown product category: " + order.getProductCategory());
+        }
+
+        //Placeholder Harbour logic. Currently, always applied.
+        if (order.getStatus() != OrderStatus.PENDING && order.getStatus() != OrderStatus.COMPLETED && order.getStatus() != OrderStatus.CANCELLED) {
+            activeFlags.add(RiskFlag.DESTINATION_HARBOUR_FULL);
+        }
 
         int totalScore = activeFlags.stream()
                 .mapToInt(RiskFlag::getPoints)

@@ -2,10 +2,12 @@ package com.projects.eudrwebapp.model.Enum;
 
 public enum ProductGroup {
     WOOD("WOOD", RiskLevel.LOW),
-    BEEF("BEEF", RiskLevel.HIGH),
-    CHEMICALS("CHEMICALS", RiskLevel.HIGH),
-    ELECTRONICS("ELECTRONICS", RiskLevel.MEDIUM),
-    TEXTILES("TEXTILES", RiskLevel.LOW);
+    CACAO("CACAO", RiskLevel.MEDIUM),
+    CATTLE("CATTLE", RiskLevel.HIGH),
+    PALM_OIL("PALM_OIL", RiskLevel.MEDIUM),
+    SOY("SOY", RiskLevel.LOW),
+    COFFEE("COFFEE", RiskLevel.MEDIUM),
+    RUBBER("RUBBER", RiskLevel.LOW);
 
     private final String name;
     private final RiskLevel riskLevel;
@@ -32,4 +34,3 @@ public enum ProductGroup {
         throw new IllegalArgumentException("Unknown product group: " + name);
     }
 }
-

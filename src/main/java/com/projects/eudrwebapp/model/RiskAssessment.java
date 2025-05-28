@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 import java.util.EnumSet;
+import java.util.Set;
 
 @Embeddable
 public class RiskAssessment {
@@ -34,6 +35,9 @@ public class RiskAssessment {
     @Enumerated(EnumType.STRING)
     private RiskLevel level;
 
+    private Set<RiskFlag> flags = EnumSet.noneOf(RiskFlag.class);  // <-- New field
+
+    // Constructor
     public RiskAssessment() {
         this.score = 0;
         this.actionCode = "NONE";
@@ -48,6 +52,16 @@ public class RiskAssessment {
         this.level = level;
     }
 
+    // New getter/setter
+    public Set<RiskFlag> getFlags() {
+        return flags;
+    }
+
+    public void setFlags(Set<RiskFlag> flags) {
+        this.flags = EnumSet.copyOf(flags);
+    }
+
+    // Existing getters/setters
     public int getScore() {
         return score;
     }
