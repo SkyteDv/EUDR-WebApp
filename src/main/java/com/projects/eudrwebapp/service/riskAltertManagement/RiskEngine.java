@@ -92,48 +92,150 @@ public class RiskEngine {
         new_assessment.setActionCode(generateCustomActionCode(activeFlags));
 
         switch (new_assessment.getActionCode()) {
+
             // No product group
-            case "CXA"       -> new_assessment.setHint("Set Valid Product Group.");
-            case "CX01A"     -> new_assessment.setHint("Set Valid Product Group. Sent to Storage.");
-            case "CX02A"     -> new_assessment.setHint("Set Valid Product Group. Sent to Storage. ");
-            case "CX0102A"   -> new_assessment.setHint("Set Valid Product Group. ");
-            case "CXF"       -> new_assessment.setHint("Set Valid Product Group. ");
-            case "CX01F"     -> new_assessment.setHint("Set Valid Product Group. ");
-            case "CX02F"     -> new_assessment.setHint("Set Valid Product Group. ");
-            case "CX0102F"   -> new_assessment.setHint("Set Valid Product Group. ");
+            case "CXA" -> {
+                new_assessment.addItemToHint("action", "Set Valid Product Group");
+            }
+            case "CX01A" -> {
+                new_assessment.addItemToHint("action", "Set Valid Product Group");
+                new_assessment.addItemToHint("action", "Sent to Storage");
+            }
+            case "CX02A" -> {
+                new_assessment.addItemToHint("action", "Set Valid Product Group");
+                new_assessment.addItemToHint("action", "Sent to Storage");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+            }
+            case "CX0102A" -> {
+                new_assessment.addItemToHint("action", "Set Valid Product Group");
+                new_assessment.addItemToHint("action", "Sent to Storage");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+            }
+            case "CXF" -> {
+                new_assessment.addItemToHint("action", "Set Valid Product Group");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CX01F" -> {
+                new_assessment.addItemToHint("action", "Set Valid Product Group");
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CX02F" -> {
+                new_assessment.addItemToHint("action", "Set Valid Product Group");
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CX0102F" -> {
+                new_assessment.addItemToHint("action", "Set Valid Product Group");
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
 
-            // Low risk product group
-            case "CLA"       -> new_assessment.setHint("");
-            case "CL01A"     -> new_assessment.setHint("");
-            case "CL02A"     -> new_assessment.setHint("");
-            case "CL0102A"   -> new_assessment.setHint("");
-            case "CLF"       -> new_assessment.setHint("");
-            case "CL01F"     -> new_assessment.setHint("");
-            case "CL02F"     -> new_assessment.setHint("");
-            case "CL0102F"   -> new_assessment.setHint("");
+            //Low Risk Product Group
+            case "CLA" -> {
+                new_assessment.addItemToHint("action", "");
+            }
+            case "CL01A" -> {
+                new_assessment.addItemToHint("action", "Sent to Storage");
+            }
+            case "CL02A" -> {
+                new_assessment.addItemToHint("action", "Contact Supplier");
+            }
+            case "CL0102A" -> {
+                new_assessment.addItemToHint("action", "Sent to Storage");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+            }
+            case "CLF" -> {
+                new_assessment.addItemToHint("action", "");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CL01F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CL02F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CL0102F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
 
-            // Medium risk product group
-            case "CMA"       -> new_assessment.setHint("");
-            case "CM01A"     -> new_assessment.setHint("");
-            case "CM02A"     -> new_assessment.setHint("");
-            case "CM0102A"   -> new_assessment.setHint("");
-            case "CMF"       -> new_assessment.setHint("");
-            case "CM01F"     -> new_assessment.setHint("");
-            case "CM02F"     -> new_assessment.setHint("");
-            case "CM0102F"   -> new_assessment.setHint("");
+            //Medium Risk Product Group
+            case "CMA" -> {
+                new_assessment.addItemToHint("action", "");
+            }
+            case "CM01A" -> {
+                new_assessment.addItemToHint("action", "Sent to Storage");
+            }
+            case "CM02A" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+            }
+            case "CM0102A" -> {
+                new_assessment.addItemToHint("action", "Sent to Storage");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+            }
+            case "CMF" -> {
+                new_assessment.addItemToHint("action", "");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CM01F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CM02F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CM0102F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
 
-            // High risk product group
-            case "CHA"       -> new_assessment.setHint("");
-            case "CH01A"     -> new_assessment.setHint("");
-            case "CH02A"     -> new_assessment.setHint("");
-            case "CH0102A"   -> new_assessment.setHint("");
-            case "CHF"       -> new_assessment.setHint("");
-            case "CH01F"     -> new_assessment.setHint("");
-            case "CH02F"     -> new_assessment.setHint("");
-            case "CH0102F"   -> new_assessment.setHint("");
-
+            //High Risk Product Group
+            case "CHA" -> {
+                new_assessment.addItemToHint("action", "");
+            }
+            case "CH01A" -> {
+                new_assessment.addItemToHint("action", "Sent to Storage");
+            }
+            case "CH02A" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+            }
+            case "CH0102A" -> {
+                new_assessment.addItemToHint("action", "Sent to Storage");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+            }
+            case "CHF" -> {
+                new_assessment.addItemToHint("action", "");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CH01F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CH02F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
+            case "CH0102F" -> {
+                new_assessment.addItemToHint("action", "Try Rerouting");
+                new_assessment.addItemToHint("action", "Contact Supplier");
+                new_assessment.addItemToHint("danger", "Destination Harbour Full");
+            }
             default -> throw new IllegalStateException("Unexpected action code: " + new_assessment.getActionCode());
         }
+
 
 
         new_assessment.setScore(totalScore);
