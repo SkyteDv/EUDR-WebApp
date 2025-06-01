@@ -70,6 +70,7 @@ public class RiskManagementService {
     public void updateOrderRiskLevels() {
         List<Order> allOrders = orderRepository.findAll();
         for (Order order : allOrders) {
+            System.out.println("Test");
             riskEngine.assessOrderRisk(order);
         }
     }

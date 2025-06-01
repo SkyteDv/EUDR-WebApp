@@ -21,7 +21,7 @@ crosshair.style.borderTop = '2px solid black';
 document.body.appendChild(crosshair);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-camera.position.set(0, 2, 0);
+camera.position.set(0, 7, 0);
 
 const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -122,7 +122,7 @@ for(let r=0; r<rows; r++){
 scene.add(shelvesGroup);
 
 // --- Products ---
-const productColors = [0xff4444, 0x44ff44, 0x4444ff, 0xffcc44];
+const productColors = [0xff4444, 0x44ff44, 0x4444ff];
 const productSize = 0.3;
 
 function createProduct(x,y,z,color,data){

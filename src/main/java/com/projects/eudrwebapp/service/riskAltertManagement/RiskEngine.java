@@ -90,6 +90,52 @@ public class RiskEngine {
         }
 
         new_assessment.setActionCode(generateCustomActionCode(activeFlags));
+
+        switch (new_assessment.getActionCode()) {
+            // No product group
+            case "CXA"       -> new_assessment.setHint("Set Valid Product Group.");
+            case "CX01A"     -> new_assessment.setHint("Set Valid Product Group. Sent to Storage.");
+            case "CX02A"     -> new_assessment.setHint("Set Valid Product Group. Sent to Storage. ");
+            case "CX0102A"   -> new_assessment.setHint("Set Valid Product Group. ");
+            case "CXF"       -> new_assessment.setHint("Set Valid Product Group. ");
+            case "CX01F"     -> new_assessment.setHint("Set Valid Product Group. ");
+            case "CX02F"     -> new_assessment.setHint("Set Valid Product Group. ");
+            case "CX0102F"   -> new_assessment.setHint("Set Valid Product Group. ");
+
+            // Low risk product group
+            case "CLA"       -> new_assessment.setHint("");
+            case "CL01A"     -> new_assessment.setHint("");
+            case "CL02A"     -> new_assessment.setHint("");
+            case "CL0102A"   -> new_assessment.setHint("");
+            case "CLF"       -> new_assessment.setHint("");
+            case "CL01F"     -> new_assessment.setHint("");
+            case "CL02F"     -> new_assessment.setHint("");
+            case "CL0102F"   -> new_assessment.setHint("");
+
+            // Medium risk product group
+            case "CMA"       -> new_assessment.setHint("");
+            case "CM01A"     -> new_assessment.setHint("");
+            case "CM02A"     -> new_assessment.setHint("");
+            case "CM0102A"   -> new_assessment.setHint("");
+            case "CMF"       -> new_assessment.setHint("");
+            case "CM01F"     -> new_assessment.setHint("");
+            case "CM02F"     -> new_assessment.setHint("");
+            case "CM0102F"   -> new_assessment.setHint("");
+
+            // High risk product group
+            case "CHA"       -> new_assessment.setHint("");
+            case "CH01A"     -> new_assessment.setHint("");
+            case "CH02A"     -> new_assessment.setHint("");
+            case "CH0102A"   -> new_assessment.setHint("");
+            case "CHF"       -> new_assessment.setHint("");
+            case "CH01F"     -> new_assessment.setHint("");
+            case "CH02F"     -> new_assessment.setHint("");
+            case "CH0102F"   -> new_assessment.setHint("");
+
+            default -> throw new IllegalStateException("Unexpected action code: " + new_assessment.getActionCode());
+        }
+
+
         new_assessment.setScore(totalScore);
 
         // Replace old assessment with new one in order
@@ -121,7 +167,7 @@ public class RiskEngine {
         // Add harbour status at the end
         if (flags.contains(RiskFlag.DESTINATION_HARBOUR_FULL)) {
             sb.append("F");
-        } else if (flags.stream().anyMatch(RiskFlag::isHarbourFlag)) {
+        } else {
             sb.append("A");
         }
 

@@ -1,0 +1,11 @@
+#productMenu {
+    top: 0;
+    background: white;
+    position: relative;
+    z-index: 2;
+}
+
+#threeContainer {
+    position: fixed;
+    top: 0;
+}

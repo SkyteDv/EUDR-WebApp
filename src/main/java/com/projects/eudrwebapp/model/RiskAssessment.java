@@ -14,6 +14,7 @@ public class RiskAssessment {
 
     private int score;
     private String actionCode;
+    private int actionGroup;
     private String hint;
 
     @Enumerated(EnumType.STRING)
