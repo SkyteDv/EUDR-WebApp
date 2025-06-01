@@ -2,6 +2,7 @@ package com.projects.eudrwebapp.service.riskAltertManagement;
 
 import com.projects.eudrwebapp.model.Enum.OrderStatus;
 import com.projects.eudrwebapp.model.Enum.ProductGroup;
+import com.projects.eudrwebapp.model.Enum.RiskFlag;
 import com.projects.eudrwebapp.model.Order;
 import com.projects.eudrwebapp.model.RiskAssessment;
 import com.projects.eudrwebapp.model.Enum.RiskLevel;
@@ -9,31 +10,31 @@ import com.projects.eudrwebapp.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.EnumSet;
-import java.util.Objects;
+import java.util.Set;
 
 @Service
 public class RiskEngine {
 
     private final OrderRepository orderRepository;
 
-    public enum RiskFlag {
-        MISSING_DDS_ATTACHED(40),
-        DDS_DENIED(33),
-        DESTINATION_HARBOUR_FULL(15),
-        HIGH_RISK_PRODUCT_GROUP(15),
-        MEDIUM_RISK_PRODUCT_GROUP(10),
-        LOW_RISK_PRODUCT_GROUP(0);
 
-        private final int points;
-
-        RiskFlag(int points) {
-            this.points = points;
-        }
-
-        public int getPoints() {
-            return points;
-        }
-    }
+    /**
+     * RiskFlags represent specific conditions contributing to the overall risk score of an order.
+     * The point values have been carefully assigned to reflect severity:
+     * <p>
+     * - MISSING_DDS_ATTACHED (40): Critical. Missing documentation is a serious compliance issue.
+     * - DDS_DENIED (33): Also critical; suggests rejection of due diligence.
+     * - DESTINATION_HARBOUR_FULL (15): Situational operational risk — moderate weight.
+     * - HIGH_RISK_PRODUCT_GROUP (15): Indicates potentially sensitive goods — moderate weight.
+     * - MEDIUM_RISK_PRODUCT_GROUP (10): Less risky but still worth tracking.
+     * - LOW_RISK_PRODUCT_GROUP (0): No risk associated.
+     * <p>
+     * Thresholds:
+     * - ≥ 66 → HIGH risk (e.g., DDS missing + high-risk product + harbour full)
+     * - ≥ 33 → MEDIUM risk (e.g., DDS missing + medium-risk product)
+     * - < 33 → LOW risk
+     * - Unknown values result in UNKNOWN
+     */
 
     public RiskEngine(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
@@ -78,10 +79,6 @@ public class RiskEngine {
                 .mapToInt(RiskFlag::getPoints)
                 .sum();
 
-        System.out.println(order.getId());
-        System.out.println(totalScore);
-        activeFlags.forEach(System.out::println);
-
         if (totalScore >= 66) {
             new_assessment.setLevel(RiskLevel.HIGH);
         } else if (totalScore >= 33) {
@@ -92,10 +89,42 @@ public class RiskEngine {
             new_assessment.setLevel(RiskLevel.UNKNOWN);
         }
 
+        new_assessment.setActionCode(generateCustomActionCode(activeFlags));
         new_assessment.setScore(totalScore);
 
         // Replace old assessment with new one in order
         order.setRiskAssessment(new_assessment);
         orderRepository.save(order);
+    }
+
+    public String generateCustomActionCode(Set<RiskFlag> flags) {
+        StringBuilder sb = new StringBuilder("C");
+
+        // Handle product group letter
+        if (flags.contains(RiskFlag.HIGH_RISK_PRODUCT_GROUP)) {
+            sb.append("H");
+        } else if (flags.contains(RiskFlag.MEDIUM_RISK_PRODUCT_GROUP)) {
+            sb.append("M");
+        } else if (flags.contains(RiskFlag.LOW_RISK_PRODUCT_GROUP)) {
+            sb.append("L");
+        } else {
+            sb.append("X"); // Default if none set
+        }
+
+        // Append all other flag codes (non-product group, non-harbour)
+        flags.stream()
+                .filter(f -> !f.isProductGroupFlag() && !f.isHarbourFlag())
+                .map(RiskFlag::getCode)
+                .sorted()
+                .forEach(sb::append);
+
+        // Add harbour status at the end
+        if (flags.contains(RiskFlag.DESTINATION_HARBOUR_FULL)) {
+            sb.append("F");
+        } else if (flags.stream().anyMatch(RiskFlag::isHarbourFlag)) {
+            sb.append("A");
+        }
+
+        return sb.toString();
     }
 }

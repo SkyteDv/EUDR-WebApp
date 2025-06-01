@@ -1,5 +1,6 @@
 package com.projects.eudrwebapp.model;
 
+import com.projects.eudrwebapp.model.Enum.RiskFlag;
 import com.projects.eudrwebapp.model.Enum.RiskLevel;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -11,23 +12,6 @@ import java.util.Set;
 @Embeddable
 public class RiskAssessment {
 
-    public enum RiskFlag {
-        MISSING_DDS_ATTACHED(33),
-        DDS_DENIED(33),
-        HIGH_RISK_PRODUCT_GROUP(20),
-        DESTINATION_HABOUR_FULL(20);
-
-        private final int points;
-
-        RiskFlag(int points) {
-            this.points = points;
-        }
-
-        public int getPoints() {
-            return points;
-        }
-    }
-
     private int score;
     private String actionCode;
     private String hint;
@@ -35,7 +19,7 @@ public class RiskAssessment {
     @Enumerated(EnumType.STRING)
     private RiskLevel level;
 
-    private Set<RiskFlag> flags = EnumSet.noneOf(RiskFlag.class);  // <-- New field
+    private Set<RiskFlag> flags = EnumSet.noneOf(RiskFlag.class);
 
     // Constructor
     public RiskAssessment() {

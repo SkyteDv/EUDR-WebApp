@@ -8,63 +8,26 @@
     <link rel="stylesheet" href="/css/testing.css">
     <link rel="stylesheet" href="/css/non-specific/side-pop.css">
     <title>Testing</title>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/"
+          }
+        }
+    </script>
+    <script type="module" src="/javascript/testing.js"></script>
 </head>
 <body>
 
-    <button id="openFilterBtn">Open Filter</button>
+<div id="info">Click a shelf block to see its ID in the console</div>
 
-    <div id="backdrop"></div>
-    <div id="wrapper-side-popup">
-        <div id="side-popup-details">
-            <section id="side-popup-start">
-                <div id="popup-title-close">
-                    <button id="closeBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                             fill="#e8eaed">
-                            <path
-                                    d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
-                        </svg>
-                    </button>
-                    <span id="popup-title" class="popup-title">Filter your Deliveries</span>
-                </div>
-
-                <div id="filterDiv" class="global-filter">
-
-                    <label class="filter-label customer-field" style="flex: 6;">
-                        <input type="text" class="filter-text-input" placeholder="Customer" />
-                    </label>
-
-                    <div id="FilterForDDS" style="flex: 4;">
-                        <span>Only with DDS</span>
-                        <label class="switch filter-label">
-                            <input type="checkbox" id="ddsAvailable" name="ddsAvailable" />
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                    <div class="timespan">
-                        <p class="filterTitle">Between</p>
-                        <label class="filter-label">
-                            <input type="date" id="from" class="date-search-input" placeholder="From">
-                        </label>
-                        <p>-</p>
-                        <label class="filter-label">
-                            <input type="date" id="till" class="date-search-input" placeholder="Till">
-                        </label>
-                    </div>
-                </div>
-            </section>
-            <section id="side-popup-end">
-                <button id="resetBtn" class="clean-button">
-                    <span>Reset</span>
-                </button>
-                <button id="applyBtn" class="clean-button pulsate">
-                    <span>Apply</span>
-                </button>
-            </section>
-        </div>
-
-    </div>
-<script src="/javascript/testing.js"></script>
+<div id="productMenu" class="side-pop">
+    <h3>Product Info</h3>
+    <p id="productInfo">Details here...</p>
+    <button id="closeMenuBtn">Close</button>
+</div>
 
 </body>
 </html>
