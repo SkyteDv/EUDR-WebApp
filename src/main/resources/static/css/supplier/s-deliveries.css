@@ -160,17 +160,19 @@
 
 /* Style the table */
 .delivery-table {
-    overflow: hidden;
     width: 100%;
     border-collapse: collapse;
 }
 
 .delivery-table tbody {
-    overflow-y: scroll;
+    /* Remove overflow-y scroll to allow sticky headers to work */
 }
 
-/* Table headers with higher contrast */
+/* Table headers with higher contrast and sticky positioning */
 .delivery-table th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 2;
     background-color: #e0e0e0; /* Darker light gray background for header */
     color: #333; /* Dark text color */
     padding: 0.8rem;

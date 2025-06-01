@@ -48,18 +48,16 @@ main {
 
 .delivery-table {
     box-sizing: border-box;
-    overflow: hidden;
     width: 100%;
     border-collapse: collapse;
     margin: 0;
     padding: 0;
-
 }
 
 /* Table headers with higher contrast */
 .delivery-table th {
-    position: sticky;
-    top: 0;
+    position: sticky !important;
+    top: 0 !important;
     z-index: 2;
     background-color: #e0e0e0; /* Darker light gray background for header */
     color: #333; /* Dark text color */

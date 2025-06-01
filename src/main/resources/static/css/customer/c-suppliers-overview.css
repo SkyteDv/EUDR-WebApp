@@ -77,7 +77,7 @@ td.status-cell {
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    overflow-x: auto;
+    overflow: auto;
 }
 
 .delivery-table {
@@ -87,17 +87,20 @@ td.status-cell {
 }
 
 .delivery-table thead {
-    background-color: #e0e0e0;
+    /* Remove background color from thead since it's on th now */
 }
 
 .delivery-table th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 2;
+    background-color: #e0e0e0; /* Move background to th elements */
     padding: 1rem;
     text-align: left;
     font-weight: 600;
     color: #333;
     border-bottom: 1px solid #ddd;
     cursor: pointer;
-    position: relative;
 }
 
 .delivery-table td {

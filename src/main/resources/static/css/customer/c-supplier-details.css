@@ -69,10 +69,14 @@
 }
 
 .delivery-table thead {
-    background-color: #e0e0e0;
+    /* Remove background color from thead since it's on th now */
 }
 
 .delivery-table th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 2;
+    background-color: #e0e0e0; /* Move background to th elements */
     font-weight: 600;
     color: #333;
 }
