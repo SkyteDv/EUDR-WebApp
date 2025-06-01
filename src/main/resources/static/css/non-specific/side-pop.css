@@ -37,6 +37,8 @@
     display: flex;
     flex-direction: column;
     width: calc(100vw - 60px);
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 
@@ -75,6 +77,8 @@
 #side-popup-start {
     margin-top: 0.5rem;
     background-color: transparent;
+    position: relative;
+    z-index: 100;
 }
 
 #side-popup-start #popup-title-close {
@@ -100,6 +104,8 @@
     flex-direction: column;
     justify-content: space-evenly;
     gap: 1rem;
+    position: relative;
+    z-index: 100;
 }
 
 .data-card-holder .data-card {
@@ -108,6 +114,9 @@
     line-height: 30px;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .data-card-holder .data-card h4 {
     font-size: 1.2em;
@@ -140,6 +149,8 @@
     flex-direction: row;
     justify-content: space-evenly;
     gap: 1rem;
+    position: relative;
+    z-index: 100;
 }
 
 #side-popup-end button {
@@ -185,6 +196,8 @@
     flex-direction: row;
     justify-content: space-evenly;
     gap: 1rem;
+    position: relative;
+    z-index: 100;
 }
 
 #danger-mark-sent #dangerBtn {

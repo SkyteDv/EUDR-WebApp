@@ -15,6 +15,7 @@
 
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="/javascript/non-specific/account-menu.js" defer></script>
+    <script src="/javascript/customer/c-manage-order-actions.js" defer></script>
 </head>
 <body>
 
@@ -157,10 +158,103 @@
                        style="color: red; font-size: 1.2em; vertical-align: middle;" title="Denied"></i>
                 </p>
             </section>
+            
             <section id="riskManagementBody">
-                <p>Body</p>
+                <div id="riskActionsContainer">
+                    <!-- Danger Alerts -->
+                    <div id="dangerAlertsSection" th:if="${order.riskAssessment.hint.containsKey('danger')}">
+                        <div class="danger-alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="alert-content">
+                                <strong>Urgent Action Required</strong>
+                                <span th:text="${order.riskAssessment.hint.get('danger')}">Danger message</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons Section -->
+                    <div id="actionButtonsSection" th:if="${order.riskAssessment.actionCode != null and order.riskAssessment.actionCode != 'NONE'}">
+                        <h3 class="section-title">Required Actions</h3>
+                        <div class="action-buttons-container">
+                            
+                            <!-- Set Valid Product Group - for codes starting with CX (unknown product group) -->
+                            <div class="action-item" th:if="${#strings.startsWith(order.riskAssessment.actionCode, 'CX')}">
+                                <div class="action-info">
+                                    <h4><i class="fas fa-tags"></i> Product Classification</h4>
+                                    <p>This order needs a valid EUDR product group classification to proceed with compliance assessment.</p>
+                                </div>
+                                <button class="action-button primary" 
+                                        onclick="showProductGroupModal()"
+                                        data-action="set-product-group">
+                                    Classify Product
+                                </button>
+                            </div>
+                            
+                            <!-- Send to Storage - for codes containing '01' -->
+                            <div class="action-item" th:if="${#strings.contains(order.riskAssessment.actionCode, '01')}">
+                                <div class="action-info">
+                                    <h4><i class="fas fa-warehouse"></i> Storage Required</h4>
+                                    <p>Due diligence documentation is missing. Order should be sent to storage until resolved.</p>
+                                </div>
+                                <button class="action-button warning" 
+                                        onclick="document.getElementById('sendToStorageForm').submit()"
+                                        data-action="send-storage">
+                                    Send to Storage
+                                </button>
+                            </div>
+                            
+                            <!-- Contact Supplier - for codes containing '02' -->
+                            <div class="action-item" th:if="${#strings.contains(order.riskAssessment.actionCode, '02')}">
+                                <div class="action-info">
+                                    <h4><i class="fas fa-phone"></i> Supplier Communication</h4>
+                                    <p>Contact supplier regarding DDS documentation or compliance issues that need immediate attention.</p>
+                                </div>
+                                <a th:if="${order.supplier.email != null}" 
+                                   th:href="'mailto:' + ${order.supplier.email} + '?subject=' + ${T(java.net.URLEncoder).encode('Urgent: EUDR Compliance Issue - Order ' + order.erpReferenceNumber, 'UTF-8')} + '&body=' + ${T(java.net.URLEncoder).encode('Dear ' + order.supplier.username + ',\n\nWe need your immediate attention regarding order ' + order.erpReferenceNumber + '.\n\nThere is a compliance issue with the Due Diligence Statement (DDS) for this order that requires urgent resolution:\n\n• Order Reference: ' + order.erpReferenceNumber + '\n• Issue: Missing or invalid DDS documentation\n• Action Required: Please provide complete and valid DDS documentation\n\nTo maintain compliance with EU Deforestation Regulation (EUDR), we need:\n1. Updated DDS documentation with all required fields\n2. Confirmation of product origin and supply chain traceability\n3. Any supporting certificates or documentation\n\nPlease respond within 24 hours to avoid potential delays in order processing.\n\nBest regards,\nRisk Management Team', 'UTF-8')}"
+                                   class="action-button info" 
+                                   data-action="contact-supplier">
+                                    Contact Supplier
+                                </a>
+                                <span th:unless="${order.supplier.email != null}" 
+                                      class="action-button info disabled" 
+                                      title="Supplier email not available">
+                                    Contact Supplier (No Email)
+                                </span>
+                            </div>
+                            
+                            <!-- Try Rerouting - for codes ending with 'F' (harbour full) OR medium/high risk with '02' -->
+                            <div class="action-item" th:if="${#strings.endsWith(order.riskAssessment.actionCode, 'F') or 
+                                                            (#strings.contains(order.riskAssessment.actionCode, '02') and 
+                                                             (#strings.startsWith(order.riskAssessment.actionCode, 'CM') or 
+                                                              #strings.startsWith(order.riskAssessment.actionCode, 'CH')))}">
+                                <div class="action-info">
+                                    <h4><i class="fas fa-route"></i> Order Rerouting</h4>
+                                    <p th:if="${#strings.endsWith(order.riskAssessment.actionCode, 'F')}">Destination harbour is at capacity. Consider rerouting to an alternative port.</p>
+                                    <p th:unless="${#strings.endsWith(order.riskAssessment.actionCode, 'F')}">Due to compliance risks, consider rerouting this order to minimize potential issues.</p>
+                                </div>
+                                <button class="action-button danger" 
+                                        onclick="showReroutingModal()"
+                                        data-action="reroute">
+                                    Reroute Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- No Actions Required -->
+                    <div id="noActionsSection" th:if="${order.riskAssessment.actionCode == null or order.riskAssessment.actionCode == 'NONE'}">
+                        <div class="success-message">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="message-content">
+                                <h3>All Good!</h3>
+                                <p>No immediate actions are required for this order. Continue monitoring as normal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
+        
         <div id="orderDataWrapper">
             <div id="orderDataDiv">
                 <section id="orderDataHeadSection">
@@ -199,7 +293,402 @@
             </div>
         </div>
     </div>
+    
+    <!-- Modals for Actions -->
+    <div id="productGroupModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-tags"></i> Set Product Group</h3>
+                <span class="close" onclick="closeModal('productGroupModal')">&times;</span>
+            </div>
+            <form th:action="@{/customer/risk/update-product-group/{orderId}(orderId=${order.id})}" method="post">
+                <div class="modal-body">
+                    <p class="modal-description">Select the appropriate EUDR product category for this order:</p>
+                    <label for="productGroupSelect">Product Group:</label>
+                    <select id="productGroupSelect" name="productCategory" class="form-select" required>
+                        <option value="">Choose a product group...</option>
+                        <option value="CATTLE">Cattle</option>
+                        <option value="COFFEE">Coffee</option>
+                        <option value="COCOA">Cocoa</option>
+                        <option value="PALM_OIL">Palm Oil</option>
+                        <option value="SOY">Soy</option>
+                        <option value="WOOD">Wood</option>
+                        <option value="RUBBER">Rubber</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="action-button primary">Update Classification</button>
+                    <button type="button" class="action-button secondary" onclick="closeModal('productGroupModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="reroutingModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-route"></i> Reroute Order</h3>
+                <span class="close" onclick="closeModal('reroutingModal')">&times;</span>
+            </div>
+            <form th:action="@{/customer/risk/reroute-order/{orderId}(orderId=${order.id})}" method="post">
+                <div class="modal-body">
+                    <p class="modal-description">Select a new destination and provide reasoning for the rerouting:</p>
+                    <label for="newDestination">New Destination Harbor:</label>
+                    <select id="newDestination" name="newDestination" class="form-select" required>
+                        <option value="">Select new destination...</option>
+                        <option value="Rotterdam">Rotterdam</option>
+                        <option value="Hamburg">Hamburg</option>
+                        <option value="Antwerp">Antwerp</option>
+                        <option value="Le Havre">Le Havre</option>
+                        <option value="Felixstowe">Felixstowe</option>
+                    </select>
+                    <div class="form-group">
+                        <label for="rerouteReason">Reason for rerouting:</label>
+                        <textarea id="rerouteReason" name="rerouteReason" rows="3" placeholder="Enter detailed reason for rerouting..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="action-button danger">Confirm Rerouting</button>
+                    <button type="button" class="action-button secondary" onclick="closeModal('reroutingModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Send to Storage Form (Hidden) -->
+    <form id="sendToStorageForm" th:action="@{/customer/risk/send-to-storage/{orderId}(orderId=${order.id})}" method="post" style="display: none;">
+    </form>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: #28a745; color: white; padding: 1rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <i class="fas fa-check-circle"></i>
+        <span th:text="${successMessage}"></span>
+    </div>
+    
+    <div th:if="${errorMessage}" class="alert alert-error" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: #dc3545; color: white; padding: 1rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span th:text="${errorMessage}"></span>
+    </div>
 </main>
+
+<style>
+/* Improved Risk Management Styles */
+#riskActionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    color: var(--text-clr);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.danger-alert {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border: 1px solid #ffc107;
+    border-left: 4px solid #f39c12;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.1);
+}
+
+.danger-alert i {
+    color: #f39c12;
+    font-size: 1.5rem;
+    min-width: 1.5rem;
+}
+
+.alert-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.alert-content strong {
+    color: #d68910;
+    font-size: 1.1rem;
+}
+
+.action-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.action-item {
+    background-color: var(--base-clr);
+    border: 1px solid var(--base-acc-medium-clr);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.action-item:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--button-bg-color);
+}
+
+.action-info {
+    flex: 1;
+}
+
+.action-info h4 {
+    color: var(--text-clr);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.action-info p {
+    color: var(--text-acc-clr);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.action-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+    white-space: nowrap;
+}
+
+.action-button.primary {
+    background-color: var(--button-bg-color);
+    color: white;
+}
+
+.action-button.primary:hover {
+    background-color: var(--button-hover-bg-clr);
+    transform: translateY(-2px);
+}
+
+.action-button.warning {
+    background-color: #ff9800;
+    color: white;
+}
+
+.action-button.warning:hover {
+    background-color: #f57c00;
+    transform: translateY(-2px);
+}
+
+.action-button.info {
+    background-color: #2196F3;
+    color: white;
+}
+
+.action-button.info:hover {
+    background-color: #1976D2;
+    transform: translateY(-2px);
+}
+
+.action-button.danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.action-button.danger:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+}
+
+.action-button.secondary {
+    background-color: var(--base-acc-medium-clr);
+    color: var(--text-clr);
+}
+
+.action-button.secondary:hover {
+    background-color: var(--base-acc-dark-clr);
+}
+
+.success-message {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border: 1px solid #28a745;
+    border-left: 4px solid #28a745;
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.success-message i {
+    color: #28a745;
+    font-size: 2rem;
+    min-width: 2rem;
+}
+
+.message-content h3 {
+    color: #1e7e34;
+    margin-bottom: 0.5rem;
+}
+
+.message-content p {
+    color: #155724;
+    margin: 0;
+}
+
+/* Modal Improvements */
+.modal-content {
+    max-width: 550px;
+    border-radius: 16px;
+}
+
+.modal-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modal-description {
+    background-color: var(--base-acc-clr);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    color: var(--text-acc-clr);
+}
+
+.form-group {
+    margin-top: 1rem;
+}
+
+.form-select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--base-acc-medium-clr);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--base-clr);
+    transition: all 0.3s ease;
+}
+
+.form-select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--button-bg-color);
+    box-shadow: 0 0 0 3px rgba(126, 117, 177, 0.1);
+}
+
+.modal-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+/* Toast Improvements */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    min-width: 300px;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    animation: toastSlideIn 0.4s ease-out;
+}
+
+/* Alert Messages */
+.alert {
+    transition: opacity 0.3s ease;
+}
+
+.alert i {
+    margin-right: 0.5rem;
+}
+
+/* Disabled Button State */
+.action-button.disabled {
+    background-color: #6c757d !important;
+    color: #ffffff;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.action-button.disabled:hover {
+    background-color: #6c757d !important;
+    transform: none !important;
+}
+
+/* Link styled as button */
+a.action-button {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+a.action-button:hover {
+    text-decoration: none;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toast-icon {
+    font-size: 1.25rem;
+}
+
+.toast-message {
+    font-weight: 500;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .action-item {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .action-button {
+        min-width: 100%;
+    }
+    
+    .modal-content {
+        margin: 5% auto;
+        width: 95%;
+    }
+    
+    .success-message, .danger-alert {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
 
 </body>
 </html>
