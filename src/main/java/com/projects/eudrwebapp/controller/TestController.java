@@ -13,4 +13,14 @@ public class TestController {
         return "test";
     }
 
+    @GetMapping("/1")
+    public String test1() {
+        return "test";
+    }
+
+    @GetMapping("/2")
+    public String test2() {
+        return "test2";
+    }
+
 }

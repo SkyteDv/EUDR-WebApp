@@ -5,7 +5,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xaaaaaa);
 
-// Crosshair creation - for aiming
+// Crosshair creation
 const crosshair = document.createElement('div');
 crosshair.style.position = 'fixed';
 crosshair.style.top = '50%';
@@ -21,14 +21,15 @@ crosshair.style.borderTop = '2px solid black';
 document.body.appendChild(crosshair);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-camera.position.set(0, 2, 0); // Player eye height inside warehouse
+camera.position.set(0, 2, 0);
 
 const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-document.body.appendChild(renderer.domElement);
+const threeContainer = document.getElementById('threeContainer');
+threeContainer.appendChild(renderer.domElement);
 
-// --- Floor setup ---
+// --- Floor ---
 const floorGeo = new THREE.PlaneGeometry(50, 50);
 const floorMat = new THREE.MeshStandardMaterial({color: 0x666666});
 const floor = new THREE.Mesh(floorGeo, floorMat);
@@ -42,32 +43,30 @@ const wallThickness = 0.5;
 const wallHeight = 10;
 const roomSize = 50;
 
-// Front wall
 const frontWall = new THREE.Mesh(new THREE.BoxGeometry(roomSize, wallHeight, wallThickness), wallMat);
 frontWall.position.set(0, wallHeight/2, -roomSize/2);
 frontWall.receiveShadow = true;
 scene.add(frontWall);
-// Back wall
+
 const backWall = frontWall.clone();
 backWall.position.set(0, wallHeight/2, roomSize/2);
 scene.add(backWall);
-// Left wall
+
 const leftWall = new THREE.Mesh(new THREE.BoxGeometry(wallThickness, wallHeight, roomSize), wallMat);
 leftWall.position.set(-roomSize/2, wallHeight/2, 0);
 scene.add(leftWall);
-// Right wall
+
 const rightWall = leftWall.clone();
 rightWall.position.set(roomSize/2, wallHeight/2, 0);
 scene.add(rightWall);
 
-// --- Shelf creation parameters ---
+// --- Shelves ---
 const shelfWidth = 2;
 const shelfDepth = 1;
 const shelfHeight = 6;
 const shelfLevels = 3;
-const shelfSpacing = 4;  // space between shelves
+const shelfSpacing = 4;
 
-// Create a shelf unit with multiple levels
 function createShelf(x, z) {
     const group = new THREE.Group();
 
@@ -76,7 +75,7 @@ function createShelf(x, z) {
     const poleMat = new THREE.MeshStandardMaterial({color: 0x7b4d2b});
     const plankMat = new THREE.MeshStandardMaterial({color: 0xdeb887});
 
-    // Four vertical poles at shelf corners
+    // Four vertical poles
     for(let i=0; i<4; i++){
         const pole = new THREE.Mesh(poleGeo, poleMat);
         pole.castShadow = true;
@@ -89,10 +88,10 @@ function createShelf(x, z) {
         group.add(pole);
     }
 
-    // Horizontal planks (levels)
+    // Horizontal planks
     for(let level=0; level<shelfLevels; level++){
         const plank = new THREE.Mesh(plankGeo, plankMat);
-        plank.position.set(0, 0.3 + level * (shelfHeight/(shelfLevels)), 0);
+        plank.position.set(0, 0.3 + level * (shelfHeight/shelfLevels), 0);
         plank.castShadow = true;
         plank.receiveShadow = true;
         group.add(plank);
@@ -108,7 +107,6 @@ function createShelf(x, z) {
     return group;
 }
 
-// Create multiple shelves in rows and columns
 const shelvesGroup = new THREE.Group();
 const rows = 3;
 const cols = 4;
@@ -123,24 +121,21 @@ for(let r=0; r<rows; r++){
 }
 scene.add(shelvesGroup);
 
-// --- Products on shelves ---
+// --- Products ---
 const productColors = [0xff4444, 0x44ff44, 0x4444ff, 0xffcc44];
 const productSize = 0.3;
 
-function createProduct(x,y,z,color){
+function createProduct(x,y,z,color,data){
     const geo = new THREE.BoxGeometry(productSize, productSize, productSize);
     const mat = new THREE.MeshStandardMaterial({color});
     const mesh = new THREE.Mesh(geo, mat);
     mesh.castShadow = true;
     mesh.position.set(x,y,z);
-
-    // Add custom property to identify products later
     mesh.userData.isProduct = true;
-
+    mesh.userData.data = data;
     return mesh;
 }
 
-// Add products randomly on shelves
 shelvesGroup.children.forEach(shelf => {
     for(let level=0; level<shelfLevels; level++){
         const productsCount = Math.floor(Math.random()*3) + 1;
@@ -172,97 +167,105 @@ dirLight.shadow.camera.top = 20;
 dirLight.shadow.camera.bottom = -20;
 scene.add(dirLight);
 
-// --- Controls setup ---
+// --- Controls ---
 const controls = new PointerLockControls(camera, renderer.domElement);
+document.body.addEventListener('click', () => controls.lock());
 
-document.body.addEventListener('click', () => {
-    controls.lock();
-}, false);
-
-// Movement variables and handlers
+// Movement variables
 const move = { forward:false, backward:false, left:false, right:false };
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
 
 const onKeyDown = (e) => {
     switch(e.code){
-        case 'ArrowUp':
-        case 'KeyW': move.forward = true; break;
-        case 'ArrowDown':
-        case 'KeyS': move.backward = true; break;
-        case 'ArrowLeft':
-        case 'KeyA': move.left = true; break;
-        case 'ArrowRight':
-        case 'KeyD': move.right = true; break;
+        case 'ArrowUp': case 'KeyW': move.forward = true; break;
+        case 'ArrowDown': case 'KeyS': move.backward = true; break;
+        case 'ArrowLeft': case 'KeyA': move.left = true; break;
+        case 'ArrowRight': case 'KeyD': move.right = true; break;
     }
 };
+
 const onKeyUp = (e) => {
     switch(e.code){
-        case 'ArrowUp':
-        case 'KeyW': move.forward = false; break;
-        case 'ArrowDown':
-        case 'KeyS': move.backward = false; break;
-        case 'ArrowLeft':
-        case 'KeyA': move.left = false; break;
-        case 'ArrowRight':
-        case 'KeyD': move.right = false; break;
+        case 'ArrowUp': case 'KeyW': move.forward = false; break;
+        case 'ArrowDown': case 'KeyS': move.backward = false; break;
+        case 'ArrowLeft': case 'KeyA': move.left = false; break;
+        case 'ArrowRight': case 'KeyD': move.right = false; break;
     }
 };
 
 document.addEventListener('keydown', onKeyDown);
 document.addEventListener('keyup', onKeyUp);
 
-// --- Raycaster and mouse vector for clicking products ---
+// --- Collision System ---
+const collidableObjects = [frontWall, backWall, leftWall, rightWall];
+const playerCollider = {
+    radius: 0.5,
+    height: 1.8,
+    position: new THREE.Vector3()
+};
+
+// Add shelf planks to collidable objects
+shelvesGroup.traverse(child => {
+    if (child.isMesh && child.geometry.type === 'BoxGeometry') {
+        collidableObjects.push(child);
+    }
+});
+
+function updatePlayerCollider() {
+    playerCollider.position.copy(camera.position);
+    playerCollider.position.y -= playerCollider.height / 2;
+}
+
+function checkCollisions(deltaX, deltaZ) {
+    updatePlayerCollider();
+    const testPos = playerCollider.position.clone();
+    testPos.x += deltaX;
+    testPos.z += deltaZ;
+
+    for (const obj of collidableObjects) {
+        if (!obj.geometry.boundingBox) obj.geometry.computeBoundingBox();
+        const objBox = new THREE.Box3().copy(obj.geometry.boundingBox);
+        objBox.applyMatrix4(obj.matrixWorld);
+
+        const dx = Math.max(objBox.min.x, Math.min(testPos.x, objBox.max.x));
+        const dz = Math.max(objBox.min.z, Math.min(testPos.z, objBox.max.z));
+
+        const distance = Math.sqrt((dx - testPos.x) ** 2 + (dz - testPos.z) ** 2);
+        if (distance < playerCollider.radius) return true;
+    }
+    return false;
+}
+
+// --- Raycaster ---
 const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2(); // Not used for mouse position, but for center screen raycasting
+const mouse = new THREE.Vector2();
+let count = 0;
 
-// Log for changes and intentions - helps track the code's evolution and purpose
-console.log('[Init] Added raycaster for detecting product clicks');
-
-// Function to open product menu (assuming you have an existing HTML menu with id 'productMenu')
 function openProductMenu(product){
-    // Log which product is clicked (can be extended to show product info)
-    console.log(`[Product Clicked] Product at position (${product.position.x.toFixed(2)}, ${product.position.y.toFixed(2)}, ${product.position.z.toFixed(2)}) clicked.`);
-
+    count++;
+    console.log(`Product clicked at (${product.position.x.toFixed(2)}, ${product.position.y.toFixed(2)}, ${product.position.z.toFixed(2)})`);
     const menu = document.getElementById('productMenu');
     if(menu){
         menu.style.display = 'block';
-        // Optionally populate menu content based on product - extend here as needed
-    } else {
-        console.warn('[Menu] No HTML element with id "productMenu" found.');
+        document.getElementById('productInfo').textContent = count.toString();
     }
 }
 
-// Detect product click using pointer lock controls and mouse click event
 document.addEventListener('mousedown', (event) => {
-    // Only trigger when controls are locked (i.e. in game mode)
     if(!controls.isLocked) return;
-
-    // Raycasting from camera center (crosshair position)
-    // Normalized device coordinates for center screen: x=0, y=0
-    mouse.x = 0;
-    mouse.y = 0;
-
+    mouse.set(0, 0);
     raycaster.setFromCamera(mouse, camera);
-
-    // Intersect all objects in the scene - specifically products
     const intersects = raycaster.intersectObjects(shelvesGroup.children.flatMap(shelf => shelf.children), true);
+    const productIntersect = intersects.find(i => i.object.userData.isProduct);
+    if(productIntersect) openProductMenu(productIntersect.object);
+});
 
-    if(intersects.length > 0){
-        // Find first intersected product by checking userData flag
-        const productIntersect = intersects.find(i => i.object.userData.isProduct);
-        if(productIntersect){
-            openProductMenu(productIntersect.object);
-        }
-    }
-}, false);
-
-// --- Animation loop ---
+// --- Animation ---
 const clock = new THREE.Clock();
 
-function animate(){
+function animate() {
     requestAnimationFrame(animate);
-
     const delta = clock.getDelta();
     const speed = 40;
 
@@ -277,8 +280,26 @@ function animate(){
     if (move.forward || move.backward) velocity.z -= direction.z * speed * delta;
     if (move.left || move.right) velocity.x -= direction.x * speed * delta;
 
-    controls.moveRight(-velocity.x * delta);
-    controls.moveForward(-velocity.z * delta);
+    // Get camera-relative movement vectors
+    const forward = new THREE.Vector3();
+    camera.getWorldDirection(forward);
+    forward.y = 0;
+    forward.normalize();
+
+    const right = new THREE.Vector3();
+    right.crossVectors(new THREE.Vector3(0, 1, 0), forward).normalize();
+
+    // PROPERLY CALCULATED MOVEMENT VECTORS (FINALLY CORRECT)
+    const moveForward = forward.clone().multiplyScalar(-velocity.z * delta); // Forward/backward
+    const moveRight = right.clone().multiplyScalar(velocity.x * delta);     // Left/right
+
+    // Apply movement with collision checks
+    if (!checkCollisions(moveRight.x, moveRight.z)) {
+        camera.position.add(moveRight);
+    }
+    if (!checkCollisions(moveForward.x, moveForward.z)) {
+        camera.position.add(moveForward);
+    }
 
     renderer.render(scene, camera);
 }
