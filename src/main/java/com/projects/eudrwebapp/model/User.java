@@ -1,21 +1,12 @@
 package com.projects.eudrwebapp.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.projects.eudrwebapp.model.Enum.Country;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -34,6 +25,17 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Country location;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_harbour",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "harbour_id")
+    )
+    private Set<Harbour> harbours = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<StorageUnit> storageUnits = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_associate", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
@@ -109,6 +111,22 @@ public class User {
 
     public void setLocation(Country location) {
         this.location = location;
+    }
+
+    public List<StorageUnit> getStorageUnits() {
+        return storageUnits;
+    }
+
+    public void setStorageUnits(List<StorageUnit> storageUnits) {
+        this.storageUnits = storageUnits;
+    }
+
+    public Set<Harbour> getHarbours() {
+        return harbours;
+    }
+
+    public void setHarbours(Set<Harbour> harbours) {
+        this.harbours = harbours;
     }
 
     @Override

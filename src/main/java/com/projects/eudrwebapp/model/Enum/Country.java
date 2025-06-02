@@ -194,7 +194,8 @@ public enum Country {
     VIETNAM("VN"),
     YEMEN("YE"),
     ZAMBIA("ZM"),
-    ZIMBABWE("ZW");
+    ZIMBABWE("ZW"),
+    UNKNOWN("UNKNOWN");
 
     private final String isoCode;
 

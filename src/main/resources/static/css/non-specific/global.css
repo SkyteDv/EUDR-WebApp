@@ -14,6 +14,8 @@
 
     --field-hover-clr: #E9E7FFFF;
 
+    --card-bg-clr: #c8c0e8;
+
     --div-light-purple-clr: #eeebfa;
     --div-acc-purple-clr: #ada4d6;
 
@@ -60,7 +62,12 @@ body {
 }
 
 .clean-button .material-icons {
-    font-size: 1.3rem;  /* or whatever size fits */
+    font-size: 1.3rem;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.clean-button svg {
     line-height: 1;
     vertical-align: middle;
 }

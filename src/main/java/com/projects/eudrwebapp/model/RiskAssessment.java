@@ -15,7 +15,6 @@ public class RiskAssessment {
 
     private int score;
     private String actionCode;
-    private int actionGroup;
 
     @ElementCollection
     @MapKeyColumn(name = "hint_key")

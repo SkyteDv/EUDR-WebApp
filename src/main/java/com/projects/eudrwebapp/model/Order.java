@@ -16,14 +16,15 @@ public class Order {
     private String productCategory;
     private String productName;
     private String dimensions;
-    private String destination;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "harbour_id")
+    private Harbour destination;
     private LocalDate orderDate;
     private LocalDate estimatedDeliveryDate;
     private String ddsReferenceNumber;
     private String responsible_party;
 
-    @Deprecated
-    private RiskLevel riskLevel;
     @Embedded
     private RiskAssessment riskAssessment;
 
@@ -46,7 +47,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(String erpReferenceNumber,String productCategory, String productName, String dimensions, String destination,
+    public Order(String erpReferenceNumber,String productCategory, String productName, String dimensions, Harbour destination,
                  LocalDate orderDate, LocalDate estimatedDeliveryDate, String ddsReferenceNumber,
                  boolean ddsOnDeliveryNote, OrderStatus status,
                  User supplier, User customer, String responsible_party, RiskAssessment riskAssessment) {
@@ -119,11 +120,11 @@ public class Order {
         this.dimensions = dimensions;
     }
 
-    public String getDestination() {
+    public Harbour getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Harbour destination) {
         this.destination = destination;
     }
 

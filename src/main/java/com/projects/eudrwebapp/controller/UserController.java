@@ -57,7 +57,7 @@ public class UserController {
                 Long userId = user.getId();
                 session.setAttribute("userId", userId);
                 System.out.println("Remembered User Id: " + userId);
-                if (userType.equals("CUSTOMER")) {
+                if (userType.equalsIgnoreCase("CUSTOMER")) {
                     return "redirect:/customer/dashboard";
                 } else if (userType.equalsIgnoreCase("SUPPLIER")) {
                     return "redirect:/supplier/dashboard";
@@ -104,9 +104,9 @@ public class UserController {
                         response.addCookie(cookie);
                     }
 
-                    if (userType.equalsIgnoreCase("customer")) {
+                    if (userType.equalsIgnoreCase("CUSTOMER")) {
                         return "redirect:/customer/dashboard";
-                    } else if(userType.equalsIgnoreCase("supplier")) {
+                    } else if(userType.equalsIgnoreCase("SUPPLIER")) {
                         return "redirect:/supplier/dashboard";
                     } else {
                         return "redirect:/";

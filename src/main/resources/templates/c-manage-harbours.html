@@ -2,15 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Risk Overview</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="/css/non-specific/global.css">
-    <link rel="stylesheet" href="/css/non-specific/header.css">
-    <link rel="stylesheet" href="/css/customer/c-risk-overview.css">
-    <link rel="stylesheet" href="/css/customer/account-menu.css">
     <link rel="stylesheet" href="/css/non-specific/sidebar.css">
+    <link rel="stylesheet" href="/css/non-specific/header.css">
+
+    <link rel="stylesheet" href="/css/customer/harbour/c-manage-harbours.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="/javascript/non-specific/account-menu.js" defer></script>
+    <script src="/javascript/customer/c-harbour/c-manage-harbours.js" defer></script>
+    <script type="module" src="/javascript/customer/c-harbour/c-generate-harbour-cards.js" defer></script>
+    <script type="module" src="/javascript/non-specific/refreshDeliveries.js" defer></script>
+
+    <title>Harbour Overview</title>
 </head>
 <body>
 
@@ -103,7 +113,7 @@
                 <span>Suppliers</span>
             </a>
         </li>
-        <li class="active">
+        <li>
             <a href="/customer/risk/overview">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                      fill="#e3e3e3">
@@ -113,8 +123,8 @@
                 <span>Mitigation</span>
             </a>
         </li>
-        <li>
-            <a href="/customer/harbour/overview">
+        <li class="active">
+            <a href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                      fill="#e3e3e3">
                     <path
@@ -127,7 +137,26 @@
 </aside>
 
 <main>
-    <div class="content"></div>
+    <div id="content-container">
+        <div id="content-header">
+            <h1>Harbour Overview</h1>
+            <div id="content-header-actions">
+                <label>
+                    <input type="text" class="search-input"
+                           placeholder="Search Harbours..." id="searchInput">
+                </label>
+                <button class="clean-button" id="toggle-view-btn">
+                    <span class="material-icons" id="toggle-icon">apps</span>
+                </button>
+                <button id="refreshDeliveriesButton" class="clean-button">
+                    <i class="fas fa-rotate-right"></i>
+                </button>
+            </div>
+        </div>
+        <div id="harbour-card-container">
+
+        </div>
+    </div>
 </main>
 
 </body>

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.Normalizer;
 
 @Service
 public class HelperService {
@@ -33,5 +34,6 @@ public class HelperService {
         double scale = Math.pow(10, decimalPlaces);
         return Math.round(value * 100 * scale) / scale; // multiply by 100 inside
     }
+
 
 }

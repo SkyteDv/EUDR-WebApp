@@ -36,7 +36,6 @@ public class DataService {
         System.out.println("User found, fetching orders where user is customer...");
         // Fetch orders where the customer_id equals userId
         List<Order> orders = orderRepository.findByCustomerId(Long.parseLong(userId));
-        System.out.println("Number of orders found: " + orders.size());
 
         // Map to count deliveries per supplier country
         Map<String, Long> deliveriesPerCountry = orders.stream()
@@ -48,11 +47,7 @@ public class DataService {
                         Collectors.counting()
                 ));
 
-        deliveriesPerCountry.forEach((country, count) ->
-                System.out.println("Country: " + country + " | Deliveries: " + count)
-        );
 
-        System.out.println("Preparing CountryDeliveryDTO list for return.");
         return deliveriesPerCountry.entrySet().stream()
                 .map(entry -> new CountryDeliveryDTO(entry.getKey(), entry.getValue().intValue()))
                 .collect(Collectors.toList());
@@ -124,8 +119,6 @@ public class DataService {
                 data.put("dds.greenRate", String.valueOf(helperService.roundToPercentage(ddsGreenRate(ordersFromThisCountry), 1))); // Placeholder
                 data.put("dds.attachRate", String.valueOf(helperService.roundToPercentage(ddsAttachRate(ordersFromThisCountry), 1))); // Placeholder
 
-                System.out.println("Data for Country: " + country);
-                data.values().forEach(System.out::println);
                 countryDataMap.put(country, data);
             });
         }
@@ -209,12 +202,9 @@ public class DataService {
                 .count();
 
         if (shipped == 0) {
-            System.out.println("No shipped orders found.");
             return 0.0;
         }
-        if (attached_and_shipped == 0) {
-            System.out.println("No shipped orders had DDS attached.");
-        }
+        if (attached_and_shipped == 0) {}
         return attached_and_shipped / shipped;
     }
 

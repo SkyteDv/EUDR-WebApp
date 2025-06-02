@@ -18,7 +18,6 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    //Overwritten Default (its the exact same)
     Optional<Order> findById(Long orderId);
 
     List<Order> findByCustomerId(Long customerId);
@@ -33,9 +32,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByStatus(OrderStatus orderStatus);
 
-    List<Order> findByRiskLevelAndNotifiedFalse(RiskLevel riskLevel);
+    List<Order> findByRiskAssessment_LevelAndNotifiedFalse(RiskLevel level);
 
-    @Query("SELECT o FROM Order o JOIN FETCH o.customer WHERE o.riskLevel IN :levels AND o.notified = false")
+    @Query("SELECT o FROM Order o JOIN FETCH o.customer WHERE o.riskAssessment.level IN :levels AND o.notified = false")
     List<Order> findByRiskLevelsAndNotifiedFalseWithAssociations(@Param("levels") List<RiskLevel> levels);
 
     @Transactional

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projects.eudrwebapp.model.*;
 import com.projects.eudrwebapp.model.DTO.SupplierStatsDTO;
+import com.projects.eudrwebapp.model.Enum.Country;
 import com.projects.eudrwebapp.model.Enum.OrderStatus;
 import com.projects.eudrwebapp.model.Enum.RiskLevel;
+import com.projects.eudrwebapp.repository.HarbourRepository;
 import com.projects.eudrwebapp.repository.ImportStatusRepository;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
+    private final HarbourRepository harbourRepository;
     private final ObjectMapper objectMapper;
     private final ImportStatusRepository importStatusRepository;;
     private final RiskEngine riskEngine;
@@ -36,9 +40,15 @@ public class OrderService {
     // Constructor injection (no need for @Autowired, Spring will inject this
     // automatically)
     @Autowired
-    public OrderService(OrderRepository orderRepository, UserRepository userRepository, ObjectMapper objectMapper, ImportStatusRepository importStatusRepository, RiskEngine riskEngine) {
+    public OrderService(OrderRepository orderRepository,
+                        UserRepository userRepository,
+                        HarbourRepository harbourRepository,
+                        ObjectMapper objectMapper,
+                        ImportStatusRepository importStatusRepository,
+                        RiskEngine riskEngine) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
+        this.harbourRepository = harbourRepository;
         this.objectMapper = objectMapper;
         this.importStatusRepository = importStatusRepository;
         this.riskEngine = riskEngine;
@@ -102,12 +112,29 @@ public class OrderService {
                 skippedAssociationCreation++;
             }
 
+            String rawHarbourName = (String) orderData.get("destination");
+            String normalizedHarbourName = normalize(rawHarbourName);
+            Harbour destinationHarbour = harbourRepository.findByName(normalizedHarbourName)
+                    .orElseGet(() -> {
+                        // Optional: create or fetch an "Unknown" harbour as fallback
+                        return harbourRepository.findByName("Unknown")
+                                .orElseGet(() -> {
+                                    Harbour unknownHarbour = new Harbour("Unknown", Country.UNKNOWN);
+                                    return harbourRepository.save(unknownHarbour);
+                                });
+                    });
+
+            if (!customerUser.getHarbours().contains(destinationHarbour)) {
+                customerUser.getHarbours().add(destinationHarbour);
+                userRepository.save(customerUser);
+            }
+
             Order order = new Order(
                     erpReferenceNumber,
                     (String) orderData.get("productCategory"),
                     (String) orderData.get("productName"),
                     (String) orderData.get("dimensions"),
-                    (String) orderData.get("destination"),
+                    destinationHarbour,
                     LocalDate.parse((String) orderData.get("orderDate")),
                     LocalDate.parse((String) orderData.get("estimatedDeliveryDate")),
                     (String) orderData.get("ddsReferenceNumber"),
@@ -212,6 +239,11 @@ public class OrderService {
                 green,
                 red,
                 yellow);
+    }
+
+    public static String normalize(String input) {
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        return normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
 }

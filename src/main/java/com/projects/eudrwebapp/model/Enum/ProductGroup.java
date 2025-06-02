@@ -4,7 +4,7 @@ public enum ProductGroup {
     WOOD("WOOD", RiskLevel.LOW),
     COCOA("COCOA", RiskLevel.MEDIUM),
     CATTLE("CATTLE", RiskLevel.HIGH),
-    PALM_OIL("PALM OIL", RiskLevel.MEDIUM),
+    PALM_OIL("PALM_OIL", RiskLevel.MEDIUM),
     SOY("SOY", RiskLevel.LOW),
     COFFEE("COFFEE", RiskLevel.MEDIUM),
     RUBBER("RUBBER", RiskLevel.LOW);

@@ -813,3 +813,42 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-06-02 00:00:26.874519+02:00 jdbc[246]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_storage_unit" already exists; SQL statement:
+create global temporary table "HTE_storage_unit"("capacity" integer, rn_ integer not null, "harbour_id" bigint, "id" bigint, "user_id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:00:26.877522+02:00 jdbc[246]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_harbour" already exists; SQL statement:
+create global temporary table "HTE_harbour"(rn_ integer not null, "id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:02:20.300972+02:00 jdbc[256]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_storage_unit" already exists; SQL statement:
+create global temporary table "HTE_storage_unit"("capacity" integer, rn_ integer not null, "harbour_id" bigint, "id" bigint, "user_id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:02:20.301473+02:00 jdbc[256]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_harbour" already exists; SQL statement:
+create global temporary table "HTE_harbour"(rn_ integer not null, "id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:02:28.031107+02:00 jdbc[266]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_storage_unit" already exists; SQL statement:
+create global temporary table "HTE_storage_unit"("capacity" integer, rn_ integer not null, "harbour_id" bigint, "id" bigint, "user_id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:02:28.031608+02:00 jdbc[266]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_harbour" already exists; SQL statement:
+create global temporary table "HTE_harbour"(rn_ integer not null, "id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:02:41.401935+02:00 jdbc[276]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_storage_unit" already exists; SQL statement:
+create global temporary table "HTE_storage_unit"("capacity" integer, rn_ integer not null, "harbour_id" bigint, "id" bigint, "user_id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:02:41.402936+02:00 jdbc[276]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_harbour" already exists; SQL statement:
+create global temporary table "HTE_harbour"(rn_ integer not null, "id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:02:53.132591+02:00 jdbc[286]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_storage_unit" already exists; SQL statement:
+create global temporary table "HTE_storage_unit"("capacity" integer, rn_ integer not null, "harbour_id" bigint, "id" bigint, "user_id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:02:53.133091+02:00 jdbc[286]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_harbour" already exists; SQL statement:
+create global temporary table "HTE_harbour"(rn_ integer not null, "id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:03:27.005187+02:00 jdbc[296]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_storage_unit" already exists; SQL statement:
+create global temporary table "HTE_storage_unit"("capacity" integer, rn_ integer not null, "harbour_id" bigint, "id" bigint, "user_id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 00:03:27.006187+02:00 jdbc[296]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_harbour" already exists; SQL statement:
+create global temporary table "HTE_harbour"(rn_ integer not null, "id" bigint, "name" varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-06-02 01:23:56.026174+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HARBOUR" not found (candidates are: "harbour"); SQL statement:
+SELECT * FROM harbour [42103-232]

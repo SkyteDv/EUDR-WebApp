@@ -25,7 +25,6 @@ public class RiskManagementService {
     @Scheduled(fixedRate = 10000) // every 10 sec = 10.000.
     @Transactional
     public void checkHighRiskOrders() {
-        System.out.println("Checking high risk orders for Mail Warning sent");
         List<RiskLevel> highRiskLevels = List.of(RiskLevel.MEDIUM, RiskLevel.HIGH);
         List<Order> highRiskOrders = orderRepository.findByRiskLevelsAndNotifiedFalseWithAssociations(highRiskLevels);
 
@@ -59,7 +58,7 @@ public class RiskManagementService {
                 Thread.currentThread().interrupt();
                 System.err.println("Sleep interrupted");
             }
-            System.out.println("Sent email to: " + order.getResponsible_party() + " for " + order.getCustomer().getUsername() + "on Order: " + order.getErpReferenceNumber());
+            System.out.println("Tried to sent email to: " + order.getResponsible_party() + " for " + order.getCustomer().getUsername() + "on Order: " + order.getErpReferenceNumber());
             order.setNotified(true);
         }
         orderRepository.saveAll(highRiskOrders); // batch save
@@ -70,7 +69,6 @@ public class RiskManagementService {
     public void updateOrderRiskLevels() {
         List<Order> allOrders = orderRepository.findAll();
         for (Order order : allOrders) {
-            System.out.println("Test");
             riskEngine.assessOrderRisk(order);
         }
     }

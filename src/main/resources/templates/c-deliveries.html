@@ -124,7 +124,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/customer/harbour/overview">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e3e3e3">
                         <path
@@ -239,7 +239,7 @@
                              data-ddsStatus=${order.ddsStatus},
                              data-ddsReferenceNumber=${order.ddsReferenceNumber},
                              data-erpReferenceNumber=${order.erpReferenceNumber},
-                             data-destination=${order.destination},
+                             data-destination=${order.destination.getName()},
                              data-status=${order.status},
                              data-supplier=${order.supplier.username},
                              data-supplierlocation=${order.supplier.location},
@@ -276,7 +276,7 @@
                         <span th:unless="${#strings.isEmpty(order.ddsReferenceNumber)}" th:text="${order.ddsReferenceNumber}"></span>
                     </td>
                     <td th:text="${order.erpReferenceNumber}"></td>
-                    <td th:text="${order.destination}"></td>
+                    <td th:text="${order.destination.getName()}"></td>
                     <td>
                         <a th:href="@{/customer/suppliers/details/{id}(id=${order.supplier.id})}" th:text="${order.supplier.username}"></a>
                     </td>
