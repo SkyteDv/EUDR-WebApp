@@ -1,19 +1,28 @@
 package com.projects.eudrwebapp.controller.customer;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.projects.eudrwebapp.model.Harbour;
 import com.projects.eudrwebapp.model.Order;
+import com.projects.eudrwebapp.repository.HarbourRepository;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import com.projects.eudrwebapp.service.appAssistance.AuthService;
 import com.projects.eudrwebapp.service.riskAltertManagement.RiskEngine;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("customer/risk")
@@ -22,18 +31,21 @@ public class CRiskController {
     AuthService authService;
     UserRepository userRepository;
     OrderRepository orderRepository;
+    HarbourRepository harbourRepository;
     RiskEngine riskEngine;
 
-    public CRiskController(AuthService authService, UserRepository userRepository, OrderRepository orderRepository, RiskEngine riskEngine) {
+    public CRiskController(AuthService authService, UserRepository userRepository, OrderRepository orderRepository,
+            HarbourRepository harbourRepository, RiskEngine riskEngine) {
         this.authService = authService;
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+        this.harbourRepository = harbourRepository;
         this.riskEngine = riskEngine;
     }
 
     @GetMapping("/overview")
     public String overview(HttpSession session, Model model) {
-        if(!authService.validateUserAuth(session, "CUSTOMER")) {
+        if (!authService.validateUserAuth(session, "CUSTOMER")) {
             return "redirect:/";
         }
 
@@ -42,11 +54,11 @@ public class CRiskController {
 
     @GetMapping("/manage-order/{orderId}")
     public String manageOrder(HttpSession session,
-                              Model model,
-                              @SessionAttribute(value = "userId", required = false) Long userId,
-                              @PathVariable("orderId") Long orderId) {
+            Model model,
+            @SessionAttribute(value = "userId", required = false) Long userId,
+            @PathVariable("orderId") Long orderId) {
 
-        if(!authService.validateUserAuth(session, "CUSTOMER")) {
+        if (!authService.validateUserAuth(session, "CUSTOMER")) {
             return "redirect:/";
         }
 
@@ -60,11 +72,11 @@ public class CRiskController {
 
     @PostMapping("/update-product-group/{orderId}")
     public String updateProductGroup(HttpSession session,
-                                     @PathVariable("orderId") Long orderId,
-                                     @RequestParam("productCategory") String productCategory,
-                                     RedirectAttributes redirectAttributes) {
+            @PathVariable("orderId") Long orderId,
+            @RequestParam("productCategory") String productCategory,
+            RedirectAttributes redirectAttributes) {
 
-        if(!authService.validateUserAuth(session, "CUSTOMER")) {
+        if (!authService.validateUserAuth(session, "CUSTOMER")) {
             return "redirect:/";
         }
 
@@ -79,8 +91,7 @@ public class CRiskController {
 
             // Validate product category
             List<String> validCategories = Arrays.asList(
-                "CATTLE", "COFFEE", "COCOA", "PALM_OIL", "SOY", "WOOD", "RUBBER"
-            );
+                    "CATTLE", "COFFEE", "COCOA", "PALM_OIL", "SOY", "WOOD", "RUBBER");
             if (!validCategories.contains(productCategory.toUpperCase())) {
                 redirectAttributes.addFlashAttribute("errorMessage", "Invalid product category selected");
                 return "redirect:/customer/risk/manage-order/" + orderId;
@@ -94,11 +105,13 @@ public class CRiskController {
             riskEngine.assessOrderRisk(order);
             orderRepository.save(order);
 
-            redirectAttributes.addFlashAttribute("successMessage", 
-                "Product category updated from " + oldCategory + " to " + productCategory + ". Risk assessment updated.");
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Product category updated from " + oldCategory + " to " + productCategory
+                            + ". Risk assessment updated.");
 
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to update product category: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Failed to update product category: " + e.getMessage());
         }
 
         return "redirect:/customer/risk/manage-order/" + orderId;
@@ -106,10 +119,10 @@ public class CRiskController {
 
     @PostMapping("/send-to-storage/{orderId}")
     public String sendToStorage(HttpSession session,
-                                @PathVariable("orderId") Long orderId,
-                                RedirectAttributes redirectAttributes) {
+            @PathVariable("orderId") Long orderId,
+            RedirectAttributes redirectAttributes) {
 
-        if(!authService.validateUserAuth(session, "CUSTOMER")) {
+        if (!authService.validateUserAuth(session, "CUSTOMER")) {
             return "redirect:/";
         }
 
@@ -124,10 +137,10 @@ public class CRiskController {
 
             // Set order status to indicate it's in storage
             order.setStatus(com.projects.eudrwebapp.model.Enum.OrderStatus.PENDING);
-            
+
             // Add a note to the risk assessment hints
             order.getRiskAssessment().addItemToHint("storage", "Order sent to storage pending DDS resolution");
-            
+
             orderRepository.save(order);
 
             redirectAttributes.addFlashAttribute("successMessage", "Order sent to storage successfully");
@@ -141,12 +154,12 @@ public class CRiskController {
 
     @PostMapping("/reroute-order/{orderId}")
     public String rerouteOrder(HttpSession session,
-                               @PathVariable("orderId") Long orderId,
-                               @RequestParam("newDestination") String newDestination,
-                               @RequestParam("rerouteReason") String rerouteReason,
-                               RedirectAttributes redirectAttributes) {
+            @PathVariable("orderId") Long orderId,
+            @RequestParam("newDestination") String newDestination,
+            @RequestParam("rerouteReason") String rerouteReason,
+            RedirectAttributes redirectAttributes) {
 
-        if(!authService.validateUserAuth(session, "CUSTOMER")) {
+        if (!authService.validateUserAuth(session, "CUSTOMER")) {
             return "redirect:/";
         }
 
@@ -170,20 +183,29 @@ public class CRiskController {
                 return "redirect:/customer/risk/manage-order/" + orderId;
             }
 
+            // Find the new destination harbour
+            Optional<Harbour> newHarbourOpt = harbourRepository.findByName(newDestination.trim());
+            if (newHarbourOpt.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage",
+                        "Destination harbour '" + newDestination + "' not found");
+                return "redirect:/customer/risk/manage-order/" + orderId;
+            }
+
             // Update destination
-            String oldDestination = order.getDestination();
-            order.setDestination(newDestination);
-            
+            Harbour oldDestination = order.getDestination();
+            Harbour newHarbour = newHarbourOpt.get();
+            order.setDestination(newHarbour);
+
             // Add reroute information to hints
-            order.getRiskAssessment().addItemToHint("reroute", 
-                "Rerouted from " + oldDestination + " to " + newDestination + ". Reason: " + rerouteReason);
-            
+            order.getRiskAssessment().addItemToHint("reroute",
+                    "Rerouted from " + oldDestination + " to " + newDestination + ". Reason: " + rerouteReason);
+
             // Trigger risk reassessment with new destination
             riskEngine.assessOrderRisk(order);
             orderRepository.save(order);
 
-            redirectAttributes.addFlashAttribute("successMessage", 
-                "Order rerouted from " + oldDestination + " to " + newDestination);
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Order rerouted from " + oldDestination + " to " + newDestination);
 
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to reroute order: " + e.getMessage());
