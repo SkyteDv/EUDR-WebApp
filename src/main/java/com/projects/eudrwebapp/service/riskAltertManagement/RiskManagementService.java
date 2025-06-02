@@ -58,7 +58,7 @@ public class RiskManagementService {
                 Thread.currentThread().interrupt();
                 System.err.println("Sleep interrupted");
             }
-            System.out.println("Tried to sent email to: " + order.getResponsible_party() + " for " + order.getCustomer().getUsername() + "on Order: " + order.getErpReferenceNumber());
+            System.out.println("Tried to sent email to: " + order.getResponsible_party() + " for " + order.getCustomer().getUsername() + " for Order: " + order.getErpReferenceNumber());
             order.setNotified(true);
         }
         orderRepository.saveAll(highRiskOrders); // batch save
