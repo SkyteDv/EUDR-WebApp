@@ -105,7 +105,6 @@ body {
             button {
                 box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.05);
                 background-color: var(--field-hover-clr);
-                opacity: 0.85;
                 flex: 1;
                 max-height: 70px;
 
@@ -119,6 +118,9 @@ body {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
+                opacity: 0;
+                transition: opacity 0.5s ease;
 
                 .svg-wrapper {
                     background-color: var(--card-bg-clr);
@@ -160,6 +162,10 @@ body {
 .harbour-card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px) translateZ(0);
+}
+
+.harbour-card:hover .card-content .card-content-actions button {
+    opacity: 1;
 }
 
 /* When container has list-layout class, show vertical list */
