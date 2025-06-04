@@ -55,6 +55,28 @@ body {
     overflow-y: scroll;
 }
 
+.card {
+    position: relative;
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.bell-wrapper {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+}
+
+.bell-icon {
+    padding: 6px;
+}
+
+
+
 .harbour-card {
     backface-visibility: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
@@ -113,7 +135,6 @@ body {
                 text-decoration: none;
                 border: none;
                 border-radius: 8px;
-                cursor: pointer;
 
                 display: flex;
                 justify-content: space-between;
