@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:attr="data-theme=${session.theme}">
 
 <head>
     <meta charset="UTF-8">
@@ -179,6 +179,20 @@
                     <section class="stat-section" id="actions-section">
                         <p class="section-title">Actions</p>
                         <div id="actions-buttons">
+                            <button class="clean-button" onclick="toggleTheme()">Toggle Theme</button>
+
+                            <script>
+                                function toggleTheme() {
+                                    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+                                    fetch(`/settings/set-theme/${newTheme}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            document.documentElement.setAttribute('data-theme', newTheme);
+                                        });
+                                }
+                            </script>
                             <button class="clean-button"><span>Mitigate Risk</span></button>
                             <button class="clean-button"><span>Export Data</span></button>
                             <button class="clean-button"><span>Help</span></button>

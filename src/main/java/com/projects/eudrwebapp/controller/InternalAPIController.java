@@ -295,4 +295,16 @@ public class InternalAPIController {
         return ResponseEntity.ok(harbourData);
     }
 
+    @GetMapping("/settings/set-theme/{theme}")
+    public ResponseEntity<Map<String, String>> setTheme(HttpSession session, @PathVariable("theme") String themeName) {
+        // Save the theme in the session
+        session.setAttribute("theme", themeName);
+
+        // Respond with confirmation
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("theme", themeName);
+        return ResponseEntity.ok(response);
+    }
+
 }
