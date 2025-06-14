@@ -1,5 +1,6 @@
 export function createCameraPopup(currentOrderId, currentOrderDdsReference) {
     // Remove existing one if present
+    console.log("Creating new Cam Popup")
     const existing = document.getElementById("cameraDiv");
     if (existing) existing.remove();
 

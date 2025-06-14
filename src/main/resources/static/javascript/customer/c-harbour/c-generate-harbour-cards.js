@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.getElementById('sortToggleBtn').addEventListener('click', async () => {
     cycleSortMode();
     const mode = getCurrentSortMode();
-    document.getElementById('sortToggleBtn').textContent = `Sort: ${mode.label} ⬇`;
+    document.getElementById('sortToggleBtn').textContent = `⬇ ${mode.label} `;
     showLoadingOverlay();
     await fetchHarbours();
     hideLoadingOverlay();

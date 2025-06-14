@@ -104,8 +104,8 @@ main {
 
 .delivery-table thead th:nth-child(3),
 .delivery-table tbody tr td:nth-child(3) {
-    border-right: 2px solid var(--line-clr);
-    padding-right: 8px;
+    border-right: 2px solid gray;
+    padding-right: 25px;
 }
 
 /* Zebra striping */

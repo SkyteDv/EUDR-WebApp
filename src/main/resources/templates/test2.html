@@ -1,164 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organic Crystal Vortex</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background: #000;
-        }
-        canvas {
-            display: block;
-        }
-    </style>
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js"
-            }
-        }
-    </script>
-    <script type="module">
-        import * as THREE from 'three';
+<style>
+    #left-content {
+        padding: 20px;
+        background: var(--base-clr);
+        box-shadow: inset -4px 0 8px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+    }
 
-        // Scene setup
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x000011);
-        scene.fog = new THREE.FogExp2(0x000011, 0.01);
+    .timeline {
+        position: relative;
+        margin-left: 30px;          /* increased left margin */
+        padding-left: 20px;
+        border-left: 3px solid #4a47a3;
+    }
 
-        // Camera (locked top-down but with perspective)
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 25, 0);
-        camera.lookAt(0, 0, 0);
-        camera.rotation.z = 0; // Lock rotation
+    .step {
+        position: relative;
+        margin-bottom: 30px;
+        padding-left: 20px;
+    }
 
-        // Renderer
-        const renderer = new THREE.WebGLRenderer({
-            antialias: true
-        });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+    .step:last-child {
+        margin-bottom: 0;
+    }
 
-        // Create 300 crystal particles with randomized properties
-        const particles = [];
-        const colors = [
-            0x00ffff, 0xff00ff, 0xffff00,
-            0xffaa00, 0xaa00ff, 0x00ffaa,
-            0xff3366, 0x66ff33, 0x3366ff
-        ];
+    .step::before {
+        content: "";
+        position: absolute;
+        left: -32px;               /* center circle on border */
+        top: 5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #4a47a3;
+        border: 3px solid white;   /* white border to separate from line */
+        box-sizing: content-box;
+    }
 
-        for (let i = 0; i < 300; i++) {
-            // Random crystal shape (tetrahedron, octahedron, or box)
-            let geometry;
-            const shapeType = Math.floor(Math.random() * 3);
+    .step .step-name {
+        font-weight: bold;
+        color: #222;
+    }
 
-            if (shapeType === 0) {
-                geometry = new THREE.ConeGeometry(0.15, 0.6, 4); // Tetrahedron-like
-            } else if (shapeType === 1) {
-                geometry = new THREE.OctahedronGeometry(0.3); // Diamond shape
-            } else {
-                geometry = new THREE.BoxGeometry(0.3, 0.6, 0.3); // Rectangular crystal
-            }
+    .step .contractor {
+        font-style: italic;
+        color: #666;
+        margin-top: 2px;
+        font-size: 0.9em;
+    }
+</style>
 
-            geometry.rotateX(Math.PI * Math.random()); // Random rotation
-
-            const material = new THREE.MeshStandardMaterial({
-                color: colors[Math.floor(Math.random() * colors.length)],
-                emissive: 0x222222,
-                emissiveIntensity: 0.5 + Math.random() * 0.5,
-                metalness: 0.8,
-                roughness: 0.2,
-                transparent: true,
-                opacity: 0.9
-            });
-
-            const crystal = new THREE.Mesh(geometry, material);
-
-            // Random 3D position within a sphere
-            const radius = 2 + Math.random() * 10;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.random() * Math.PI;
-
-            crystal.position.set(
-                Math.sin(phi) * Math.cos(theta) * radius,
-                (Math.random() - 0.5) * 4, // Vertical spread
-                Math.sin(phi) * Math.sin(theta) * radius
-            );
-
-            // Unique movement properties
-            crystal.userData = {
-                speed: {
-                    orbit: 0.01 + Math.random() * 0.03,
-                    rotation: 0.01 + Math.random() * 0.05,
-                    bob: Math.random() * 0.02
-                },
-                radius: radius * (0.7 + Math.random() * 0.6),
-                heightOffset: (Math.random() - 0.5) * 4,
-                timeOffset: Math.random() * 1000
-            };
-
-            scene.add(crystal);
-            particles.push(crystal);
-        }
-
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(1, 1, 1).normalize();
-        scene.add(directionalLight);
-
-        const pointLight = new THREE.PointLight(0xffffff, 1, 20);
-        pointLight.position.set(0, 5, 0);
-        scene.add(pointLight);
-
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-
-            const time = Date.now() * 0.001;
-
-            particles.forEach(crystal => {
-                const data = crystal.userData;
-
-                // Organic orbital motion
-                data.timeOffset += 0.01;
-                const angle = time * data.speed.orbit + data.timeOffset;
-
-                crystal.position.x = Math.cos(angle) * data.radius;
-                crystal.position.z = Math.sin(angle) * data.radius;
-
-                // Vertical bobbing
-                crystal.position.y = data.heightOffset + Math.sin(time * 2 + data.timeOffset) * 2;
-
-                // Individual rotation
-                crystal.rotation.x += data.speed.rotation * 0.1;
-                crystal.rotation.y += data.speed.rotation * 0.2;
-                crystal.rotation.z += data.speed.rotation * 0.15;
-
-                // Pulsing scale
-                const pulse = 0.8 + Math.sin(time * 3 + data.timeOffset) * 0.2;
-                crystal.scale.set(pulse, pulse, pulse);
-            });
-
-            renderer.render(scene, camera);
-        }
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        animate();
-    </script>
-</head>
-<body>
-<!-- Hypnotic crystal display -->
-</body>
-</html>
+<div id="left-content">
+    <div id="contractors-container">
+        <div class="timeline">
+            <div class="step">
+                <div class="step-name">Unloading</div>
+                <div class="contractor">Contractor A</div>
+            </div>
+            <div class="step">
+                <div class="step-name">RFID Label Scanning</div>
+                <div class="contractor">Contractor B</div>
+            </div>
+            <div class="step">
+                <div class="step-name">Warehousing</div>
+                <div class="contractor">Contractor C</div>
+            </div>
+            <div class="step">
+                <div class="step-name">Customs Clearance</div>
+                <div class="contractor">Contractor D</div>
+            </div>
+            <div class="step">
+                <div class="step-name">Disposal (if needed)</div>
+                <div class="contractor">Contractor E</div>
+            </div>
+        </div>
+    </div>
+</div>

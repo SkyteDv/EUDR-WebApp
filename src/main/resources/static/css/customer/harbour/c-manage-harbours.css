@@ -33,15 +33,41 @@ body {
 
     #content-header-actions {
         display: flex;
-        gap: 0.5rem;
+        gap: 1rem;
         flex-direction: row;
+        align-items: center;
+
+        #sortSection {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+
+            p {
+                font-size: 1rem;
+            }
+
+            #sortToggleBtn {
+                min-width: 125px;
+            }
+        }
 
         .search-input {
+            margin-left: 1rem;
+            width: 13rem;
             padding: 0.5rem 1rem;
             font-size: 1rem;
             border: 1px solid #ccc;
             border-radius: 8px;
         }
+    }
+}
+
+@media (max-width: 1200px) {
+
+    #content-header #content-header-actions {
+        gap: 0.5rem;
     }
 }
 
