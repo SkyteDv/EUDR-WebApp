@@ -71,7 +71,7 @@ main {
     text-align: center;
     font-weight: 600;
     border-collapse: collapse;
-    border-bottom: 1px solid var(--base-acc-dark-clr);
+    border-bottom: 1px solid var(--field-hover-clr);
 }
 
 .delivery-table td {
@@ -184,6 +184,9 @@ main {
 }
 .status-SHIPPED {
     background-color: #0275d8;
+}
+.status-IN_STORAGE {
+    background-color: #c5970d;
 }
 .status-IN_HARBOUR {
     background-color: #5bc0de;
