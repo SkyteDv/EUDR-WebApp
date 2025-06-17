@@ -6,18 +6,12 @@
     <title>Customer Overview</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/non-specific/sidebar.css">
     <link rel="stylesheet" href="/css/account-menu.css">
-
     <link rel="stylesheet" href="/css/customer/c-suppliers-overview.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <script src="/javascript/non-specific/account-menu.js" defer></script>
-    <script src="/javascript/non-specific/customTableSearch.js" defer></script>
-    <script src="/javascript/supplier/s-customer/s-sortTableHeaders.js" defer></script>
-    <link rel="stylesheet" href="/css/non-specific/sidebar.css">
-
-    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
+    <link rel="stylesheet" href="/css/non-specific/deliveries-filter.css">
 </head>
 
 <body>
@@ -40,7 +34,6 @@
             </div>
         </div>
     </header>
-
 
     <aside id="sidebar">
         <ul>
@@ -114,55 +107,453 @@
         </ul>
     </aside>
 
-    <main class="supplier-page">
-        <div class="section-header">
-            <h1>Customer Overview</h1>
-
-            <div class="global-actions">
-                <label>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search Customers...">
-                </label>
-                <button id="refreshCustomersButton" class="clean-button" title="Refresh">
-                    <i class="fas fa-rotate-right"></i>
+    <main class="supplier-overview-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-users"></i>
+                    Customer Overview
+                </h1>
+                <p class="header-subtitle">Manage and monitor your connected customers</p>
+            </div>
+            
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search customers...">
+                </div>
+                <button id="customerFilterBtn" class="clean-button expandable">
+                    <i class="fas fa-filter"></i>
+                    <span class="button-text">Filter</span>
+                </button>
+                <button id="refreshCustomersButton" class="clean-button expandable" title="Refresh">
+                    <i class="fas fa-sync-alt"></i>
+                    <span class="button-text">Refresh</span>
                 </button>
             </div>
         </div>
 
-        <div class="wrapper">
-            <table class="delivery-table" id="customersTable">
-                <thead>
-                    <tr>
-                        <th class="sortable">Customer Name</th>
-                        <th class="sortable">Country</th>
-                        <th class="sortable">Total Deliveries</th>
-                        <th class="sortable">First Delivery</th>
-                        <th class="sortable">Last Delivery</th>
-                        <th class="sortable">DDS Yes</th>
-                        <th class="sortable">DDS No</th>
-                        <th class="sortable">DDS Denied</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="stat : ${customerStats}">
-                        <td th:text="${stat.customerName}">Name</td>
-                        <td th:text="${stat.country}">Country</td>
-                        <td th:text="${stat.totalSharedDeliveries}">0</td>
-                        <td th:text="${#temporals.format(stat.firstDeliveryDate, 'dd.MM.yyyy')}">01.01.2024</td>
-                        <td th:text="${#temporals.format(stat.lastDeliveryDate, 'dd.MM.yyyy')}">01.01.2024</td>
-                        <td th:text="${stat.ddsYes}">0</td>
-                        <td th:text="${stat.ddsNo}">0</td>
-                        <td th:text="${stat.ddsDenied}">0</td>
-                        <td>
-                            <a th:href="@{'/supplier/customers/details/' + ${stat.customerId}}" class="btn">
-                                <i class="fas fa-eye"></i> View
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Statistics Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${customerStats.size()}">0</div>
+                    <div class="stat-label">Total Customers</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${#aggregates.sum(customerStats.![totalSharedDeliveries])}">0</div>
+                    <div class="stat-label">Total Deliveries</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${#aggregates.sum(customerStats.![ddsYes])}">0</div>
+                    <div class="stat-label">DDS Approved</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:with="totalDeliveries=${#aggregates.sum(customerStats.![totalSharedDeliveries])},ddsYes=${#aggregates.sum(customerStats.![ddsYes])}" 
+                         th:text="${totalDeliveries > 0 ? (ddsYes * 100 / totalDeliveries) : 0} + '%'">0%</div>
+                    <div class="stat-label">Overall Approval Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2>
+                    <i class="fas fa-table"></i>
+                    Customer Details
+                </h2>
+                <div class="table-actions">
+                    <button class="clean-button expandable">
+                        <i class="fas fa-download"></i>
+                        <span class="button-text">Export</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-wrapper">
+                <table class="modern-suppliers-table">
+                    <thead class="sticky-header">
+                        <tr>
+                            <th class="sortable" data-column="0">
+                                <div class="th-content">
+                                    <span>Customer</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="1">
+                                <div class="th-content">
+                                    <span>Country</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="2">
+                                <div class="th-content">
+                                    <span>Total Deliveries</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="3">
+                                <div class="th-content">
+                                    <span>DDS Approved</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="4">
+                                <div class="th-content">
+                                    <span>DDS Pending</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="5">
+                                <div class="th-content">
+                                    <span>DDS Denied</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="6">
+                                <div class="th-content">
+                                    <span>Approval Rate</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="actions-header">
+                                <div class="th-content">
+                                    <span>Actions</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="stat : ${customerStats}" 
+                            class="supplier-row clickable-row" 
+                            th:onclick="|window.location='/supplier/customers/details/${stat.customerId}'|"
+                            th:title="'Click to view details for ' + ${stat.customerName}">
+                            
+                            <td class="supplier-name-cell">
+                                <div class="supplier-info">
+                                    <div class="supplier-avatar">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <div class="supplier-details">
+                                        <span class="supplier-name" th:text="${stat.customerName}">Customer A</span>
+                                        <span class="supplier-id" th:text="'ID: ' + ${stat.customerId}">ID: 123</span>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <td class="country-cell">
+                                <div class="country-badge">
+                                    <span th:text="${stat.country}">Country</span>
+                                </div>
+                            </td>
+                            
+                            <td class="delivery-count">
+                                <div class="count-badge total">
+                                    <span th:text="${stat.totalSharedDeliveries}">10</span>
+                                </div>
+                            </td>
+                            
+                            <td class="status-count green-count">
+                                <div class="count-badge success" th:if="${stat.ddsYes > 0}">
+                                    <span th:text="${stat.ddsYes}">5</span>
+                                </div>
+                                <span th:if="${stat.ddsYes == 0}" class="no-data">—</span>
+                            </td>
+                            
+                            <td class="status-count yellow-count">
+                                <div class="count-badge warning" th:if="${stat.ddsNo > 0}">
+                                    <span th:text="${stat.ddsNo}">3</span>
+                                </div>
+                                <span th:if="${stat.ddsNo == 0}" class="no-data">—</span>
+                            </td>
+                            
+                            <td class="status-count red-count">
+                                <div class="count-badge danger" th:if="${stat.ddsDenied > 0}">
+                                    <span th:text="${stat.ddsDenied}">2</span>
+                                </div>
+                                <span th:if="${stat.ddsDenied == 0}" class="no-data">—</span>
+                            </td>
+                            
+                            <td class="green-rate-cell">
+                                <div th:if="${stat.totalSharedDeliveries > 0}" class="rate-container">
+                                    <div class="rate-badge" 
+                                         th:with="approvalRate=${stat.totalSharedDeliveries > 0 ? (stat.ddsYes * 100 / stat.totalSharedDeliveries) : 0}"
+                                         th:classappend="${approvalRate >= 80 ? 'excellent' : 
+                                                         (approvalRate >= 60 ? 'good' : 
+                                                         (approvalRate >= 40 ? 'fair' : 
+                                                         (approvalRate > 0 ? 'poor' : 'no-data')))}"
+                                         th:text="${#numbers.formatDecimal(approvalRate, 1, 1)} + '%'">
+                                        50%
+                                    </div>
+                                </div>
+                                <div th:if="${stat.totalSharedDeliveries == 0}" class="no-data-badge">
+                                    <i class="fas fa-hourglass-half"></i>
+                                    <span>Pending</span>
+                                </div>
+                            </td>
+                            
+                            <td class="actions-cell">
+                                <button class="action-btn view-btn" 
+                                        th:onclick="event.stopPropagation(); window.location='/supplier/customers/details/' + ${stat.customerId}"
+                                        title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn more-btn" title="More Options">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div th:if="${customerStats.empty}" class="empty-state">
+                    <i class="fas fa-users-slash"></i>
+                    <h3>No Customers Found</h3>
+                    <p>You haven't connected with any customers yet.</p>
+                    <button class="clean-button">
+                        <i class="fas fa-plus"></i>
+                        Add Customer
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
+
+    <div id="backdrop"></div>
+    <div id="customerFilterDiv" class="global-filter">
+        <section id="filterHeader">
+            <p class="filterTitle">Filter Customer Table</p>
+            <div class="filter-buttons">
+                <button id="resetCustomerFilter" class="clean-button expandable">
+                    <span class="material-icons">restart_alt</span>
+                    <span class="button-text">Reset</span>
+                </button>
+                <button id="applyCustomerFilter" class="clean-button expandable">
+                    <span class="material-icons">done</span>
+                    <span class="button-text">Apply</span>
+                </button>
+            </div>
+        </section>
+
+        <label class="filter-label">
+            <input type="text" id="customerNameFilter" class="filter-text-input" placeholder="Customer Name">
+        </label>
+
+        <label class="filter-label">
+            <input type="text" id="countryFilter" class="filter-text-input" placeholder="Country">
+        </label>
+
+        <label class="filter-label">
+            <input type="number" id="minApprovalRate" class="filter-text-input" placeholder="Min. Approval Rate (%)" min="0" max="100">
+        </label>
+
+        <label class="filter-label">
+            <input type="number" id="maxDeniedDeliveries" class="filter-text-input" placeholder="Max. Denied Deliveries" min="0">
+        </label>
+    </div>
+
+    <script src="/javascript/non-specific/account-menu.js" defer></script>
+    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
+    
+    <script>
+        // Enhanced table interactions for customer overview
+        document.addEventListener('DOMContentLoaded', function() {
+            // Table sorting functionality
+            const sortableHeaders = document.querySelectorAll('.sortable');
+            const tableBody = document.querySelector('.modern-suppliers-table tbody');
+            
+            sortableHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const columnIndex = parseInt(this.getAttribute('data-column'));
+                    const sortIcon = this.querySelector('.sort-icon');
+                    const isAscending = sortIcon.classList.contains('fa-sort') || sortIcon.classList.contains('fa-sort-down');
+                    
+                    // Reset all other sort icons
+                    sortableHeaders.forEach(h => {
+                        if (h !== this) {
+                            h.querySelector('.sort-icon').className = 'fas fa-sort sort-icon';
+                        }
+                    });
+                    
+                    // Toggle current sort icon
+                    if (isAscending) {
+                        sortIcon.className = 'fas fa-sort-up sort-icon';
+                    } else {
+                        sortIcon.className = 'fas fa-sort-down sort-icon';
+                    }
+                    
+                    // Sort the table rows
+                    const rows = Array.from(tableBody.querySelectorAll('.supplier-row'));
+                    
+                    rows.sort((a, b) => {
+                        let aValue, bValue;
+                        
+                        switch(columnIndex) {
+                            case 0: // Customer name
+                                aValue = a.querySelector('.supplier-name').textContent.trim();
+                                bValue = b.querySelector('.supplier-name').textContent.trim();
+                                break;
+                            case 1: // Country
+                                aValue = a.querySelector('.country-badge span').textContent.trim();
+                                bValue = b.querySelector('.country-badge span').textContent.trim();
+                                break;
+                            case 2: // Total deliveries
+                                aValue = parseInt(a.querySelector('.delivery-count .count-badge span').textContent);
+                                bValue = parseInt(b.querySelector('.delivery-count .count-badge span').textContent);
+                                break;
+                            case 3: // DDS Yes
+                                const aYes = a.querySelector('.green-count .count-badge span');
+                                const bYes = b.querySelector('.green-count .count-badge span');
+                                aValue = aYes ? parseInt(aYes.textContent) : 0;
+                                bValue = bYes ? parseInt(bYes.textContent) : 0;
+                                break;
+                            case 4: // DDS No
+                                const aNo = a.querySelector('.yellow-count .count-badge span');
+                                const bNo = b.querySelector('.yellow-count .count-badge span');
+                                aValue = aNo ? parseInt(aNo.textContent) : 0;
+                                bValue = bNo ? parseInt(bNo.textContent) : 0;
+                                break;
+                            case 5: // DDS Denied
+                                const aDenied = a.querySelector('.red-count .count-badge span');
+                                const bDenied = b.querySelector('.red-count .count-badge span');
+                                aValue = aDenied ? parseInt(aDenied.textContent) : 0;
+                                bValue = bDenied ? parseInt(bDenied.textContent) : 0;
+                                break;
+                            case 6: // Approval rate
+                                const aRate = a.querySelector('.rate-badge');
+                                const bRate = b.querySelector('.rate-badge');
+                                aValue = aRate ? parseFloat(aRate.textContent.replace('%', '')) : 0;
+                                bValue = bRate ? parseFloat(bRate.textContent.replace('%', '')) : 0;
+                                break;
+                            default:
+                                return 0;
+                        }
+                        
+                        if (typeof aValue === 'string') {
+                            return isAscending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                        } else {
+                            return isAscending ? aValue - bValue : bValue - aValue;
+                        }
+                    });
+                    
+                    // Re-append sorted rows
+                    rows.forEach(row => tableBody.appendChild(row));
+                });
+            });
+            
+            // Enhanced search functionality
+            const searchInput = document.getElementById('searchInput');
+            const customerRows = document.querySelectorAll('.supplier-row');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                customerRows.forEach(row => {
+                    const customerName = row.querySelector('.supplier-name').textContent.toLowerCase();
+                    const customerId = row.querySelector('.supplier-id').textContent.toLowerCase();
+                    const country = row.querySelector('.country-badge span').textContent.toLowerCase();
+                    
+                    if (customerName.includes(searchTerm) || customerId.includes(searchTerm) || country.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Row hover effects
+            customerRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(2px)';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+
+            // Filter functionality
+            const filterBtn = document.getElementById('customerFilterBtn');
+            const filterDiv = document.getElementById('customerFilterDiv');
+            const backdrop = document.getElementById('backdrop');
+            const resetBtn = document.getElementById('resetCustomerFilter');
+            const applyBtn = document.getElementById('applyCustomerFilter');
+
+            filterBtn.addEventListener('click', function() {
+                filterDiv.classList.add('active');
+                backdrop.classList.add('active');
+            });
+
+            backdrop.addEventListener('click', function() {
+                filterDiv.classList.remove('active');
+                backdrop.classList.remove('active');
+            });
+
+            resetBtn.addEventListener('click', function() {
+                document.getElementById('customerNameFilter').value = '';
+                document.getElementById('countryFilter').value = '';
+                document.getElementById('minApprovalRate').value = '';
+                document.getElementById('maxDeniedDeliveries').value = '';
+                // Show all rows
+                customerRows.forEach(row => row.style.display = '');
+            });
+
+            applyBtn.addEventListener('click', function() {
+                const nameFilter = document.getElementById('customerNameFilter').value.toLowerCase();
+                const countryFilter = document.getElementById('countryFilter').value.toLowerCase();
+                const minApprovalRate = parseFloat(document.getElementById('minApprovalRate').value) || 0;
+                const maxDeniedDeliveries = parseInt(document.getElementById('maxDeniedDeliveries').value) || Infinity;
+
+                customerRows.forEach(row => {
+                    const customerName = row.querySelector('.supplier-name').textContent.toLowerCase();
+                    const country = row.querySelector('.country-badge span').textContent.toLowerCase();
+                    const rateElement = row.querySelector('.rate-badge');
+                    const approvalRate = rateElement ? parseFloat(rateElement.textContent.replace('%', '')) : 0;
+                    const deniedElement = row.querySelector('.red-count .count-badge span');
+                    const deniedDeliveries = deniedElement ? parseInt(deniedElement.textContent) : 0;
+
+                    const matchesName = !nameFilter || customerName.includes(nameFilter);
+                    const matchesCountry = !countryFilter || country.includes(countryFilter);
+                    const matchesApprovalRate = approvalRate >= minApprovalRate;
+                    const matchesDeniedDeliveries = deniedDeliveries <= maxDeniedDeliveries;
+
+                    if (matchesName && matchesCountry && matchesApprovalRate && matchesDeniedDeliveries) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                filterDiv.classList.remove('active');
+                backdrop.classList.remove('active');
+            });
+
+            // Refresh functionality
+            document.getElementById('refreshCustomersButton').addEventListener('click', function() {
+                window.location.reload();
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -21,7 +21,6 @@
             <h4>CUSTOMER</h4>
         </div>
 
-
         <div class="account-wrapper">
             <a href="#" id="account-toggle">
                 👤 Hello <span th:text="${session.username}">User</span> ▼
@@ -34,8 +33,6 @@
                 </form>
             </div>
         </div>
-
-
     </header>
 
     <aside id="sidebar">
@@ -127,75 +124,285 @@
     </aside>
 
     <main class="detail-page">
-        <h1 th:text="'Supplier: ' + ${supplier.username}"></h1>
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="/customer/suppliers/overview">
+                <i class="fas fa-arrow-left"></i>
+                Back to Suppliers
+            </a>
+        </nav>
 
-        <div class="card-grid">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <div class="supplier-avatar">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="header-info">
+                    <h1 th:text="${supplier.username}">Supplier Name</h1>
+                    <p class="supplier-id">ID: <span th:text="${supplier.osapiensID}">12345</span></p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="clean-button expandable">
+                    <i class="fas fa-edit"></i>
+                    <span class="button-text">Edit</span>
+                </button>
+                <button class="clean-button expandable">
+                    <i class="fas fa-share"></i>
+                    <span class="button-text">Share</span>
+                </button>
+            </div>
+        </div>
 
-            <!-- Supplier Info -->
-            <section class="card">
-                <h2>Supplier Information</h2>
-                <p><strong>Name:</strong> <span th:text="${supplier.username}"></span></p>
-                <p><strong>Osapiens-ID:</strong> <span th:text="${supplier.osapiensID}"></span></p>
-                <p><strong>User-ID:</strong> <span th:text="${supplier.id}"></span></p>
+        <!-- Key Metrics Dashboard -->
+        <div class="metrics-dashboard">
+            <div class="metric-card primary">
+                <div class="metric-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-value" th:text="${deliveries.size()}">0</div>
+                    <div class="metric-label">Total Deliveries</div>
+                </div>
+            </div>
+            <div class="metric-card success">
+                <div class="metric-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-value" th:text="${greenCount}">0</div>
+                    <div class="metric-label">Green Status</div>
+                </div>
+            </div>
+            <div class="metric-card warning">
+                <div class="metric-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-value" th:text="${yellowCount}">0</div>
+                    <div class="metric-label">Yellow Status</div>
+                </div>
+            </div>
+            <div class="metric-card danger">
+                <div class="metric-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-value" th:text="${redCount}">0</div>
+                    <div class="metric-label">Red Status</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <!-- Supplier Information Card -->
+            <section class="info-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-info-circle"></i>
+                        Supplier Information
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Company Name</label>
+                            <span th:text="${supplier.username}">Company Name</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Osapiens ID</label>
+                            <span th:text="${supplier.osapiensID}">12345</span>
+                        </div>
+                        <div class="info-item">
+                            <label>User ID</label>
+                            <span th:text="${supplier.id}">67890</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Partnership Status</label>
+                            <span class="status-badge active">Active</span>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <!-- Deliveries -->
-            <section class="card">
-                <h2>Shared Deliveries</h2>
-                <table class="delivery-table">
-                    <thead>
-                        <tr>
-                            <th>ERP Ref</th>
-                            <th>Produkt</th>
-                            <th>Order Date</th>
-                            <th>DDS Ref</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="order : ${deliveries}">
-                            <td th:text="${order.erpReferenceNumber}"></td>
-                            <td th:text="${order.productName}"></td>
-                            <td th:text="${order.orderDate}"></td>
-                            <td
-                                th:text="${order.ddsReferenceNumber != null && order.ddsReferenceNumber != '' ? order.ddsReferenceNumber : '–'}">
-                            </td>
-                            <td th:text="${order.status}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Risk Assessment Card -->
+            <section class="chart-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-chart-pie"></i>
+                        Risk Assessment
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="riskChart" width="300" height="300"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item green">
+                            <span class="legend-color"></span>
+                            <span>Low Risk</span>
+                            <strong th:text="${greenCount}">0</strong>
+                        </div>
+                        <div class="legend-item yellow">
+                            <span class="legend-color"></span>
+                            <span>Medium Risk</span>
+                            <strong th:text="${yellowCount}">0</strong>
+                        </div>
+                        <div class="legend-item red">
+                            <span class="legend-color"></span>
+                            <span>High Risk</span>
+                            <strong th:text="${redCount}">0</strong>
+                        </div>
+                    </div>
+                    <p class="chart-summary" th:text="'Risk evaluation based on ' + ${deliveries.size()} + ' deliveries.'">
+                        Risk evaluation based on 0 deliveries.
+                    </p>
+                </div>
             </section>
 
-            <!-- Platz für Erweiterung -->
-            <section class="card">
-                <h2>Riskchart</h2>
-                <canvas id="riskChart" width="300" height="300"></canvas>
-                <p id="riskInfo" th:text="'Risk evaluation based on ' + ${deliveries.size()} + ' deliveries.'">
-                </p>
+            <!-- Deliveries Table Card -->
+            <section class="table-card full-width">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-shipping-fast"></i>
+                        Shared Deliveries
+                    </h2>
+                    <div class="header-actions">
+                        <button class="clean-button expandable">
+                            <i class="fas fa-download"></i>
+                            <span class="button-text">Export</span>
+                        </button>
+                        <button class="clean-button expandable">
+                            <i class="fas fa-filter"></i>
+                            <span class="button-text">Filter</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-wrapper">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>ERP Reference</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>Product</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>Order Date</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>DDS Reference</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>Status</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="order : ${deliveries}" class="table-row" th:attr="data-order-id=${order.id}">
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-hashtag cell-icon"></i>
+                                            <span th:text="${order.erpReferenceNumber}">ERP-001</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-box cell-icon"></i>
+                                            <span th:text="${order.productName}">Product Name</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-calendar cell-icon"></i>
+                                            <span th:text="${order.orderDate}">2024-01-01</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-file-alt cell-icon"></i>
+                                            <span th:text="${order.ddsReferenceNumber != null && order.ddsReferenceNumber != '' ? order.ddsReferenceNumber : '—'}">—</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge" 
+                                              th:classappend="${order.status == 'GREEN' ? 'success' : (order.status == 'YELLOW' ? 'warning' : (order.status == 'RED' ? 'danger' : 'neutral'))}"
+                                              th:text="${order.status}">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="icon-button" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="icon-button manage-risk-btn" title="Manage Risk" th:attr="data-order-id=${order.id}">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:if="${deliveries.empty}" class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No deliveries found for this supplier</p>
+                        </div>
+                    </div>
+                </div>
             </section>
-
-
         </div>
     </main>
-
 
     <script src="/javascript/non-specific/account-menu.js" defer></script>
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script th:inline="javascript">
+        // Enhanced Chart Configuration
         const ctx = document.getElementById('riskChart').getContext('2d');
 
         const data = {
-            labels: ['Green', 'Yellow', 'Red'],
+            labels: ['Low Risk', 'Medium Risk', 'High Risk'],
             datasets: [{
                 data: [
-                /*[[${greenCount}]]*/,
-                /*[[${yellowCount}]]*/,
+                    /*[[${greenCount}]]*/,
+                    /*[[${yellowCount}]]*/,
                     /*[[${redCount}]]*/
                 ],
-                backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
-                borderWidth: 1
+                backgroundColor: [
+                    '#28a745',
+                    '#ffc107', 
+                    '#dc3545'
+                ],
+                borderWidth: 3,
+                borderColor: '#fff',
+                hoverBorderWidth: 4,
+                hoverBackgroundColor: [
+                    '#218838',
+                    '#e0a800',
+                    '#c82333'
+                ]
             }]
         };
 
@@ -203,15 +410,96 @@
             type: 'doughnut',
             data: data,
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: 'bottom'
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#fff',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                return `${context.label}: ${context.parsed} (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%',
+                elements: {
+                    arc: {
+                        borderWidth: 2
                     }
                 }
             }
         });
+
+        // Table interactions
+        document.querySelectorAll('.modern-table th').forEach(header => {
+            header.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                // Reset all other sort icons
+                document.querySelectorAll('.modern-table th i').forEach(i => {
+                    if (i !== icon) {
+                        i.className = 'fas fa-sort';
+                    }
+                });
+                
+                // Toggle current sort icon
+                if (icon.classList.contains('fa-sort')) {
+                    icon.className = 'fas fa-sort-up';
+                } else if (icon.classList.contains('fa-sort-up')) {
+                    icon.className = 'fas fa-sort-down';
+                } else {
+                    icon.className = 'fas fa-sort-up';
+                }
+            });
+        });
+
+        // Manage Risk button functionality
+        document.querySelectorAll('.manage-risk-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const orderId = this.getAttribute('data-order-id');
+                if (orderId) {
+                    window.location.href = `/customer/risk/manage-order/${orderId}`;
+                }
+            });
+        });
     </script>
 
+    <style>
+        /* Manage Risk Button Styling */
+        .manage-risk-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white !important;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .manage-risk-btn:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .manage-risk-btn i {
+            color: white;
+        }
+
+        /* Action buttons container spacing */
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+    </style>
 
 </body>
 

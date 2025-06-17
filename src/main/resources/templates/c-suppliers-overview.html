@@ -127,60 +127,222 @@
         </ul>
     </aside>
 
-    <main class="supplier-page">
-        <div class="section-header">
-            <h1>Supplier Overview</h1>
-
-            <div class="global-actions">
-                <label>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search Suppliers...">
-                </label>
+    <main class="supplier-overview-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-users"></i>
+                    Supplier Overview
+                </h1>
+                <p class="header-subtitle">Manage and monitor your connected suppliers</p>
+            </div>
+            
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search suppliers...">
+                </div>
                 <button id="supplierFilterBtn" class="clean-button expandable">
-                    <i class="material-icons">tune</i>
+                    <i class="fas fa-filter"></i>
                     <span class="button-text">Filter</span>
                 </button>
-                <button id="refreshSuppliersButton" class="clean-button" title="Refresh">
-                    <i class="fas fa-rotate-right"></i>
+                <button id="refreshSuppliersButton" class="clean-button expandable" title="Refresh">
+                    <i class="fas fa-sync-alt"></i>
+                    <span class="button-text">Refresh</span>
                 </button>
             </div>
         </div>
 
-        <div class="wrapper">
-            <table class="delivery-table">
-                <thead>
-                    <tr>
-                        <th class="sortable" data-column="0">Supplier<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="1">Total Deliveries<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="2">Green<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="3">Red<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="4">Yellow<i class="sort-icon fas fa-sort"></i></th>
-                        <th class="sortable" data-column="5">Green Rate<i class="sort-icon fas fa-sort"></i></th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="stat : ${supplierStats}">
-                        <td th:text="${stat.supplierName}">Supplier A</td>
-                        <td th:text="${stat.totalDeliveries}">10</td>
-                        <td th:text="${stat.greenDeliveries}" class="status-cell">5</td>
-                        <td th:text="${stat.redDeliveries}" class="status-cell">2</td>
-                        <td th:text="${stat.yellowDeliveries}" class="status-cell">3</td>
-                        <td th:text="${#numbers.formatDecimal(stat.greenRate, 1, 1)} + '%'" th:class="'status-cell ' + 
-      (${stat.greenDeliveries} > 0 ? 'status-green' :
-      (${stat.yellowDeliveries} > 0 ? 'status-yellow' :
-      (${stat.redDeliveries} > 0 ? 'status-red' : '')))">
-                            50%
-                        </td>
-                        <td>
-                            <button class="details-button primary-action"
-                                th:onclick="|window.location='/customer/suppliers/details/${stat.supplierId}'|"
-                                title="View Details">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Statistics Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${supplierStats.size()}">0</div>
+                    <div class="stat-label">Total Suppliers</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${#aggregates.sum(supplierStats.![totalDeliveries])}">0</div>
+                    <div class="stat-label">Total Deliveries</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${#aggregates.sum(supplierStats.![greenDeliveries])}">0</div>
+                    <div class="stat-label">Green Deliveries</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:with="totalDeliveries=${#aggregates.sum(supplierStats.![totalDeliveries])},greenDeliveries=${#aggregates.sum(supplierStats.![greenDeliveries])}" 
+                         th:text="${totalDeliveries > 0 ? (greenDeliveries * 100 / totalDeliveries) : 0} + '%'">0%</div>
+                    <div class="stat-label">Overall Green Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Suppliers Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2>
+                    <i class="fas fa-table"></i>
+                    Supplier Details
+                </h2>
+                <div class="table-actions">
+                    <button class="clean-button expandable">
+                        <i class="fas fa-download"></i>
+                        <span class="button-text">Export</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-wrapper">
+                <table class="modern-suppliers-table">
+                    <thead class="sticky-header">
+                        <tr>
+                            <th class="sortable" data-column="0">
+                                <div class="th-content">
+                                    <span>Supplier</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="1">
+                                <div class="th-content">
+                                    <span>Total Deliveries</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="2">
+                                <div class="th-content">
+                                    <span>Green</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="3">
+                                <div class="th-content">
+                                    <span>Yellow</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="4">
+                                <div class="th-content">
+                                    <span>Red</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="sortable" data-column="5">
+                                <div class="th-content">
+                                    <span>Green Rate</span>
+                                    <i class="fas fa-sort sort-icon"></i>
+                                </div>
+                            </th>
+                            <th class="actions-header">
+                                <div class="th-content">
+                                    <span>Actions</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="stat : ${supplierStats}" 
+                            class="supplier-row clickable-row" 
+                            th:onclick="|window.location='/customer/suppliers/details/${stat.supplierId}'|"
+                            th:title="'Click to view details for ' + ${stat.supplierName}">
+                            
+                            <td class="supplier-name-cell">
+                                <div class="supplier-info">
+                                    <div class="supplier-avatar">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <div class="supplier-details">
+                                        <span class="supplier-name" th:text="${stat.supplierName}">Supplier A</span>
+                                        <span class="supplier-id" th:text="'ID: ' + ${stat.supplierId}">ID: 123</span>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <td class="delivery-count">
+                                <div class="count-badge total">
+                                    <span th:text="${stat.totalDeliveries}">10</span>
+                                </div>
+                            </td>
+                            
+                            <td class="status-count green-count">
+                                <div class="count-badge success" th:if="${stat.greenDeliveries > 0}">
+                                    <span th:text="${stat.greenDeliveries}">5</span>
+                                </div>
+                                <span th:if="${stat.greenDeliveries == 0}" class="no-data">—</span>
+                            </td>
+                            
+                            <td class="status-count yellow-count">
+                                <div class="count-badge warning" th:if="${stat.yellowDeliveries > 0}">
+                                    <span th:text="${stat.yellowDeliveries}">3</span>
+                                </div>
+                                <span th:if="${stat.yellowDeliveries == 0}" class="no-data">—</span>
+                            </td>
+                            
+                            <td class="status-count red-count">
+                                <div class="count-badge danger" th:if="${stat.redDeliveries > 0}">
+                                    <span th:text="${stat.redDeliveries}">2</span>
+                                </div>
+                                <span th:if="${stat.redDeliveries == 0}" class="no-data">—</span>
+                            </td>
+                            
+                            <td class="green-rate-cell">
+                                <div th:if="${stat.totalDeliveries > 0}" class="rate-container">
+                                    <div class="rate-badge" 
+                                         th:classappend="${stat.greenRate >= 80 ? 'excellent' : 
+                                                         (stat.greenRate >= 60 ? 'good' : 
+                                                         (stat.greenRate >= 40 ? 'fair' : 
+                                                         (stat.greenRate > 0 ? 'poor' : 'no-data')))}"
+                                         th:text="${#numbers.formatDecimal(stat.greenRate, 1, 1)} + '%'">
+                                        50%
+                                    </div>
+                                </div>
+                                <div th:if="${stat.totalDeliveries == 0}" class="no-data-badge">
+                                    <i class="fas fa-hourglass-half"></i>
+                                    <span>Pending</span>
+                                </div>
+                            </td>
+                            
+                            <td class="actions-cell">
+                                <button class="action-btn view-btn" 
+                                        th:onclick="event.stopPropagation(); window.location='/customer/suppliers/details/' + ${stat.supplierId}"
+                                        title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn more-btn" title="More Options">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div th:if="${supplierStats.empty}" class="empty-state">
+                    <i class="fas fa-users-slash"></i>
+                    <h3>No Suppliers Found</h3>
+                    <p>You haven't connected with any suppliers yet.</p>
+                    <button class="clean-button">
+                        <i class="fas fa-plus"></i>
+                        Add Supplier
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -215,11 +377,124 @@
         </label>
     </div>
 
-
     <script src="/javascript/non-specific/account-menu.js" defer></script>
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="/javascript/customer/c-supplier/c-supplier-overview.js" defer></script>
     <script src="/javascript/customer/c-supplier/c-supplierFilter.js" defer></script>
+    
+    <script>
+        // Enhanced table interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Table sorting functionality
+            const sortableHeaders = document.querySelectorAll('.sortable');
+            const tableBody = document.querySelector('.modern-suppliers-table tbody');
+            
+            sortableHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const columnIndex = parseInt(this.getAttribute('data-column'));
+                    const sortIcon = this.querySelector('.sort-icon');
+                    const isAscending = sortIcon.classList.contains('fa-sort') || sortIcon.classList.contains('fa-sort-down');
+                    
+                    // Reset all other sort icons
+                    sortableHeaders.forEach(h => {
+                        if (h !== this) {
+                            h.querySelector('.sort-icon').className = 'fas fa-sort sort-icon';
+                        }
+                    });
+                    
+                    // Toggle current sort icon
+                    if (isAscending) {
+                        sortIcon.className = 'fas fa-sort-up sort-icon';
+                    } else {
+                        sortIcon.className = 'fas fa-sort-down sort-icon';
+                    }
+                    
+                    // Sort the table rows
+                    const rows = Array.from(tableBody.querySelectorAll('.supplier-row'));
+                    
+                    rows.sort((a, b) => {
+                        let aValue, bValue;
+                        
+                        switch(columnIndex) {
+                            case 0: // Supplier name
+                                aValue = a.querySelector('.supplier-name').textContent.trim();
+                                bValue = b.querySelector('.supplier-name').textContent.trim();
+                                break;
+                            case 1: // Total deliveries
+                                aValue = parseInt(a.querySelector('.delivery-count .count-badge span').textContent);
+                                bValue = parseInt(b.querySelector('.delivery-count .count-badge span').textContent);
+                                break;
+                            case 2: // Green deliveries
+                                const aGreen = a.querySelector('.green-count .count-badge span');
+                                const bGreen = b.querySelector('.green-count .count-badge span');
+                                aValue = aGreen ? parseInt(aGreen.textContent) : 0;
+                                bValue = bGreen ? parseInt(bGreen.textContent) : 0;
+                                break;
+                            case 3: // Yellow deliveries
+                                const aYellow = a.querySelector('.yellow-count .count-badge span');
+                                const bYellow = b.querySelector('.yellow-count .count-badge span');
+                                aValue = aYellow ? parseInt(aYellow.textContent) : 0;
+                                bValue = bYellow ? parseInt(bYellow.textContent) : 0;
+                                break;
+                            case 4: // Red deliveries
+                                const aRed = a.querySelector('.red-count .count-badge span');
+                                const bRed = b.querySelector('.red-count .count-badge span');
+                                aValue = aRed ? parseInt(aRed.textContent) : 0;
+                                bValue = bRed ? parseInt(bRed.textContent) : 0;
+                                break;
+                            case 5: // Green rate
+                                const aRate = a.querySelector('.rate-badge');
+                                const bRate = b.querySelector('.rate-badge');
+                                aValue = aRate ? parseFloat(aRate.textContent.replace('%', '')) : 0;
+                                bValue = bRate ? parseFloat(bRate.textContent.replace('%', '')) : 0;
+                                break;
+                            default:
+                                return 0;
+                        }
+                        
+                        if (typeof aValue === 'string') {
+                            return isAscending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                        } else {
+                            return isAscending ? aValue - bValue : bValue - aValue;
+                        }
+                    });
+                    
+                    // Re-append sorted rows
+                    rows.forEach(row => tableBody.appendChild(row));
+                });
+            });
+            
+            // Enhanced search functionality
+            const searchInput = document.getElementById('searchInput');
+            const supplierRows = document.querySelectorAll('.supplier-row');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                supplierRows.forEach(row => {
+                    const supplierName = row.querySelector('.supplier-name').textContent.toLowerCase();
+                    const supplierId = row.querySelector('.supplier-id').textContent.toLowerCase();
+                    
+                    if (supplierName.includes(searchTerm) || supplierId.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Row hover effects
+            supplierRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(2px)';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

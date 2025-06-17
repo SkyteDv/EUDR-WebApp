@@ -16,6 +16,184 @@
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
     <script src="/javascript/non-specific/account-menu.js" defer></script>
     <script src="/javascript/customer/c-manage-order-actions.js" defer></script>
+    
+    <script>
+        // Enhanced Modal Management - Ensure DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Make functions globally accessible
+            window.showModal = function(modalId) {
+                console.log('Attempting to show modal:', modalId);
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    console.log('Modal found, showing it');
+                    modal.style.display = 'flex';
+                    // Trigger animation after display is set
+                    requestAnimationFrame(() => {
+                        modal.classList.add('show');
+                    });
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    console.error('Modal not found:', modalId);
+                }
+            };
+
+            window.closeModal = function(modalId) {
+                console.log('Attempting to close modal:', modalId);
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('show');
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = '';
+                    }, 300);
+                } else {
+                    console.error('Modal not found for closing:', modalId);
+                }
+            };
+
+            window.showProductGroupModal = function() {
+                console.log('showProductGroupModal called');
+                showModal('productGroupModal');
+            };
+
+            window.showReroutingModal = function() {
+                console.log('showReroutingModal called');
+                showModal('reroutingModal');
+            };
+
+            window.showContactSupplierModal = function() {
+                console.log('showContactSupplierModal called');
+                showModal('contactSupplierModal');
+            };
+            
+            window.sendEmailToSupplier = function() {
+                const subject = document.getElementById('messageSubject').value;
+                const body = document.getElementById('messageBody').value;
+                const supplierEmail = '[[${order.supplier.email}]]';
+                
+                const mailtoLink = `mailto:${supplierEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                window.location.href = mailtoLink;
+                
+                showToast('Email client opened with pre-filled message', 'success');
+                closeModal('contactSupplierModal');
+            };
+
+            window.copyMessageToClipboard = function() {
+                const subject = document.getElementById('messageSubject').value;
+                const body = document.getElementById('messageBody').value;
+                const supplierEmail = '[[${order.supplier.email}]]';
+                
+                const fullMessage = `To: ${supplierEmail}\nSubject: ${subject}\n\n${body}`;
+                
+                navigator.clipboard.writeText(fullMessage).then(() => {
+                    showToast('Message copied to clipboard successfully!', 'success');
+                    closeModal('contactSupplierModal');
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = fullMessage;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showToast('Message copied to clipboard successfully!', 'success');
+                    closeModal('contactSupplierModal');
+                });
+            };
+
+            window.showToast = function(message, type = 'info') {
+                // Remove existing toasts
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                
+                const iconMap = {
+                    success: 'fas fa-check-circle',
+                    error: 'fas fa-exclamation-triangle',
+                    info: 'fas fa-info-circle',
+                    warning: 'fas fa-exclamation-triangle'
+                };
+
+                const colorMap = {
+                    success: '#28a745',
+                    error: '#dc3545',
+                    info: '#17a2b8',
+                    warning: '#ffc107'
+                };
+
+                toast.style.background = colorMap[type] || colorMap.info;
+                toast.style.color = 'white';
+
+                toast.innerHTML = `
+                    <div class="toast-content">
+                        <i class="${iconMap[type] || iconMap.info} toast-icon"></i>
+                        <span class="toast-message">${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(toast);
+
+                // Auto remove after 4 seconds
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.parentNode.removeChild(toast);
+                        }
+                    }, 300);
+                }, 4000);
+            };
+
+            // Close modal when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal-backdrop')) {
+                    const modal = e.target.closest('.modal');
+                    if (modal) {
+                        closeModal(modal.id);
+                    }
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const openModal = document.querySelector('.modal.show');
+                    if (openModal) {
+                        closeModal(openModal.id);
+                    }
+                }
+            });
+
+            // Add form validation for required fields
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.style.borderColor = '#f44336';
+                            field.addEventListener('input', function() {
+                                this.style.borderColor = '#e2e8f0';
+                            }, { once: true });
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        showToast('Please fill in all required fields', 'error');
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -209,12 +387,12 @@
                                     <h4><i class="fas fa-phone"></i> Supplier Communication</h4>
                                     <p>Contact supplier regarding DDS documentation or compliance issues that need immediate attention.</p>
                                 </div>
-                                <a th:if="${order.supplier.email != null}" 
-                                   th:href="'mailto:' + ${order.supplier.email} + '?subject=' + ${T(java.net.URLEncoder).encode('Urgent: EUDR Compliance Issue - Order ' + order.erpReferenceNumber, 'UTF-8')} + '&body=' + ${T(java.net.URLEncoder).encode('Dear ' + order.supplier.username + ',\n\nWe need your immediate attention regarding order ' + order.erpReferenceNumber + '.\n\nThere is a compliance issue with the Due Diligence Statement (DDS) for this order that requires urgent resolution:\n\n• Order Reference: ' + order.erpReferenceNumber + '\n• Issue: Missing or invalid DDS documentation\n• Action Required: Please provide complete and valid DDS documentation\n\nTo maintain compliance with EU Deforestation Regulation (EUDR), we need:\n1. Updated DDS documentation with all required fields\n2. Confirmation of product origin and supply chain traceability\n3. Any supporting certificates or documentation\n\nPlease respond within 24 hours to avoid potential delays in order processing.\n\nBest regards,\nRisk Management Team', 'UTF-8')}"
-                                   class="action-button info" 
-                                   data-action="contact-supplier">
+                                <button th:if="${order.supplier.email != null}" 
+                                        class="action-button info" 
+                                        onclick="showContactSupplierModal()"
+                                        data-action="contact-supplier">
                                     Contact Supplier
-                                </a>
+                                </button>
                                 <span th:unless="${order.supplier.email != null}" 
                                       class="action-button info disabled" 
                                       title="Supplier email not available">
@@ -296,6 +474,7 @@
     
     <!-- Modals for Actions -->
     <div id="productGroupModal" class="modal" style="display: none;">
+        <div class="modal-backdrop" onclick="closeModal('productGroupModal')"></div>
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-tags"></i> Set Product Group</h3>
@@ -304,27 +483,38 @@
             <form th:action="@{/customer/risk/update-product-group/{orderId}(orderId=${order.id})}" method="post">
                 <div class="modal-body">
                     <p class="modal-description">Select the appropriate EUDR product category for this order:</p>
-                    <label for="productGroupSelect">Product Group:</label>
-                    <select id="productGroupSelect" name="productCategory" class="form-select" required>
-                        <option value="">Choose a product group...</option>
-                        <option value="CATTLE">Cattle</option>
-                        <option value="COFFEE">Coffee</option>
-                        <option value="COCOA">Cocoa</option>
-                        <option value="PALM_OIL">Palm Oil</option>
-                        <option value="SOY">Soy</option>
-                        <option value="WOOD">Wood</option>
-                        <option value="RUBBER">Rubber</option>
-                    </select>
+                    <div class="form-group">
+                        <label for="productGroupSelect">Product Group:</label>
+                        <select id="productGroupSelect" name="productCategory" class="form-select" required>
+                            <option value="">Choose a product group...</option>
+                            <option value="CATTLE">🐄 Cattle</option>
+                            <option value="COFFEE">☕ Coffee</option>
+                            <option value="COCOA">🍫 Cocoa</option>
+                            <option value="PALM_OIL">🌴 Palm Oil</option>
+                            <option value="SOY">🌱 Soy</option>
+                            <option value="WOOD">🌲 Wood</option>
+                            <option value="RUBBER">🔘 Rubber</option>
+                        </select>
+                    </div>
+                    <div class="classification-info">
+                        <i class="fas fa-info-circle"></i>
+                        <p>This classification is required for EUDR compliance assessment. Please ensure you select the correct category that matches your product.</p>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="action-button primary">Update Classification</button>
-                    <button type="button" class="action-button secondary" onclick="closeModal('productGroupModal')">Cancel</button>
+                    <button type="submit" class="action-button primary">
+                        <i class="fas fa-check"></i> Update Classification
+                    </button>
+                    <button type="button" class="action-button secondary" onclick="closeModal('productGroupModal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
                 </div>
             </form>
         </div>
     </div>
     
     <div id="reroutingModal" class="modal" style="display: none;">
+        <div class="modal-backdrop" onclick="closeModal('reroutingModal')"></div>
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-route"></i> Reroute Order</h3>
@@ -333,23 +523,112 @@
             <form th:action="@{/customer/risk/reroute-order/{orderId}(orderId=${order.id})}" method="post">
                 <div class="modal-body">
                     <p class="modal-description">Select a new destination and provide reasoning for the rerouting:</p>
-                    <label for="newDestination">New Destination Harbor:</label>
-                    <select id="newDestination" name="newDestination" class="form-select" required>
-                        <option value="">Select new destination...</option>
-                        <option value="Rotterdam">Rotterdam</option>
-                        <option value="Hamburg">Hamburg</option>
-                        <option value="Antwerp">Antwerp</option>
-                        <option value="Le Havre">Le Havre</option>
-                        <option value="Felixstowe">Felixstowe</option>
-                    </select>
+                    <div class="form-group">
+                        <label for="newDestination">New Destination Harbor:</label>
+                        <select id="newDestination" name="newDestination" class="form-select" required>
+                            <option value="">Select new destination...</option>
+                            <option value="Rotterdam">Rotterdam</option>
+                            <option value="Hamburg">Hamburg</option>
+                            <option value="Antwerp">Antwerp</option>
+                            <option value="Le Havre">Le Havre</option>
+                            <option value="Felixstowe">Felixstowe</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="rerouteReason">Reason for rerouting:</label>
                         <textarea id="rerouteReason" name="rerouteReason" rows="3" placeholder="Enter detailed reason for rerouting..." required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="action-button danger">Confirm Rerouting</button>
-                    <button type="button" class="action-button secondary" onclick="closeModal('reroutingModal')">Cancel</button>
+                    <button type="submit" class="action-button danger">
+                        <i class="fas fa-route"></i> Confirm Rerouting
+                    </button>
+                    <button type="button" class="action-button secondary" onclick="closeModal('reroutingModal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="contactSupplierModal" class="modal" style="display: none;">
+        <div class="modal-backdrop" onclick="closeModal('contactSupplierModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope"></i> Contact Supplier</h3>
+                <span class="close" onclick="closeModal('contactSupplierModal')">&times;</span>
+            </div>
+            <form id="contactSupplierForm">
+                <div class="modal-body">
+                    <p class="modal-description">Send an urgent message to the supplier regarding EUDR compliance issues:</p>
+                    
+                    <div class="supplier-info">
+                        <div class="info-row">
+                            <label>Supplier:</label>
+                            <span th:text="${order.supplier.username}">Supplier Name</span>
+                        </div>
+                        <div class="info-row">
+                            <label>Email:</label>
+                            <span th:text="${order.supplier.email}">supplier@example.com</span>
+                        </div>
+                        <div class="info-row">
+                            <label>Order Reference:</label>
+                            <span th:text="${order.erpReferenceNumber}">Order123</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="messageSubject">Subject:</label>
+                        <input type="text" id="messageSubject" class="form-input" 
+                               th:value="'Urgent: EUDR Compliance Issue - Order ' + ${order.erpReferenceNumber}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="messageBody">Message:</label>
+                        <textarea id="messageBody" rows="8" class="form-textarea" placeholder="Customize your message...">Dear [[${order.supplier.username}]],
+
+We need your immediate attention regarding order [[${order.erpReferenceNumber}]].
+
+There is a compliance issue with the Due Diligence Statement (DDS) for this order that requires urgent resolution:
+
+• Order Reference: [[${order.erpReferenceNumber}]]
+• Issue: Missing or invalid DDS documentation
+• Action Required: Please provide complete and valid DDS documentation
+
+To maintain compliance with EU Deforestation Regulation (EUDR), we need:
+1. Updated DDS documentation with all required fields
+2. Confirmation of product origin and supply chain traceability
+3. Any supporting certificates or documentation
+
+Please respond within 24 hours to avoid potential delays in order processing.
+
+Best regards,
+Risk Management Team</textarea>
+                    </div>
+
+                    <div class="contact-options">
+                        <div class="option-card">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <h4>Send Email</h4>
+                            <p>Opens your default email client with the pre-filled message</p>
+                        </div>
+                        <div class="option-card">
+                            <i class="fas fa-copy"></i>
+                            <h4>Copy Message</h4>
+                            <p>Copy the message to clipboard for manual sending</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="action-button info" onclick="sendEmailToSupplier()">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </button>
+                    <button type="button" class="action-button primary" onclick="copyMessageToClipboard()">
+                        <i class="fas fa-copy"></i> Copy Message
+                    </button>
+                    <button type="button" class="action-button secondary" onclick="closeModal('contactSupplierModal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
                 </div>
             </form>
         </div>
@@ -470,55 +749,70 @@
     transition: all 0.3s ease;
     min-width: 140px;
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
 }
 
 .action-button.primary {
-    background-color: var(--button-bg-color);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .action-button.primary:hover {
-    background-color: var(--button-hover-bg-clr);
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 .action-button.warning {
-    background-color: #ff9800;
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
     color: white;
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
 }
 
 .action-button.warning:hover {
-    background-color: #f57c00;
+    background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
 }
 
 .action-button.info {
-    background-color: #2196F3;
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
     color: white;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
 }
 
 .action-button.info:hover {
-    background-color: #1976D2;
+    background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
 }
 
 .action-button.danger {
-    background-color: #f44336;
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
     color: white;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
 }
 
 .action-button.danger:hover {
-    background-color: #d32f2f;
+    background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
 }
 
 .action-button.secondary {
-    background-color: var(--base-acc-medium-clr);
-    color: var(--text-clr);
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+    color: #2d3748;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .action-button.secondary:hover {
-    background-color: var(--base-acc-dark-clr);
+    background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .success-message {
@@ -549,50 +843,252 @@
     margin: 0;
 }
 
-/* Modal Improvements */
-.modal-content {
-    max-width: 550px;
-    border-radius: 16px;
-}
-
-.modal-header h3 {
+/* Modern Modal System */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-}
-
-.modal-description {
-    background-color: var(--base-acc-clr);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    color: var(--text-acc-clr);
-}
-
-.form-group {
-    margin-top: 1rem;
-}
-
-.form-select, textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 2px solid var(--base-acc-medium-clr);
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: var(--base-clr);
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
     transition: all 0.3s ease;
 }
 
-.form-select:focus, textarea:focus {
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    position: relative;
+    background: var(--base-clr);
+    max-width: 650px;
+    width: 90%;
+    max-height: 90vh;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    transform: scale(0.8) translateY(30px);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 1001;
+}
+
+.modal.show .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px 20px 0 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.modal-header .close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-header .close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 2rem;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.modal-description {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 1px solid #e2e8f0;
+    padding: 1.25rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    color: #4a5568;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-clr);
+    font-size: 0.95rem;
+}
+
+.form-select, .form-input, .form-textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: var(--base-clr);
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-select:focus, .form-input:focus, .form-textarea:focus {
     outline: none;
-    border-color: var(--button-bg-color);
-    box-shadow: 0 0 0 3px rgba(126, 117, 177, 0.1);
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
 }
 
 .modal-footer {
+    background: #f8fafc;
+    padding: 1.5rem 2rem;
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
+    border-radius: 0 0 20px 20px;
+}
+
+/* Contact Supplier Modal Specific Styles */
+.supplier-info {
+    background: linear-gradient(135deg, #ebf8ff 0%, #e6fffa 100%);
+    border: 1px solid #90cdf4;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-row label {
+    font-weight: 600;
+    color: #2d3748;
+    min-width: 120px;
+    margin-bottom: 0;
+    margin-right: 1rem;
+}
+
+.info-row span {
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.contact-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.option-card {
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+    border: 1px solid #fc8181;
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.option-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(252, 129, 129, 0.15);
+}
+
+.option-card i {
+    font-size: 1.5rem;
+    color: #e53e3e;
+    margin-bottom: 0.5rem;
+}
+
+.option-card h4 {
+    margin: 0 0 0.5rem 0;
+    color: #2d3748;
+    font-size: 1rem;
+}
+
+.option-card p {
+    margin: 0;
+    color: #718096;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+/* Classification Info */
+.classification-info {
+    background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+    border: 1px solid #68d391;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.classification-info i {
+    color: #38a169;
+    font-size: 1.125rem;
+    margin-top: 0.125rem;
+}
+
+.classification-info p {
+    margin: 0;
+    color: #2f855a;
+    font-size: 0.875rem;
+    line-height: 1.5;
 }
 
 /* Toast Improvements */
@@ -608,7 +1104,6 @@
     animation: toastSlideIn 0.4s ease-out;
 }
 
-/* Alert Messages */
 .alert {
     transition: opacity 0.3s ease;
 }
@@ -619,20 +1114,22 @@
 
 /* Disabled Button State */
 .action-button.disabled {
-    background-color: #6c757d !important;
-    color: #ffffff;
+    background: #e2e8f0 !important;
+    color: #a0aec0 !important;
     cursor: not-allowed;
     opacity: 0.7;
+    box-shadow: none !important;
 }
 
 .action-button.disabled:hover {
-    background-color: #6c757d !important;
+    background: #e2e8f0 !important;
     transform: none !important;
+    box-shadow: none !important;
 }
 
 /* Link styled as button */
 a.action-button {
-    display: inline-block;
+    display: inline-flex;
     text-decoration: none;
     text-align: center;
 }
@@ -653,6 +1150,15 @@ a.action-button:hover {
 
 .toast-message {
     font-weight: 500;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes toastSlideIn {
@@ -679,14 +1185,66 @@ a.action-button:hover {
     }
     
     .modal-content {
-        margin: 5% auto;
         width: 95%;
+        max-height: 95vh;
+    }
+    
+    .modal-header {
+        padding: 1rem 1.5rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .modal-footer {
+        padding: 1rem 1.5rem;
+        flex-direction: column;
+    }
+    
+    .action-button {
+        width: 100%;
+    }
+    
+    .contact-options {
+        grid-template-columns: 1fr;
     }
     
     .success-message, .danger-alert {
         flex-direction: column;
         text-align: center;
     }
+    
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .info-row label {
+        min-width: auto;
+        margin-right: 0;
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* Scrollbar Styling */
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
 }
 </style>
 

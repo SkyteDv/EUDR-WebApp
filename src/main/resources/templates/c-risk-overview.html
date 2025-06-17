@@ -1,134 +1,479 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:attr="data-theme=${session.theme}">
 <head>
     <meta charset="UTF-8">
-    <title>Risk Overview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Management Overview</title>
     <link rel="stylesheet" href="/css/non-specific/global.css">
     <link rel="stylesheet" href="/css/non-specific/header.css">
     <link rel="stylesheet" href="/css/customer/c-risk-overview.css">
     <link rel="stylesheet" href="/css/customer/account-menu.css">
     <link rel="stylesheet" href="/css/non-specific/sidebar.css">
-
-    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/javascript/non-specific/account-menu.js" defer></script>
+    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
+    <script src="/javascript/customer/c-risk-overview.js" defer></script>
 </head>
+
 <body>
-
-<header class="header">
-    <div class="logo-container">
-        <a href="/"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
-        <h4>CUSTOMER</h4>
-    </div>
-
-    <nav class="navbar">
-        <h2>Folium</h2>
-    </nav>
-
-    <div class="account-wrapper">
-        <a href="#" id="account-toggle">
-            👤 Hello <span th:text="${session.username}">User</span> ▼
-        </a>
-        <div class="dropdown-menu" id="account-menu">
-            <a href="/account">Profile</a>
-            <a href="/settings">Settings</a>
-            <form th:action="@{/user/logout}" method="post">
-                <button type="submit" class="dropdown-btn">Logout</button>
-            </form>
+    <header class="header">
+        <div class="logo-container">
+            <a href="/"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+            <h4>CUSTOMER</h4>
         </div>
-    </div>
-</header>
 
-<aside id="sidebar">
-    <ul>
-        <li id="sidebar-actions-container">
-            <span class="logo">Actions</span>
-            <button onclick=toggleSidebar() id="toggle-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                     fill="#e8eaed">
-                    <path
-                            d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
-                </svg>
-            </button>
-        </li>
-        <li>
-            <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                     fill="#e8eaed">
-                    <path
-                            d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
-                </svg>
-                <span>Dashboard</span>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                     fill="#e8eaed">
-                    <path
-                            d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
-                </svg>
-            </button>
-            <ul class="sub-menu">
-                <div>
-                    <li><a href="/customer/dashboard">Data 1</a></li>
-                    <li><a href="#">Data 2</a></li>
-                    <li><a href="#">Data 3</a></li>
+        <div class="account-wrapper">
+            <a href="#" id="account-toggle">
+                <i class="fas fa-user"></i> Hello <span th:text="${session.username}">User</span> <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="dropdown-menu" id="account-menu">
+                <a href="/account">Profile</a>
+                <a href="/settings">Settings</a>
+                <form th:action="@{/user/logout}" method="post">
+                    <button type="submit" class="dropdown-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <aside id="sidebar">
+        <ul>
+            <li id="sidebar-actions-container">
+                <span class="logo">Actions</span>
+                <button onclick=toggleSidebar() id="toggle-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                        <path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button onclick=toggleSubMenu(this) class="dropdown-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                        <path d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
+                    </svg>
+                    <span>Dashboard</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                        <path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+                    </svg>
+                </button>
+                <ul class="sub-menu">
+                    <div>
+                        <li><a href="/customer/dashboard">Data 1</a></li>
+                        <li><a href="#">Data 2</a></li>
+                        <li><a href="#">Data 3</a></li>
+                    </div>
+                </ul>
+            </li>
+            <li>
+                <button onclick=toggleSubMenu(this) class="dropdown-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                        <path d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Zm320-228Z" />
+                    </svg>
+                    <span>Deliveries</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                        <path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+                    </svg>
+                </button>
+                <ul class="sub-menu">
+                    <div>
+                        <li><a href="/customer/deliveries/active">Active</a></li>
+                        <li><a href="/customer/deliveries/history">History</a></li>
+                    </div>
+                </ul>
+            </li>
+            <li>
+                <a href="/customer/suppliers/overview">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                        <path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
+                    </svg>
+                    <span>Suppliers</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="/customer/risk/overview">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                        <path d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480v-315l-240 90v207q0 7 2 18h238v316Z" />
+                    </svg>
+                    <span>Risk Management</span>
+                </a>
+            </li>
+            <li>
+                <a href="/customer/harbour/overview">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                        <path d="M152-80h-32v-80h32q48 0 91.5-10.5T341-204q38 19 66.5 31.5T480-160q44 0 72.5-12.5T619-204q53 23 97.5 33.5T809-160h31v80h-31q-49 0-95.5-9T622-116q-40 19-73 27t-69 8q-36 0-68.5-8T339-116q-45 18-91.5 27T152-80Zm328-160q-60 0-105-40l-45-40q-27 27-60.5 46T198-247l-85-273q-5-17 3-31t25-19l59-16v-134q0-33 23.5-56.5T280-800h100v-80h200v80h100q33 0 56.5 23.5T760-720v134l59 16q17 5 25 19t3 31l-85 273q-38-8-71.5-27T630-320l-45 40q-45 40-105 40Zm2-80q31 0 55-20.5t44-43.5l46-53 41 42q11 11 22.5 20.5T713-355l46-149-279-73-278 73 46 149q11-10 22.5-19.5T293-395l41-42 46 53q20 24 45 44t57 20ZM280-607l200-53 200 53v-113H280v113Zm201 158Z" />
+                    </svg>
+                    <span>Harbours</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <main>
+        <div class="risk-dashboard">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="header-content">
+                    <h1>Risk Management Overview</h1>
+                    <p class="header-description">Monitor and manage delivery risks across your supply chain</p>
                 </div>
-            </ul>
-        </li>
-        <li>
-            <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                     fill="#e3e3e3">
-                    <path
-                            d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Zm320-228Z" />
-                </svg>
-                <span>Deliveries</span>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                     fill="#e8eaed">
-                    <path
-                            d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
-                </svg>
-            </button>
-            <ul class="sub-menu">
-                <div>
-                    <li><a href="/customer/deliveries/active">Active</a></li>
-                    <li><a href="/customer/deliveries/history">History</a></li>
+                <div class="header-actions">
+                    <div class="system-status" th:classappend="${highRiskOrders > 0 ? 'status-critical' : (mediumRiskOrders > 0 ? 'status-warning' : 'status-normal')}">
+                        <i class="fas fa-shield-alt status-icon"></i>
+                        <span class="status-text" th:text="${highRiskOrders > 0 ? 'Critical Issues Detected' : (mediumRiskOrders > 0 ? 'Monitoring Required' : 'System Normal')}">System Normal</span>
+                    </div>
                 </div>
-            </ul>
-        </li>
-        <li>
-            <a href="/customer/suppliers/overview">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                     fill="#e3e3e3">
-                    <path
-                            d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
-                </svg>
-                <span>Suppliers</span>
-            </a>
-        </li>
-        <li class="active">
-            <a href="/customer/risk/overview">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                     fill="#e3e3e3">
-                    <path
-                            d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480v-315l-240 90v207q0 7 2 18h238v316Z" />
-                </svg>
-                <span>Mitigation</span>
-            </a>
-        </li>
-        <li>
-            <a href="/customer/harbour/overview">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                     fill="#e3e3e3">
-                    <path
-                            d="M152-80h-32v-80h32q48 0 91.5-10.5T341-204q38 19 66.5 31.5T480-160q44 0 72.5-12.5T619-204q53 23 97.5 33.5T809-160h31v80h-31q-49 0-95.5-9T622-116q-40 19-73 27t-69 8q-36 0-68.5-8T339-116q-45 18-91.5 27T152-80Zm328-160q-60 0-105-40l-45-40q-27 27-60.5 46T198-247l-85-273q-5-17 3-31t25-19l59-16v-134q0-33 23.5-56.5T280-800h100v-80h200v80h100q33 0 56.5 23.5T760-720v134l59 16q17 5 25 19t3 31l-85 273q-38-8-71.5-27T630-320l-45 40q-45 40-105 40Zm2-80q31 0 55-20.5t44-43.5l46-53 41 42q11 11 22.5 20.5T713-355l46-149-279-73-278 73 46 149q11-10 22.5-19.5T293-395l41-42 46 53q20 24 45 44t57 20ZM280-607l200-53 200 53v-113H280v113Zm201 158Z" />
-                </svg>
-                <span>Harbours</span>
-            </a>
-        </li>
-    </ul>
-</aside>
+            </div>
 
-<main>
-    <div class="content"></div>
-</main>
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Key Metrics Grid -->
+            <div class="metrics-section">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-boxes metric-icon"></i>
+                            <span class="metric-title">Total Orders</span>
+                        </div>
+                        <div class="metric-value" th:text="${totalOrders}">0</div>
+                        <div class="metric-trend">
+                            <span class="trend-label">Active:</span>
+                            <span class="trend-value" th:text="${activeOrders}">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card critical" th:if="${highRiskOrders > 0}">
+                        <div class="metric-header">
+                            <i class="fas fa-exclamation-triangle metric-icon"></i>
+                            <span class="metric-title">Critical Risk</span>
+                        </div>
+                        <div class="metric-value" th:text="${highRiskOrders}">0</div>
+                        <div class="metric-trend">
+                            <span class="trend-label">Requires immediate attention</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-chart-line metric-icon"></i>
+                            <span class="metric-title">Average Risk Score</span>
+                        </div>
+                        <div class="metric-value" th:text="${averageRiskScore}">0</div>
+                        <div class="metric-trend">
+                            <span class="trend-label">Max:</span>
+                            <span class="trend-value" th:text="${maxRiskScore}">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card" th:classappend="${ordersWithMissingDDS > 0 ? 'warning' : ''}">
+                        <div class="metric-header">
+                            <i class="fas fa-file-alt metric-icon"></i>
+                            <span class="metric-title">DDS Compliance</span>
+                        </div>
+                        <div class="metric-value" th:text="${compliancePercentage} + '%'">100%</div>
+                        <div class="metric-trend" th:if="${ordersWithMissingDDS > 0}">
+                            <span class="trend-label" th:text="${ordersWithMissingDDS} + ' missing'">0 missing</span>
+                        </div>
+                        <div class="metric-trend" th:unless="${ordersWithMissingDDS > 0}">
+                            <span class="trend-label">Fully compliant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Risk Distribution and Analytics -->
+            <div class="content-grid">
+                <!-- Risk Distribution Chart -->
+                <div class="content-card chart-card">
+                    <div class="card-header">
+                        <h3>Risk Distribution</h3>
+                        <div class="card-actions">
+                            <button class="btn-secondary btn-sm">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="risk-chart-container">
+                            <div class="donut-chart" th:attr="data-high=${highRiskPercentage}, data-medium=${mediumRiskPercentage}, data-low=${lowRiskPercentage}, data-unknown=${unknownRiskPercentage}">
+                                <div class="chart-center">
+                                    <span class="chart-total" th:text="${totalOrders}">0</span>
+                                    <span class="chart-label">Orders</span>
+                                </div>
+                            </div>
+                            <div class="chart-legend">
+                                <div class="legend-item high-risk">
+                                    <span class="legend-dot"></span>
+                                    <span class="legend-text">Critical Risk</span>
+                                    <span class="legend-value" th:text="${highRiskOrders}">0</span>
+                                </div>
+                                <div class="legend-item medium-risk">
+                                    <span class="legend-dot"></span>
+                                    <span class="legend-text">Medium Risk</span>
+                                    <span class="legend-value" th:text="${mediumRiskOrders}">0</span>
+                                </div>
+                                <div class="legend-item low-risk">
+                                    <span class="legend-dot"></span>
+                                    <span class="legend-text">Low Risk</span>
+                                    <span class="legend-value" th:text="${lowRiskOrders}">0</span>
+                                </div>
+                                <div class="legend-item unknown-risk">
+                                    <span class="legend-dot"></span>
+                                    <span class="legend-text">Pending Assessment</span>
+                                    <span class="legend-value" th:text="${unknownRiskOrders}">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Cards -->
+                <div class="analytics-grid">
+                    <!-- Delivery Timeline -->
+                    <div class="content-card analytics-card">
+                        <div class="card-header">
+                            <h4><i class="fas fa-calendar-alt"></i> Delivery Timeline</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="timeline-stats">
+                                <div class="timeline-item">
+                                    <span class="timeline-number" th:text="${thisWeekDeliveries}">0</span>
+                                    <span class="timeline-label">This Week</span>
+                                </div>
+                                <div class="timeline-item">
+                                    <span class="timeline-number" th:text="${nextWeekDeliveries}">0</span>
+                                    <span class="timeline-label">Next Week</span>
+                                </div>
+                                <div class="timeline-item warning" th:if="${overdueDeliveries > 0}">
+                                    <span class="timeline-number" th:text="${overdueDeliveries}">0</span>
+                                    <span class="timeline-label">Overdue</span>
+                                </div>
+                            </div>
+                            <a href="/customer/deliveries/active" class="card-action">View Schedule</a>
+                        </div>
+                    </div>
+
+                    <!-- Supplier Risk Profile -->
+                    <div class="content-card analytics-card">
+                        <div class="card-header">
+                            <h4><i class="fas fa-building"></i> Supplier Overview</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="supplier-stats">
+                                <div class="supplier-count">
+                                    <span class="count-number" th:text="${totalSuppliers}">0</span>
+                                    <span class="count-label">Active Suppliers</span>
+                                </div>
+                                <div class="risk-breakdown">
+                                    <div class="risk-bar">
+                                        <span class="risk-label">High Risk Orders</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill high-risk" th:style="'width: ' + ${highRiskPercentage} + '%'"></div>
+                                        </div>
+                                        <span class="risk-count" th:text="${highRiskOrders}">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="/customer/suppliers/overview" class="card-action">Manage Suppliers</a>
+                        </div>
+                    </div>
+
+                    <!-- Product Categories -->
+                    <div class="content-card analytics-card">
+                        <div class="card-header">
+                            <h4><i class="fas fa-tags"></i> Product Categories</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="category-list">
+                                <div class="category-item" th:each="category : ${productCategories}">
+                                    <span class="category-name" th:text="${category}">Category</span>
+                                    <div class="category-indicator normal"></div>
+                                </div>
+                                <div class="category-item" th:if="${#lists.isEmpty(productCategories)}">
+                                    <span class="category-name">No categories available</span>
+                                </div>
+                            </div>
+                            <a href="/customer/deliveries/active" class="card-action">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Critical Issues Alert -->
+            <div class="alert-section" th:if="${ordersWithMissingDDS > 0 or highRiskOrders > 0}">
+                <div class="alert-header">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Critical Issues Requiring Attention</h3>
+                </div>
+                <div class="alert-grid">
+                    <div class="alert-card critical" th:if="${ordersWithMissingDDS > 0}">
+                        <div class="alert-icon">
+                            <i class="fas fa-file-times"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>Missing DDS Documentation</h4>
+                            <p><span th:text="${ordersWithMissingDDS}">0</span> orders require DDS documentation</p>
+                            <a href="/customer/deliveries/active" class="btn-primary">Review Orders</a>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-card critical" th:if="${highRiskOrders > 0}">
+                        <div class="alert-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>High-Risk Orders</h4>
+                            <p><span th:text="${highRiskOrders}">0</span> orders require immediate risk mitigation</p>
+                            <a href="#high-risk-orders" class="btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- High-Risk Orders Table -->
+            <div class="table-section" th:if="${!highRiskActiveOrders.isEmpty()}" id="high-risk-orders">
+                <div class="table-header">
+                    <h3>Critical Orders Requiring Immediate Attention</h3>
+                    <div class="table-actions">
+                        <button class="btn-secondary">
+                            <i class="fas fa-filter"></i>
+                            Filter
+                        </button>
+                        <button class="btn-secondary">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Priority</th>
+                                <th>Order Reference</th>
+                                <th>Product</th>
+                                <th>Supplier</th>
+                                <th>Risk Score</th>
+                                <th>Key Issues</th>
+                                <th>Delivery Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="order, orderStat : ${highRiskActiveOrders}" class="table-row critical">
+                                <td>
+                                    <div class="priority-badge" th:classappend="${order.riskAssessment.score > 60 ? 'priority-critical' : (order.riskAssessment.score > 40 ? 'priority-high' : 'priority-medium')}">
+                                        <span th:text="${orderStat.count}">1</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="order-info">
+                                        <span class="order-ref" th:text="${order.erpReferenceNumber}">REF-001</span>
+                                        <span class="order-status" th:text="${order.status}">Status</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="product-info">
+                                        <div class="product-name" th:text="${order.productName}">Product Name</div>
+                                        <div class="product-category" th:text="${order.productCategory}">Category</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="supplier-info">
+                                        <span class="supplier-name" th:text="${order.supplier.companyName}">Supplier Name</span>
+                                        <span class="supplier-location" th:text="${order.supplier.country}">Location</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="risk-score-display">
+                                        <span class="score-badge" th:classappend="${order.riskAssessment.score > 60 ? 'score-critical' : (order.riskAssessment.score > 40 ? 'score-high' : 'score-medium')}" 
+                                              th:text="${order.riskAssessment.score}">0</span>
+                                        <div class="score-bar">
+                                            <div class="score-fill" th:style="'width: ' + ${order.riskAssessment.score} + '%'"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="issues-tags">
+                                        <span class="issue-tag critical" th:if="${order.ddsStatus == 'Not Available'}" title="Missing DDS Documentation">
+                                            <i class="fas fa-file-times"></i> No DDS
+                                        </span>
+                                        <span class="issue-tag warning" th:if="${order.ddsStatus == 'No'}" title="DDS Not on Delivery Note">
+                                            <i class="fas fa-exclamation-triangle"></i> DDS Issue
+                                        </span>
+                                        <span class="issue-tag critical" th:if="${order.riskAssessment.score > 50}" title="High Risk Score">
+                                            <i class="fas fa-shield-alt"></i> High Risk
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="delivery-status">
+                                        <span class="status-text" th:text="${order.estimatedDeliveryDate != null ? 'Scheduled' : 'Pending'}">Pending</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a th:href="@{'/customer/risk/manage-order/' + ${order.id}}" class="btn-primary btn-sm">
+                                            <i class="fas fa-cog"></i>
+                                            Manage
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="actions-section">
+                <h3>Quick Actions</h3>
+                <div class="actions-grid">
+                    <a href="/customer/deliveries/active" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>View All Deliveries</h4>
+                            <p>Review all active and pending deliveries</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/customer/suppliers/overview" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>Supplier Management</h4>
+                            <p>Manage supplier relationships and compliance</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/customer/harbour/overview" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-anchor"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>Harbour Information</h4>
+                            <p>Check harbour capacity and restrictions</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/customer/dashboard" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>Analytics Dashboard</h4>
+                            <p>View detailed analytics and reports</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            </div>
+            <!-- End Dashboard Content -->
+        </div>
+    </main>
 </body>
 </html>
