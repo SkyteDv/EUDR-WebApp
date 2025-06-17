@@ -3,7 +3,7 @@ package com.projects.eudrwebapp.controller;
 import java.io.InputStream;
 import java.util.Optional;
 
-import com.projects.eudrwebapp.model.Country;
+import com.projects.eudrwebapp.model.Enum.Country;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
-import com.projects.eudrwebapp.service.HelperService;
+import com.projects.eudrwebapp.service.appAssistance.HelperService;
 import com.projects.eudrwebapp.service.OrderService;
 
 import jakarta.servlet.http.Cookie;
@@ -57,7 +57,7 @@ public class UserController {
                 Long userId = user.getId();
                 session.setAttribute("userId", userId);
                 System.out.println("Remembered User Id: " + userId);
-                if (userType.equals("CUSTOMER")) {
+                if (userType.equalsIgnoreCase("CUSTOMER")) {
                     return "redirect:/customer/dashboard";
                 } else if (userType.equalsIgnoreCase("SUPPLIER")) {
                     return "redirect:/supplier/dashboard";
@@ -104,9 +104,9 @@ public class UserController {
                         response.addCookie(cookie);
                     }
 
-                    if (userType.equalsIgnoreCase("customer")) {
+                    if (userType.equalsIgnoreCase("CUSTOMER")) {
                         return "redirect:/customer/dashboard";
-                    } else if(userType.equalsIgnoreCase("supplier")) {
+                    } else if(userType.equalsIgnoreCase("SUPPLIER")) {
                         return "redirect:/supplier/dashboard";
                     } else {
                         return "redirect:/";

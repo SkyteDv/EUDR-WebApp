@@ -1,0 +1,77 @@
+<style>
+    #left-content {
+        padding: 20px;
+        background: var(--base-clr);
+        box-shadow: inset -4px 0 8px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .timeline {
+        position: relative;
+        margin-left: 30px;          /* increased left margin */
+        padding-left: 20px;
+        border-left: 3px solid #4a47a3;
+    }
+
+    .step {
+        position: relative;
+        margin-bottom: 30px;
+        padding-left: 20px;
+    }
+
+    .step:last-child {
+        margin-bottom: 0;
+    }
+
+    .step::before {
+        content: "";
+        position: absolute;
+        left: -32px;               /* center circle on border */
+        top: 5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #4a47a3;
+        border: 3px solid white;   /* white border to separate from line */
+        box-sizing: content-box;
+    }
+
+    .step .step-name {
+        font-weight: bold;
+        color: #222;
+    }
+
+    .step .contractor {
+        font-style: italic;
+        color: #666;
+        margin-top: 2px;
+        font-size: 0.9em;
+    }
+</style>
+
+<div id="left-content">
+    <div id="contractors-container">
+        <div class="timeline">
+            <div class="step">
+                <div class="step-name">Unloading</div>
+                <div class="contractor">Contractor A</div>
+            </div>
+            <div class="step">
+                <div class="step-name">RFID Label Scanning</div>
+                <div class="contractor">Contractor B</div>
+            </div>
+            <div class="step">
+                <div class="step-name">Warehousing</div>
+                <div class="contractor">Contractor C</div>
+            </div>
+            <div class="step">
+                <div class="step-name">Customs Clearance</div>
+                <div class="contractor">Contractor D</div>
+            </div>
+            <div class="step">
+                <div class="step-name">Disposal (if needed)</div>
+                <div class="contractor">Contractor E</div>
+            </div>
+        </div>
+    </div>
+</div>

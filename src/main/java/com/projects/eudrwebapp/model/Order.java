@@ -1,5 +1,7 @@
 package com.projects.eudrwebapp.model;
 
+import com.projects.eudrwebapp.model.Enum.OrderStatus;
+import com.projects.eudrwebapp.model.Enum.RiskLevel;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -14,12 +16,17 @@ public class Order {
     private String productCategory;
     private String productName;
     private String dimensions;
-    private String destination;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "harbour_id")
+    private Harbour destination;
     private LocalDate orderDate;
     private LocalDate estimatedDeliveryDate;
     private String ddsReferenceNumber;
     private String responsible_party;
-    private RiskLevel riskLevel;
+
+    @Embedded
+    private RiskAssessment riskAssessment;
 
     private boolean notified = false;
     private boolean ddsOnDeliveryNote;
@@ -40,11 +47,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(String erpReferenceNumber,String productCategory, String productName, String dimensions, String destination,
+    public Order(String erpReferenceNumber,String productCategory, String productName, String dimensions, Harbour destination,
                  LocalDate orderDate, LocalDate estimatedDeliveryDate, String ddsReferenceNumber,
                  boolean ddsOnDeliveryNote, OrderStatus status,
-                 User supplier, User customer, String responsible_party,
-                 RiskLevel riskLevel) {
+                 User supplier, User customer, String responsible_party, RiskAssessment riskAssessment) {
         this.erpReferenceNumber = erpReferenceNumber;
         this.productCategory = productCategory;
         this.productName = productName;
@@ -58,8 +64,8 @@ public class Order {
         this.supplier = supplier;
         this.customer = customer;
         this.responsible_party = responsible_party;
-        this.riskLevel = riskLevel;
         this.notified = false;
+        this.riskAssessment = riskAssessment;
     }
 
     public String getDdsStatus() {
@@ -114,11 +120,11 @@ public class Order {
         this.dimensions = dimensions;
     }
 
-    public String getDestination() {
+    public Harbour getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Harbour destination) {
         this.destination = destination;
     }
 
@@ -187,11 +193,19 @@ public class Order {
     }
 
     public RiskLevel getRiskLevel() {
-        return riskLevel;
+        return riskAssessment.getLevel();
     }
 
     public void setRiskLevel(RiskLevel riskLevel) {
-        this.riskLevel = riskLevel;
+        this.riskAssessment.setLevel(riskLevel);
+    }
+
+    public RiskAssessment getRiskAssessment() {
+        return riskAssessment;
+    }
+
+    public void setRiskAssessment(RiskAssessment riskAssessment) {
+        this.riskAssessment = riskAssessment;
     }
 
     public boolean isNotified() {

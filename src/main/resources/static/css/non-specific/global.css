@@ -2,35 +2,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-
-/*Light Mode*/
+    /* Light Mode */
     --base-clr: white;
     --base-acc-clr: #f6f6f6;
-    --base-acc-medium-clr: lightgray;
+    --base-acc-medium-clr: #c1c1c1;
     --base-acc-dark-clr: #919191;
 
     --text-clr: black;
     --text-acc-clr: #424242;
 
-    --field-hover-clr: #E9E7FFFF;
+    --field-hover-clr: #E9E7FF;
+
+    --card-bg-clr: #c8c0e8;
 
     --div-light-purple-clr: #eeebfa;
     --div-acc-purple-clr: #ada4d6;
 
     --button-bg-color: #7e75b1;
-    --button-hover-bg-clr: #6857A8FF;
+    --button-hover-bg-clr: #6857A8;
 
-
-/*Dark Mode*/
-
-
-    /*
     --line-clr: #42434a;
 
     --accent-clr: #5e63ff;
     --secondary-text-clr: #b0b3c1;
-    */
+
+    --column-bg-light: rgba(215, 215, 241, 0.2);
 }
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --base-clr: #1c1c1e;
+    --base-acc-clr: #2c2c2e;
+    --base-acc-medium-clr: #3a3a3c;
+    --base-acc-dark-clr: #505053;
+
+    --text-clr: #f1f1f1;
+    --text-acc-clr: #cccccc;
+
+    --field-hover-clr: #2a2a2d;
+
+    --card-bg-clr: #2e2a44;
+
+    --div-light-purple-clr: #3e3858;
+    --div-acc-purple-clr: #5e5a7f;
+
+    --button-bg-color: #7e75b1;
+    --button-hover-bg-clr: #978ee2;
+
+    --line-clr: #5a5a5e;
+
+    --accent-clr: #7b7fff;
+    --secondary-text-clr: #d1d1e0;
+}
+
 
 * {
     font-family: Poppins, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -60,7 +84,12 @@ body {
 }
 
 .clean-button .material-icons {
-    font-size: 1.3rem;  /* or whatever size fits */
+    font-size: 1.3rem;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.clean-button svg {
     line-height: 1;
     vertical-align: middle;
 }

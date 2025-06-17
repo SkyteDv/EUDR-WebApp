@@ -31,6 +31,7 @@ function closeSidebar() {
         const verifyButton = document.getElementById("verifyBtn");
         verifyButton.removeAttribute("disabled");
         verifyButton.style.display = 'inline-flex';
+        title.innerText = 'Detail View';
         if (existingCameraDiv) {
             existingCameraDiv.remove();
         }
@@ -106,9 +107,6 @@ function setupPopupButtons() {
 
     // === DANGER BUTTON ===
     freshDangerBtn.addEventListener('click', () => {
-        const confirmed = confirm("Are you sure you want to mark this Order as sent?\nThis will negatively impact your Credibility!");
-        if (!confirmed) return;
-
         fetch("/api/deliveries/update/status", {
             method: "POST",
             headers: {
@@ -151,7 +149,7 @@ function setupPopupButtons() {
 
             // Remove old camera div if it exists
             removeExistingCameraDiv();
-
+            console.log("Verify Clicked")
             // Create the new popup
             createCameraPopup(currentOrderId, currentOrderDdsReference);
         });
@@ -208,8 +206,10 @@ function removeExistingCameraDiv() {
 
 // === TABLE ROW LISTENERS ===
 document.querySelectorAll(".clickable-row").forEach(row => {
+    /*
     if(row.classList.contains("red-outline")) {
         return;
     }
+     */
     row.addEventListener("click", () => openSidebarFromRow(row));
 });

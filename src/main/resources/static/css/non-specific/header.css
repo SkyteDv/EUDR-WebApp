@@ -3,7 +3,7 @@
     position: fixed;
     height: 6vh;
     min-height: 40px;
-    background-color: #fff;
+    background-color: var(--base-clr);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     top: 0;
     left: 0;
@@ -44,7 +44,7 @@
 
 .navbar a {
     text-decoration: none;
-    color: #333;
+    color: var(--text-acc-clr);
     font-size: 1.1rem;
     font-weight: 500;
     padding: 0.5rem 1rem;
@@ -53,7 +53,7 @@
 }
 
 .navbar a.active {
-    color: #7a6fbe;
+    color: var(--button-bg-color);
 }
 
 .navbar a.active::after {
@@ -63,11 +63,11 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background-color: #7a6fbe;
+    background-color: var(--button-bg-color);
 }
 
 .navbar a:hover {
-    color: #7a6fbe;
+    color: var(--button-bg-color);
 }
 
 .navbar a:hover::after {
@@ -77,20 +77,28 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background-color: #7a6fbe;
+    background-color: var(--button-bg-color);
 }
 
 .menu-toggle {
     display: none; /* hidden by default */
     font-size: 2rem;
     cursor: pointer;
-    color: #333;
+    color: var(--text-acc-clr);
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.header h4 {
+    color: var(--text-clr)
+}
+
+.header h2 {
+    color: var(--text-clr);
 }
 
 /* Account Dropdown Container */
@@ -104,14 +112,14 @@
     z-index: 1001;
 }
 
-/* Dropdown Menü selbst */
+/* Dropdown Menu itself */
 .dropdown-menu {
     display: none;
     position: absolute;
     top: calc(100% + 0.5rem);
     right: 0;
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: var(--base-clr);
+    border: 1px solid var(--base-acc-medium-clr);
     border-radius: 8px;
     min-width: 200px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -119,12 +127,12 @@
     z-index: 9999;
 }
 
-/* Sichtbar machen über Klasse */
+/* Make visible via class */
 .dropdown-menu.visible {
     display: block;
 }
 
-/* Einträge im Dropdown-Menü */
+/* Entries in Dropdown Menu */
 .dropdown-menu a,
 .dropdown-menu .dropdown-btn {
     display: block;
@@ -132,7 +140,7 @@
     padding: 0.75rem 1rem;
     text-align: left;
     text-decoration: none;
-    color: #333;
+    color: var(--text-acc-clr);
     background: none;
     border: none;
     cursor: pointer;
@@ -140,26 +148,25 @@
     transition: background-color 0.2s ease;
 }
 
-/* Hover-Effekt */
+/* Hover effect */
 .dropdown-menu a:hover,
 .dropdown-menu .dropdown-btn:hover {
-    background-color: #E9E7FFFF;
+    background-color: var(--field-hover-clr);
 }
 
 #account-toggle {
     text-decoration: none;
-    color: #333;
+    color: var(--text-acc-clr);
     font-weight: 500;
 }
 
 #account-toggle:visited {
-    color: #333;
+    color: var(--text-acc-clr);
 }
 
 #account-toggle:hover {
-    color: #7a6fbe; /* oder eine Hover-Farbe deiner Wahl */
+    color: var(--button-bg-color); /* or any hover color you prefer */
 }
-
 
 #account-toggle i {
     margin-right: 0.5rem;
@@ -173,4 +180,3 @@
         font-size: 0.8rem;
     }
 }
-

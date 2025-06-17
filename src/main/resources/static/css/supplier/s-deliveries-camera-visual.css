@@ -8,37 +8,57 @@
     opacity: 1;
 }
 
+/* Ensure the wrapper can contain the camera properly */
+#wrapper-side-popup {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 #cameraDiv {
     pointer-events: all;
-    z-index: 999999999;
+    z-index: 50;
     display: flex;
-    position: absolute;
-    top: 55%;
-    height: 750px;
-    width: 1100px;
-    margin-left: 700px; /* distance from right edge */
-    transform: translateY(-50%); /* centers vertically */
+    position: absolute; /* Changed back to absolute for visibility */
+    right: 1rem;
+    top: 1rem;
+    width: calc(100vw - 650px); /* Take remaining width after the data cards */
+    max-width: 700px;
+    min-height: 500px;
     color: var(--text-clr);
+    flex-direction: column;
+    border: 2px solid rgba(255, 0, 0, 0.3); /* Temporary debug border to see if camera is positioned */
+}
+
+/* When the popup is in wide mode, ensure camera is visible */
+#side-popup-details.wide #cameraDiv {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: calc(100vw - 650px);
+    max-width: 700px;
+    z-index: 10; /* Lower z-index to go under data cards when zooming */
+    border: 2px solid rgba(0, 255, 0, 0.3); /* Different color for wide mode */
 }
 
 #webcamVideo {
-    z-index: 999999999;
+    z-index: inherit;
     width: 100%;
+    max-width: 100%;
     aspect-ratio: 16 / 9;
     background-color: transparent;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 #camera-popup-content {
-    z-index: 999999999;
+    z-index: inherit;
     background-color: var(--base-acc-clr);
     padding: 20px;
     width: 100%;
     height: 100%;
-    max-width: 100%;
-
     position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #camera-popup-actions {
@@ -48,4 +68,43 @@
     width: 100%;
     background-color: transparent;
     justify-content: space-between;
+    gap: 1rem;
+}
+
+#camera-popup-actions button {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    min-width: 120px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+    #cameraDiv,
+    #side-popup-details.wide #cameraDiv {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: 100%;
+        max-width: 100%;
+        margin: 1rem auto;
+        z-index: 5; /* Even lower z-index for smaller screens */
+    }
+}
+
+/* For very small screens or high zoom levels */
+@media (max-width: 1000px) {
+    #cameraDiv,
+    #side-popup-details.wide #cameraDiv {
+        z-index: 1; /* Lowest z-index to ensure it goes under everything */
+    }
+}
+
+/* Special styling for video area when in verification mode */
+#side-popup-details.wide #videoArea {
+    margin-bottom: 1rem;
+}
+
+#side-popup-details.wide #videoArea h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-clr);
 }

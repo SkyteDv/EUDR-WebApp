@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.projects.eudrwebapp.model.User;
 import com.projects.eudrwebapp.repository.UserRepository;
-import com.projects.eudrwebapp.service.MailService;
+import com.projects.eudrwebapp.service.riskAltertManagement.MailService;
 
 import jakarta.servlet.http.HttpSession;
 

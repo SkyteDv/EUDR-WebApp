@@ -1,0 +1,280 @@
+body {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
+#content-container {
+    background-color: var(--base-clr);
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#content-header {
+    padding:  1rem 3rem;
+    width: 100%;
+    position: relative;
+    top: 0;
+    min-height: 75px;
+    box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+        font-size: 2rem;
+        color: #333;
+    }
+
+    #content-header-actions {
+        display: flex;
+        gap: 1rem;
+        flex-direction: row;
+        align-items: center;
+
+        #sortSection {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+
+            p {
+                font-size: 1rem;
+            }
+
+            #sortToggleBtn {
+                min-width: 125px;
+            }
+        }
+
+        .search-input {
+            margin-left: 1rem;
+            width: 13rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+
+    #content-header #content-header-actions {
+        gap: 0.5rem;
+    }
+}
+
+#harbour-card-container {
+    margin-top: 0.5rem;
+    box-sizing: border-box;
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    overflow-y: scroll;
+}
+
+.card {
+    position: relative;
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.bell-wrapper {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+}
+
+.bell-icon {
+    padding: 6px;
+}
+
+
+
+.harbour-card {
+    backface-visibility: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100%;
+    min-height: 325px;
+    background-color: var(--card-bg-clr);
+
+    will-change: transform, opacity;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+
+    .card-content {
+
+        display: flex;
+        flex-direction: column;
+
+        .card-title-container {
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg-clr);
+            min-height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0 0 0.3rem 0.3rem;
+            opacity: 1;
+
+            .card-title {
+                font-weight: 400;
+                color: var(--text-clr);
+
+            }
+        }
+
+        .card-content-actions {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            flex: 1;
+            gap: 0.75rem;
+
+            button {
+                box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.05);
+                background-color: var(--field-hover-clr);
+                flex: 1;
+                max-height: 70px;
+
+                font-size: 1rem;
+
+                text-decoration: none;
+                border: none;
+                border-radius: 8px;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                opacity: 0;
+                transition: opacity 0.5s ease;
+
+                .svg-wrapper {
+                    background-color: var(--card-bg-clr);
+                    flex: 1;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    max-width: 80px;
+                    border-radius: 8px;
+
+                }
+
+                span {
+                    color: black;
+                    padding: 0.5rem;
+                    flex: 1;
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+
+    img {
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        mask-image:
+                linear-gradient(to top, transparent 0%, black 1.5%, black 98.5%, transparent 100%),
+                linear-gradient(to right, transparent 0%, black 1.5%, black 98.5%, transparent 100%);
+
+        mask-composite: intersect; /* Combine the two masks */
+    }
+}
+
+.harbour-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px) translateZ(0);
+}
+
+.harbour-card:hover .card-content .card-content-actions button {
+    opacity: 1;
+}
+
+/* When container has list-layout class, show vertical list */
+#harbour-card-container.list-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 2.5rem; /* optional smaller padding */
+    overflow-y: auto;
+}
+
+/* Hide images in list view */
+#harbour-card-container.list-layout .harbour-card img {
+    display: none;
+}
+
+/* Cards style for list layout */
+#harbour-card-container.list-layout .harbour-card {
+    border-radius: 0;
+    min-height: 50px;
+    width: 100%;
+    box-shadow: none;
+    background-color: var(--card-bg-clr);
+    transform: translateY(-20px);
+    opacity: 0.95;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Content inside card for list layout - adjust to horizontal */
+#harbour-card-container.list-layout .harbour-card .card-content {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Title container for list view - smaller */
+#harbour-card-container.list-layout .harbour-card .card-title-container {
+    min-height: auto;
+    box-shadow: none;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+}
+
+/* Buttons shrink or align horizontally */
+#harbour-card-container.list-layout .harbour-card .card-content-actions {
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0;
+    flex: none;
+}
+
+/* Buttons smaller and inline */
+#harbour-card-container.list-layout .harbour-card .card-content-actions button {
+    max-height: 40px;
+    font-size: 0.9rem;
+    padding: 0 0.75rem;
+    flex: none;
+    justify-content: center;
+    gap: 0.5rem;
+}

@@ -1,8 +1,9 @@
 package com.projects.eudrwebapp.configuration;
 
-import com.projects.eudrwebapp.model.Country;
-import com.projects.eudrwebapp.model.Order;
+import com.projects.eudrwebapp.model.Enum.Country;
+import com.projects.eudrwebapp.model.Harbour;
 import com.projects.eudrwebapp.model.User;
+import com.projects.eudrwebapp.repository.HarbourRepository;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -13,8 +14,30 @@ import org.springframework.context.annotation.Configuration;
 public class H2DataLoader {
 
     @Bean
-    public CommandLineRunner dataLoader(UserRepository userRepository, OrderRepository orderRepository) {
+    public CommandLineRunner dataLoader(UserRepository userRepository, OrderRepository orderRepository, HarbourRepository harbourRepository) {
         return args -> {
+
+            if (harbourRepository.count() == 0) {
+                harbourRepository.save(new Harbour("Rotterdam", Country.NETHERLANDS));
+                harbourRepository.save(new Harbour("Antwerp", Country.BELGIUM));
+                harbourRepository.save(new Harbour("Hamburg", Country.GERMANY));
+                harbourRepository.save(new Harbour("Valencia", Country.SPAIN));
+                harbourRepository.save(new Harbour("Marseille", Country.FRANCE));
+                harbourRepository.save(new Harbour("Genoa", Country.ITALY));
+                harbourRepository.save(new Harbour("Algeciras", Country.SPAIN));
+                harbourRepository.save(new Harbour("Bremerhaven", Country.GERMANY));
+                harbourRepository.save(new Harbour("Barcelona", Country.SPAIN));
+                harbourRepository.save(new Harbour("Le Havre", Country.FRANCE));
+                harbourRepository.save(new Harbour("Piraeus", Country.GREECE));
+                harbourRepository.save(new Harbour("Gdansk", Country.POLAND));
+                harbourRepository.save(new Harbour("Amsterdam", Country.NETHERLANDS));
+                harbourRepository.save(new Harbour("Trieste", Country.ITALY));
+                harbourRepository.save(new Harbour("Zeebrugge", Country.BELGIUM));
+
+                System.out.println("Harbours loaded into the database.");
+            } else {
+                System.out.println("Harbours already exist. Skipping harbour load.");
+            }
             // Only load dummy data if the user table is empty
             if (userRepository.count() == 0) {
                 // Insert default suppliers
@@ -49,7 +72,7 @@ public class H2DataLoader {
                 User customer = new User("C5", "1", "CUSTOMER", "CUST005", Country.PORTUGAL);
                 userRepository.save(customer);
 
-                System.out.println("Dummy data loaded into the database.");
+                System.out.println("Example Supplier and Customer Accounts loaded into the database.");
             } else {
                 System.out.println("Data already exists. Skipping initial load.");
             }

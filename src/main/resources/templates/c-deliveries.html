@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:attr="data-theme=${session.theme}">
 
 <head>
     <meta charset="UTF-8">
@@ -124,7 +124,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/customer/harbour/overview">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e3e3e3">
                         <path
@@ -239,7 +239,7 @@
                              data-ddsStatus=${order.ddsStatus},
                              data-ddsReferenceNumber=${order.ddsReferenceNumber},
                              data-erpReferenceNumber=${order.erpReferenceNumber},
-                             data-destination=${order.destination},
+                             data-destination=${order.destination.getName()},
                              data-status=${order.status},
                              data-supplier=${order.supplier.username},
                              data-supplierlocation=${order.supplier.location},
@@ -250,13 +250,14 @@
                              data-dimensions=${order.dimensions}">
 
                     <td>
-                      <span th:text="${order.riskLevel}"
+                      <span th:text="${order.getRiskAssessment().getLevel()}"
                             th:classappend="
-                              ${order.riskLevel.name() == 'LOW'} ? 'risk-label risk-low' :
-                              (${order.riskLevel.name() == 'MEDIUM'} ? 'risk-label risk-medium' :
-                              (${order.riskLevel.name() == 'HIGH'} ? 'risk-label risk-high' : ''))">
+                              ${order.getRiskAssessment().getLevel().name() == 'LOW'} ? 'risk-label risk-low' :
+                              (${order.getRiskAssessment().getLevel().name() == 'MEDIUM'} ? 'risk-label risk-medium' :
+                              (${order.getRiskAssessment().getLevel().name() == 'HIGH'} ? 'risk-label risk-high' : ''))">
                       </span>
                     </td>
+
 
                     <td>
                         <span th:class="'status-badge status-' + ${order.status.name()}" th:text="${order.status}">
@@ -275,7 +276,7 @@
                         <span th:unless="${#strings.isEmpty(order.ddsReferenceNumber)}" th:text="${order.ddsReferenceNumber}"></span>
                     </td>
                     <td th:text="${order.erpReferenceNumber}"></td>
-                    <td th:text="${order.destination}"></td>
+                    <td th:text="${order.destination.getName()}"></td>
                     <td>
                         <a th:href="@{/customer/suppliers/details/{id}(id=${order.supplier.id})}" th:text="${order.supplier.username}"></a>
                     </td>

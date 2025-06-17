@@ -1,6 +1,10 @@
 /* === Allgemeines Layout === */
 main {
     font-size: 0.85vw;
+
+    @media (max-width: 1100px) {
+        font-size: 0.8rem;
+    }
 }
 
 /* === Headerbereich === */
@@ -13,7 +17,7 @@ main {
 
 .deliveries-header h1 {
     font-size: 2rem;
-    color: #333;
+    color: var(--text-clr);
 }
 
 .search-filter {
@@ -24,15 +28,17 @@ main {
 .search-input {
     padding: 0.5rem 1rem;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--base-acc-dark-clr);
     border-radius: 8px;
+    background-color: var(--base-clr);
+    color: var(--text-clr);
 }
 
 /* === Tabelle: Wrapper für Scroll & Sticky === */
 main {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 6vh); /* Fixhöhe inkl. Header */
+    height: calc(100vh - 6vh);
     padding: 1rem;
     box-sizing: border-box;
 }
@@ -42,7 +48,7 @@ main {
     overflow-y: auto;
     position: relative;
     border-radius: 8px;
-    background-color: white;
+    background-color: var(--base-clr);
     box-sizing: border-box;
 }
 
@@ -54,83 +60,72 @@ main {
     padding: 0;
 }
 
-/* Table headers with higher contrast */
 .delivery-table th {
     position: sticky !important;
     top: 0 !important;
     z-index: 2;
-    background-color: #e0e0e0; /* Darker light gray background for header */
-    color: #333; /* Dark text color */
+    background-color: var(--base-acc-medium-clr);
+    color: var(--text-clr);
     padding: 0.8rem;
     text-align: center;
     font-weight: 600;
     border-collapse: collapse;
-    border-bottom: 1px solid #ddd; /* Border under header */
+    border-bottom: 1px solid var(--field-hover-clr);
 }
 
-/* Style for the table rows */
 .delivery-table td {
     padding: 1rem;
     text-align: center;
+    color: var(--text-clr);
 }
 
-
+/* First 3 columns fixed width */
 .delivery-table th:nth-child(1),
-.delivery-table td:nth-child(1) {
-    width: 150px;
-    white-space: nowrap;
-}
-
+.delivery-table td:nth-child(1),
 .delivery-table th:nth-child(2),
-.delivery-table td:nth-child(2) {
-    width: 150px;
-    white-space: nowrap;
-}
-
+.delivery-table td:nth-child(2),
 .delivery-table th:nth-child(3),
 .delivery-table td:nth-child(3) {
     width: 150px;
     white-space: nowrap;
 }
 
-/* Let other columns be flexible */
+/* Flexible remaining columns */
 .delivery-table th:nth-child(n+4),
 .delivery-table td:nth-child(n+4) {
     width: auto;
 }
 
-/* Darker background for first 3 columns with some transparency */
+/* Darker background for first 3 columns */
 .delivery-table tbody tr td:nth-child(-n+3) {
-    background-color: rgba(215, 215, 241, 0.2); /* light gray with transparency */
+    background-color: var(--column-bg-light);
 }
 
 .delivery-table thead th:nth-child(3),
 .delivery-table tbody tr td:nth-child(3) {
-    border-right: 2px solid #999; /* adjust color & thickness as needed */
-    /* Optional: add some padding to separate the border visually */
-    padding-right: 8px;
-
+    border-right: 2px solid gray;
+    padding-right: 25px;
 }
 
-
-/* Optional: Zebra striping for rows */
+/* Zebra striping */
 .delivery-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: var(--base-acc-clr);
 }
 
-/* Hover effect for table rows */
+/* Hover effect */
 .delivery-table tr:hover {
-    background-color: rgb(233, 231, 255); /* Light gray background when hovering */
-    cursor: pointer; /* Change cursor to a pointer to indicate interactivity */
+    background-color: var(--field-hover-clr);
+    cursor: pointer;
 }
 
-/* Optional: Highlight the row even more when clicked */
+/* Active/clicked */
 .delivery-table tr:active {
-    background-color: #cac8ec;
+    background-color: var(--div-acc-purple-clr);
 }
 
+/* Selected row */
 .delivery-table tr.selected {
-    background-color: #cbc9ff;
+    background-color: var(--card-bg-clr);
 }
 
 /* === Sonstige Styles === */
@@ -157,16 +152,16 @@ main {
 }
 
 .risk-low {
-    background-color: #0a6720; /* Green */
+    background-color: #0a6720;
 }
 
 .risk-medium {
-    background-color: #ffc107; /* Amber/Yellow */
-    color: #212529; /* Dark text for better contrast */
+    background-color: #ffc107;
+    color: #212529;
 }
 
 .risk-high {
-    background-color: #bc202e; /* Red */
+    background-color: #bc202e;
 }
 
 /* Status badges */
@@ -183,9 +178,21 @@ main {
     user-select: none;
 }
 
-.status-PENDING { background-color: var(--button-hover-bg-clr) }
-.status-SHIPPED { background-color: #0275d8; }
-.status-IN_HARBOUR { background-color: #5bc0de; }
-.status-COMPLETED { background-color: #5cb85c; }
-.status-CANCELLED { background-color: #d9534f; }
-
+.status-PENDING {
+    background-color: var(--button-hover-bg-clr);
+}
+.status-SHIPPED {
+    background-color: #0275d8;
+}
+.status-IN_STORAGE {
+    background-color: #c5970d;
+}
+.status-IN_HARBOUR {
+    background-color: #5bc0de;
+}
+.status-COMPLETED {
+    background-color: #5cb85c;
+}
+.status-CANCELLED {
+    background-color: #d9534f;
+}

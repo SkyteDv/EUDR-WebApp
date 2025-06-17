@@ -1,10 +1,17 @@
 package com.projects.eudrwebapp.controller;
 
 import com.projects.eudrwebapp.model.*;
+import com.projects.eudrwebapp.model.DTO.CountryDeliveryDTO;
+import com.projects.eudrwebapp.model.Enum.OrderStatus;
+import com.projects.eudrwebapp.model.Enum.RiskLevel;
 import com.projects.eudrwebapp.repository.ImportStatusRepository;
 import com.projects.eudrwebapp.repository.OrderRepository;
 import com.projects.eudrwebapp.repository.UserRepository;
 import com.projects.eudrwebapp.service.*;
+import com.projects.eudrwebapp.service.appAssistance.DataService;
+import com.projects.eudrwebapp.service.appAssistance.HelperService;
+import com.projects.eudrwebapp.service.deliveryNote.PDFService;
+import com.projects.eudrwebapp.service.deliveryNote.QRCodeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -233,5 +240,71 @@ public class InternalAPIController {
         return ResponseEntity.ok(dataMap);
     }
 
+    @GetMapping("/harbour/get-harbours")
+    public ResponseEntity<Map<String, List<String>>> getHarbourOverview(HttpSession session) {
+        String userId = String.valueOf(session.getAttribute("userId"));
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        User user = userOpt.get();
+
+        Set<Harbour> userConnectedHarbours = user.getHarbours();
+        Map<String, List<String>> harbourData = new HashMap<>();
+
+        for (Harbour harbour : userConnectedHarbours) {
+            String harbourName = harbour.getName();
+
+            // Example image path - adjust as needed
+            String imagePath = "/images/harbours/" + harbourName.toLowerCase().replace(" ", "") + ".png";
+
+            // Country code string from enum
+            String countryCode = harbour.getCountry().toString();
+
+            List<Order> userOrders = orderRepository.findByCustomerId(Long.valueOf(userId));
+
+            long activeOrdersCount = userOrders.stream()
+                    .filter(order -> order.getDestination().getName().equalsIgnoreCase(harbourName))
+                    .filter(order -> order.getStatus() != OrderStatus.COMPLETED && order.getStatus() != OrderStatus.CANCELLED)
+                    .count();
+
+            long activeMediumHighRiskOrdersCount = userOrders.stream()
+                    .filter(order -> order.getDestination().getName().equalsIgnoreCase(harbourName))
+                    .filter(order -> order.getStatus() != OrderStatus.COMPLETED && order.getStatus() != OrderStatus.CANCELLED)
+                    .filter(order -> order.getRiskAssessment().getLevel() == RiskLevel.MEDIUM
+                            || order.getRiskAssessment().getLevel() == RiskLevel.HIGH)
+                    .count();
+
+            long ordersInStorageCount = userOrders.stream()
+                    .filter(order -> order.getDestination().getName().equalsIgnoreCase(harbourName))
+                    .filter(order -> order.getStatus() == OrderStatus.IN_STORAGE)
+                    .count();
+
+
+            List<String> details = List.of(
+                    imagePath,
+                    countryCode,
+                    String.valueOf(activeOrdersCount),
+                    String.valueOf(activeMediumHighRiskOrdersCount),
+                    String.valueOf(ordersInStorageCount)
+            );
+
+            harbourData.put(harbourName, details);
+        }
+
+        return ResponseEntity.ok(harbourData);
+    }
+
+    @GetMapping("/settings/set-theme/{theme}")
+    public ResponseEntity<Map<String, String>> setTheme(HttpSession session, @PathVariable("theme") String themeName) {
+        // Save the theme in the session
+        session.setAttribute("theme", themeName);
+
+        // Respond with confirmation
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("theme", themeName);
+        return ResponseEntity.ok(response);
+    }
 
 }
