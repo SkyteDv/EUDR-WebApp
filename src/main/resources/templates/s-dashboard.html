@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="/css/supplier/s-dashboard.css">
     <link rel="stylesheet" href="/css/account-menu.css">
     <link rel="stylesheet" href="/css/non-specific/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
-    <title>Homepage</title>
+    <title>Supplier Dashboard - HexaTrace</title>
 </head>
 
 <body>
@@ -23,7 +24,6 @@
             <h4>SUPPLIER</h4>
         </div>
 
-        
         <div class="account-wrapper">
             <a href="#" id="account-toggle">
                 👤 Hello <span th:text="${session.username}">User</span> ▼
@@ -36,10 +36,7 @@
                 </form>
             </div>
         </div>
-
     </header>
-
-    
 
     <aside id="sidebar">
         <ul>
@@ -113,16 +110,256 @@
         </ul>
     </aside>
 
+    <main class="dashboard-page">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <h1>Welcome back, <span th:text="${supplier.username}">Supplier</span>!</h1>
+                <p>Here's an overview of your supply chain operations and key metrics.</p>
+            </div>
+            <div class="welcome-stats">
+                <div class="welcome-stat">
+                    <span class="welcome-stat-number" th:text="${totalCustomers}">0</span>
+                    <span class="welcome-stat-label">Customers</span>
+                </div>
+                <div class="welcome-stat">
+                    <span class="welcome-stat-number" th:text="${activeDeliveries}">0</span>
+                    <span class="welcome-stat-label">Active Orders</span>
+                </div>
+                <div class="welcome-stat">
+                    <span class="welcome-stat-number" th:text="${ddsApprovalRate}">0</span>%
+                    <span class="welcome-stat-label">DDS Rate</span>
+                </div>
+            </div>
+        </div>
 
+        <!-- Statistics Grid -->
+        <div class="stats-grid">
+            <div class="stat-card info">
+                <div class="stat-icon info">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${totalCustomers}">0</div>
+                    <div class="stat-label">Total Customers</div>
+                    <div class="stat-subtitle">Connected partners</div>
+                </div>
+            </div>
 
-    <main>
+            <div class="stat-card primary">
+                <div class="stat-icon primary">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${totalDeliveries}">0</div>
+                    <div class="stat-label">Total Deliveries</div>
+                    <div class="stat-subtitle">All-time shipments</div>
+                </div>
+            </div>
 
-        
+            <div class="stat-card warning">
+                <div class="stat-icon warning">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${activeDeliveries}">0</div>
+                    <div class="stat-label">Active Deliveries</div>
+                    <div class="stat-subtitle">In progress</div>
+                </div>
+            </div>
 
+            <div class="stat-card danger">
+                <div class="stat-icon danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${highRiskDeliveries}">0</div>
+                    <div class="stat-label">High Risk Orders</div>
+                    <div class="stat-subtitle">Require attention</div>
+                </div>
+            </div>
+
+            <div class="stat-card success">
+                <div class="stat-icon success">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${completedDeliveries}">0</div>
+                    <div class="stat-label">Completed Orders</div>
+                    <div class="stat-subtitle">Successfully shipped</div>
+                </div>
+            </div>
+
+            <div class="stat-card warning">
+                <div class="stat-icon warning">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" th:text="${pendingDDS}">0</div>
+                    <div class="stat-label">Pending DDS</div>
+                    <div class="stat-subtitle">Documents needed</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content Grid -->
+        <div class="dashboard-content">
+            <!-- Recent Deliveries -->
+            <div class="recent-deliveries">
+                <div class="section-header">
+                    <h3>
+                        <i class="fas fa-shipping-fast"></i>
+                        Recent Deliveries
+                    </h3>
+                    <a href="/supplier/deliveries" class="view-all-btn">
+                        View All <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="deliveries-table">
+                    <table class="delivery-table" th:if="${!recentDeliveries.empty}">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Order ID</th>
+                                <th>Product</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>DDS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="delivery : ${recentDeliveries}">
+                                <td>
+                                    <div class="customer-name" th:text="${delivery.customer.username}">Customer Name</div>
+                                </td>
+                                <td>
+                                    <span class="order-id" th:text="${delivery.erpReferenceNumber}">ORD-001</span>
+                                </td>
+                                <td th:text="${delivery.productName}">Product Name</td>
+                                <td th:text="${#temporals.format(delivery.orderDate, 'MMM dd, yyyy')}">Jan 15, 2024</td>
+                                <td>
+                                    <span class="status-badge"
+                                          th:classappend="${delivery.status.name().toLowerCase()}"
+                                          th:text="${#strings.capitalize(delivery.status.name().toLowerCase())}">
+                                        Processing
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="dds-status"
+                                          th:classappend="${delivery.ddsStatus.toLowerCase().replace(' ', '-')}"
+                                          th:text="${delivery.ddsStatus}">
+                                        <i class="fas fa-check" th:if="${delivery.ddsStatus == 'Yes'}"></i>
+                                        <i class="fas fa-times" th:if="${delivery.ddsStatus == 'No'}"></i>
+                                        <i class="fas fa-exclamation" th:if="${delivery.ddsStatus == 'Not Available'}"></i>
+                                        Yes
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div th:if="${recentDeliveries.empty}" class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h4>No Recent Deliveries</h4>
+                        <p>Your recent delivery activity will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="dashboard-sidebar">
+                <!-- Risk Overview -->
+                <div class="risk-overview">
+                    <div class="section-header">
+                        <h3>
+                            <i class="fas fa-shield-alt"></i>
+                            Risk Overview
+                        </h3>
+                    </div>
+                    <div class="risk-chart">
+                        <div class="risk-item" th:if="${riskDistribution.containsKey(T(com.projects.eudrwebapp.model.Enum.RiskLevel).HIGH)}">
+                            <div class="risk-level">
+                                <div class="risk-indicator high"></div>
+                                <span>High Risk</span>
+                            </div>
+                            <div class="risk-count" th:text="${riskDistribution.get(T(com.projects.eudrwebapp.model.Enum.RiskLevel).HIGH)}">0</div>
+                        </div>
+                        <div class="risk-item" th:if="${riskDistribution.containsKey(T(com.projects.eudrwebapp.model.Enum.RiskLevel).MEDIUM)}">
+                            <div class="risk-level">
+                                <div class="risk-indicator medium"></div>
+                                <span>Medium Risk</span>
+                            </div>
+                            <div class="risk-count" th:text="${riskDistribution.get(T(com.projects.eudrwebapp.model.Enum.RiskLevel).MEDIUM)}">0</div>
+                        </div>
+                        <div class="risk-item" th:if="${riskDistribution.containsKey(T(com.projects.eudrwebapp.model.Enum.RiskLevel).LOW)}">
+                            <div class="risk-level">
+                                <div class="risk-indicator low"></div>
+                                <span>Low Risk</span>
+                            </div>
+                            <div class="risk-count" th:text="${riskDistribution.get(T(com.projects.eudrwebapp.model.Enum.RiskLevel).LOW)}">0</div>
+                        </div>
+                        
+                        <div th:if="${riskDistribution.empty}" class="empty-state">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>No Risk Data</h4>
+                            <p>Risk assessment data will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DDS Status -->
+                <div class="dds-status-card">
+                    <div class="section-header">
+                        <h3>
+                            <i class="fas fa-file-check"></i>
+                            DDS Compliance
+                        </h3>
+                    </div>
+                    <div class="dds-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" th:style="'width: ' + ${ddsApprovalRate} + '%'"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span th:text="${approvedDDS} + ' Approved'">0 Approved</span>
+                            <span th:text="${ddsApprovalRate} + '%'">0%</span>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-acc-clr);">
+                            <div>✅ Approved: <span th:text="${approvedDDS}">0</span></div>
+                            <div>⏳ Pending: <span th:text="${pendingDDS}">0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="section-header">
+                        <h3>
+                            <i class="fas fa-bolt"></i>
+                            Quick Actions
+                        </h3>
+                    </div>
+                    <div class="action-buttons">
+                        <a href="/supplier/deliveries" class="action-btn">
+                            <i class="fas fa-truck"></i>
+                            Manage Deliveries
+                        </a>
+                        <a href="/supplier/customers/overview" class="action-btn">
+                            <i class="fas fa-users"></i>
+                            View Customers
+                        </a>
+                        <a href="/supplier/account" class="action-btn">
+                            <i class="fas fa-user-cog"></i>
+                            Account Settings
+                        </a>
+                        <a href="#" class="action-btn" onclick="window.print()">
+                            <i class="fas fa-print"></i>
+                            Export Report
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
-
-
-
 
     <script src="/javascript/non-specific/account-menu.js"></script>
 

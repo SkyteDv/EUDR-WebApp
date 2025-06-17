@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Detail</title>
+    <link rel="stylesheet" href="/css/non-specific/global.css">
+    <link rel="stylesheet" href="/css/non-specific/header.css">
+    <link rel="stylesheet" href="/css/non-specific/sidebar.css">
+    <link rel="stylesheet" href="/css/account-menu.css">
+    <link rel="stylesheet" href="/css/customer/c-supplier-details.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="/supplier/dashboard"><img src="/images/icons/logo_for_slides.png" class="logo" alt="HexaTrace Logo"></a>
+            <h4>SUPPLIER</h4>
+        </div>
+
+        <div class="account-wrapper">
+            <a href="#" id="account-toggle">
+                👤 Hello <span th:text="${session.username}">Supplier</span> ▼
+            </a>
+            <div class="dropdown-menu" id="account-menu">
+                <a href="/account">Profile</a>
+                <a href="/settings">Settings</a>
+                <form th:action="@{/user/logout}" method="post">
+                    <button type="submit" class="dropdown-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <aside id="sidebar">
+        <ul>
+            <li id="sidebar-actions-container">
+                <span class="logo">Actions</span>
+                <button onclick="toggleSidebar()" id="toggle-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#e8eaed">
+                        <path
+                            d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+                    </svg>
+                </button>
+            </li>
+
+            <!-- Dashboard -->
+            <li>
+                <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                         fill="#e8eaed">
+                        <path
+                                d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
+                    </svg>
+                    <span>Dashboard</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#e8eaed">
+                        <path
+                            d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+                    </svg>
+                </button>
+                <ul class="sub-menu">
+                    <div>
+                        <li><a href="/supplier/dashboard">Overview</a></li>
+                    </div>
+                </ul>
+            </li>
+
+            <!-- Deliveries -->
+            <li>
+                <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#e3e3e3">
+                        <path
+                            d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Zm320-228Z" />
+                    </svg>
+                    <span>Deliveries</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#e8eaed">
+                        <path
+                            d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+                    </svg>
+                </button>
+                <ul class="sub-menu">
+                    <div>
+                        <li><a href="/supplier/deliveries">Active</a></li>
+                        <li><a href="/supplier/deliveries/history">History</a></li>
+                    </div>
+                </ul>
+            </li>
+
+            <!-- Customers -->
+            <li class="active">
+                <a href="/supplier/customers/overview">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#e3e3e3">
+                        <path
+                            d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
+                    </svg>
+                    <span>Customers</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="detail-page">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="/supplier/customers/overview">
+                <i class="fas fa-arrow-left"></i>
+                Back to Customers
+            </a>
+        </nav>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <div class="supplier-avatar">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="header-info">
+                    <h1 th:text="${customer.username}">Customer Name</h1>
+                    <p class="supplier-id">ID: <span th:text="${customer.osapiensID}">12345</span></p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="clean-button expandable">
+                    <i class="fas fa-edit"></i>
+                    <span class="button-text">Edit</span>
+                </button>
+                <button class="clean-button expandable">
+                    <i class="fas fa-share"></i>
+                    <span class="button-text">Share</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Key Metrics Dashboard -->
+        <div class="metrics-dashboard">
+            <div class="metric-card primary">
+                <div class="metric-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-value" th:text="${deliveries.size()}">0</div>
+                    <div class="metric-label">Total Deliveries</div>
+                </div>
+            </div>
+            <div class="metric-card success">
+                <div class="metric-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-value" th:text="${ddsYesCount}">0</div>
+                    <div class="metric-label">DDS Approved</div>
+                </div>
+            </div>
+            <div class="metric-card warning">
+                <div class="metric-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-value" th:text="${ddsNoCount}">0</div>
+                    <div class="metric-label">DDS Pending</div>
+                </div>
+            </div>
+            <div class="metric-card danger">
+                <div class="metric-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-value" th:text="${ddsDeniedCount}">0</div>
+                    <div class="metric-label">DDS Denied</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <!-- Customer Information Card -->
+            <section class="info-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-info-circle"></i>
+                        Customer Information
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Company Name</label>
+                            <span th:text="${customer.username}">Company Name</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Osapiens ID</label>
+                            <span th:text="${customer.osapiensID}">12345</span>
+                        </div>
+                        <div class="info-item">
+                            <label>User ID</label>
+                            <span th:text="${customer.id}">67890</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Country</label>
+                            <span th:text="${customer.location != null ? customer.location.name() : 'Not specified'}">Country</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Partnership Status</label>
+                            <span class="status-badge active">Active</span>
+                        </div>
+                        <div class="info-item" th:if="${firstDeliveryDate != null}">
+                            <label>First Delivery</label>
+                            <span th:text="${#temporals.format(firstDeliveryDate, 'dd/MM/yyyy')}">01/01/2024</span>
+                        </div>
+                        <div class="info-item" th:if="${lastDeliveryDate != null}">
+                            <label>Last Delivery</label>
+                            <span th:text="${#temporals.format(lastDeliveryDate, 'dd/MM/yyyy')}">01/01/2024</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DDS Assessment Card -->
+            <section class="chart-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-chart-pie"></i>
+                        DDS Assessment
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="ddsChart" width="300" height="300"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item green">
+                            <span class="legend-color"></span>
+                            <span>Approved</span>
+                            <strong th:text="${ddsYesCount}">0</strong>
+                        </div>
+                        <div class="legend-item yellow">
+                            <span class="legend-color"></span>
+                            <span>Pending</span>
+                            <strong th:text="${ddsNoCount}">0</strong>
+                        </div>
+                        <div class="legend-item red">
+                            <span class="legend-color"></span>
+                            <span>Denied</span>
+                            <strong th:text="${ddsDeniedCount}">0</strong>
+                        </div>
+                    </div>
+                    <p class="chart-summary" th:text="'DDS evaluation based on ' + ${deliveries.size()} + ' deliveries.'">
+                        DDS evaluation based on 0 deliveries.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Deliveries Table Card -->
+            <section class="table-card full-width">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-shipping-fast"></i>
+                        Shared Deliveries
+                    </h2>
+                    <div class="header-actions">
+                        <button class="clean-button expandable">
+                            <i class="fas fa-download"></i>
+                            <span class="button-text">Export</span>
+                        </button>
+                        <button class="clean-button expandable">
+                            <i class="fas fa-filter"></i>
+                            <span class="button-text">Filter</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-wrapper">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>ERP Reference</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>Product</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>Order Date</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>Destination</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>DDS Reference</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th-content">
+                                            <span>DDS Status</span>
+                                            <i class="fas fa-sort"></i>
+                                        </div>
+                                    </th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="order : ${deliveries}" class="table-row" th:attr="data-order-id=${order.id}">
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-hashtag cell-icon"></i>
+                                            <span th:text="${order.erpReferenceNumber}">ERP-001</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-box cell-icon"></i>
+                                            <span th:text="${order.productName}">Product Name</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-calendar cell-icon"></i>
+                                            <span th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy')}">01/01/2024</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-map-marker-alt cell-icon"></i>
+                                            <span th:text="${order.destination != null ? order.destination.name : 'Not specified'}">Destination</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="cell-content">
+                                            <i class="fas fa-file-alt cell-icon"></i>
+                                            <span th:text="${order.ddsReferenceNumber != null && order.ddsReferenceNumber != '' ? order.ddsReferenceNumber : '—'}">—</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge" 
+                                              th:classappend="${order.ddsStatus == 'Yes' ? 'success' : (order.ddsStatus == 'No' ? 'warning' : 'danger')}"
+                                              th:text="${order.ddsStatus}">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="icon-button" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="icon-button contact-customer-btn" title="Contact Customer" th:attr="data-customer-id=${customer.id}">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:if="${deliveries.empty}" class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No deliveries found for this customer</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="/javascript/non-specific/account-menu.js" defer></script>
+    <script src="/javascript/non-specific/sidebar-toggle.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script th:inline="javascript">
+        // Enhanced Chart Configuration
+        const ctx = document.getElementById('ddsChart').getContext('2d');
+
+        const data = {
+            labels: ['Approved', 'Pending', 'Denied'],
+            datasets: [{
+                data: [
+                    /*[[${ddsYesCount}]]*/,
+                    /*[[${ddsNoCount}]]*/,
+                    /*[[${ddsDeniedCount}]]*/
+                ],
+                backgroundColor: [
+                    '#28a745',
+                    '#ffc107', 
+                    '#dc3545'
+                ],
+                borderWidth: 3,
+                borderColor: '#fff',
+                hoverBorderWidth: 4,
+                hoverBackgroundColor: [
+                    '#218838',
+                    '#e0a800',
+                    '#c82333'
+                ]
+            }]
+        };
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#fff',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                return `${context.label}: ${context.parsed} (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%',
+                elements: {
+                    arc: {
+                        borderWidth: 2
+                    }
+                }
+            }
+        });
+
+        // Table interactions
+        document.querySelectorAll('.modern-table th').forEach(header => {
+            header.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                // Reset all other sort icons
+                document.querySelectorAll('.modern-table th i').forEach(i => {
+                    if (i !== icon) {
+                        i.className = 'fas fa-sort';
+                    }
+                });
+                
+                // Toggle current sort icon
+                if (icon.classList.contains('fa-sort')) {
+                    icon.className = 'fas fa-sort-up';
+                } else if (icon.classList.contains('fa-sort-up')) {
+                    icon.className = 'fas fa-sort-down';
+                } else {
+                    icon.className = 'fas fa-sort-up';
+                }
+            });
+        });
+
+        // Contact Customer button functionality
+        document.querySelectorAll('.contact-customer-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const customerId = this.getAttribute('data-customer-id');
+                if (customerId) {
+                    // Add your contact functionality here
+                    alert('Contact functionality would be implemented here for customer ID: ' + customerId);
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* Contact Customer Button Styling */
+        .contact-customer-btn {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white !important;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-customer-btn:hover {
+            background: linear-gradient(135deg, #138496 0%, #0e6b74 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+        }
+
+        .contact-customer-btn i {
+            color: white;
+        }
+
+        /* Action buttons container spacing */
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+    </style>
+
+</body>
+
+</html> 
