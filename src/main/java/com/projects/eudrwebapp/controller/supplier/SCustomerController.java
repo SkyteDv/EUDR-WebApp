@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.projects.eudrwebapp.model.Order;
@@ -94,5 +95,68 @@ public class SCustomerController {
 
         model.addAttribute("customerStats", customerStats);
         return "s-customers-overview";
+    }
+
+    @GetMapping("/details/{customerId}")
+    public String showCustomerDetail(@PathVariable Long customerId, HttpSession session, Model model) {
+        // Validate supplier authentication
+        Long supplierId = (Long) session.getAttribute("userId");
+        if (supplierId == null) {
+            return "redirect:/user/login";
+        }
+
+        // Fetch supplier and customer
+        Optional<User> supplierOpt = userRepository.findById(supplierId.toString());
+        Optional<User> customerOpt = userRepository.findById(customerId.toString());
+
+        if (supplierOpt.isEmpty() || customerOpt.isEmpty()) {
+            return "redirect:/supplier/customers/overview";
+        }
+
+        User supplier = supplierOpt.get();
+        User customer = customerOpt.get();
+
+        // Fetch all orders between this supplier and customer
+        List<Order> deliveries = orderRepository.findByCustomerAndSupplier(customer, supplier);
+
+        // Verify supplier-customer relationship (they must have shared orders)
+        if (deliveries.isEmpty()) {
+            return "redirect:/supplier/customers/overview";
+        }
+
+        // Calculate DDS statistics
+        int ddsYesCount = (int) deliveries.stream()
+                .filter(order -> "Yes".equalsIgnoreCase(order.getDdsStatus()))
+                .count();
+        
+        int ddsNoCount = (int) deliveries.stream()
+                .filter(order -> "No".equalsIgnoreCase(order.getDdsStatus()))
+                .count();
+        
+        int ddsDeniedCount = (int) deliveries.stream()
+                .filter(order -> "Not Available".equalsIgnoreCase(order.getDdsStatus()))
+                .count();
+
+        // Calculate first and last delivery dates
+        LocalDate firstDeliveryDate = deliveries.stream()
+                .map(Order::getOrderDate)
+                .min(LocalDate::compareTo)
+                .orElse(null);
+
+        LocalDate lastDeliveryDate = deliveries.stream()
+                .map(Order::getOrderDate)
+                .max(LocalDate::compareTo)
+                .orElse(null);
+
+        // Add attributes to model
+        model.addAttribute("customer", customer);
+        model.addAttribute("deliveries", deliveries);
+        model.addAttribute("ddsYesCount", ddsYesCount);
+        model.addAttribute("ddsNoCount", ddsNoCount);
+        model.addAttribute("ddsDeniedCount", ddsDeniedCount);
+        model.addAttribute("firstDeliveryDate", firstDeliveryDate);
+        model.addAttribute("lastDeliveryDate", lastDeliveryDate);
+
+        return "s-customer-detail-view";
     }
 }

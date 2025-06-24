@@ -80,8 +80,18 @@ public class PDFService {
 
     private void savePdfToFile(byte[] pdf, String fileName) throws IOException {
         String directoryPath = "src/main/resources/static/tmp/";
+        File directory = new File(directoryPath);
+        
+        // Create the directory if it doesn't exist
+        if (!directory.exists()) {
+            if (directory.mkdirs()) {
+                System.out.println("Created tmp directory: " + directoryPath);
+            } else {
+                throw new IOException("Failed to create tmp directory: " + directoryPath);
+            }
+        }
+        
         File file = new File(directoryPath + fileName);
-
 
         if (file.exists()) {
             System.out.println("File already exists, overwriting: " + fileName);
