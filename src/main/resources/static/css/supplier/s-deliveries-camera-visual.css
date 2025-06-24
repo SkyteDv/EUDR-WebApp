@@ -17,28 +17,16 @@
 
 #cameraDiv {
     pointer-events: all;
-    z-index: 50;
-    display: flex;
+    z-index: 5000;
     position: absolute; /* Changed back to absolute for visibility */
-    right: 1rem;
-    top: 1rem;
-    width: calc(100vw - 650px); /* Take remaining width after the data cards */
-    max-width: 700px;
-    min-height: 500px;
+    right: 2rem;
+    width: 50vw;
+    min-height: 100vh;
     color: var(--text-clr);
+    display: flex;
     flex-direction: column;
-    border: 2px solid rgba(255, 0, 0, 0.3); /* Temporary debug border to see if camera is positioned */
-}
-
-/* When the popup is in wide mode, ensure camera is visible */
-#side-popup-details.wide #cameraDiv {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    width: calc(100vw - 650px);
-    max-width: 700px;
-    z-index: 10; /* Lower z-index to go under data cards when zooming */
-    border: 2px solid rgba(0, 255, 0, 0.3); /* Different color for wide mode */
+    justify-content: center;
+    align-items: center;
 }
 
 #webcamVideo {
@@ -79,23 +67,14 @@
 
 /* Responsive adjustments */
 @media (max-width: 1400px) {
-    #cameraDiv,
-    #side-popup-details.wide #cameraDiv {
-        position: relative;
-        right: auto;
-        top: auto;
-        width: 100%;
-        max-width: 100%;
-        margin: 1rem auto;
-        z-index: 5; /* Even lower z-index for smaller screens */
+    #cameraDiv {
+        max-width: 40vw;
     }
 }
 
-/* For very small screens or high zoom levels */
 @media (max-width: 1000px) {
-    #cameraDiv,
-    #side-popup-details.wide #cameraDiv {
-        z-index: 1; /* Lowest z-index to ensure it goes under everything */
+    #cameraDiv {
+        max-width: 25vw;
     }
 }
 

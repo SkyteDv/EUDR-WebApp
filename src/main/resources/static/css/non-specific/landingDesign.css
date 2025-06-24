@@ -353,31 +353,31 @@ section+section {
 
 /* Fix Toggle-Position auf Seiten mit reduziertem Inhalt, z.B. Login/Register */
 .main-nav ul {
-  align-items: center;
+    align-items: center;
 }
 
 .main-nav li {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 /* Optional: Etwas Abstand unterhalb des Schalters */
 .theme-toggle {
-  display: flex;
-  align-items: center;
-  margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
 }
 
 /* Auf Login-/Registerseiten ggf. Abstand zur rechten Seite verringern */
 @media (max-width: 600px) {
-  .main-nav ul {
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+    .main-nav ul {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-  .main-header {
-    flex-direction: column;
-    align-items: center;
-  }
+    .main-header {
+        flex-direction: column;
+        align-items: center;
+    }
 }

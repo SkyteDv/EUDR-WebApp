@@ -446,7 +446,7 @@
                         <p><strong>DDS Ref:</strong> <span th:text="${order.ddsReferenceNumber}">Placeholder</span></p>
                         <p><strong>Order Date:</strong> <span th:text="${order.orderDate}">Placeholder</span></p>
                         <p><strong>Expected Delivery Date:</strong> <span th:text="${order.estimatedDeliveryDate}">Placeholder</span></p>
-                        <p><strong>Destination Harbour:</strong> <span th:text="${order.destination}">Placeholder</span></p>
+                        <p><strong>Destination Harbour:</strong> <span th:text="${order.destination.getName()}">Placeholder</span></p>
                     </div>
 
                     <!-- Customer Information -->

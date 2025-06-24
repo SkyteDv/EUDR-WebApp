@@ -148,7 +148,7 @@ export function createCameraPopup(currentOrderId, currentOrderDdsReference) {
         errorOutput.textContent = '';
         qrOutput.textContent = '';
         completeButton.disabled = true;
-        startScanButton.disabled = true; // Optional: disable during scan
+         // Optional: disable during scan
     });
 
     cancelButton.addEventListener('click',  () => {
